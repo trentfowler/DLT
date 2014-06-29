@@ -4,6 +4,10 @@ import java.awt.event.*;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
+/**
+ * A custom JScrollPane that bubbles mouse wheel events up to the parent component.
+ *
+ */
 public class BetterScrollPane extends JScrollPane {
 	
 	private static final long serialVersionUID = -7109180173608789154L;
