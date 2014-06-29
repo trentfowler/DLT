@@ -309,13 +309,27 @@ public class Main {
 				
 				Main.FIELDS.get(Main.SELECTED_INDEX).initializeStatus();
 				
-				if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty())
-					Main.LIST_MODEL.add(Main.SELECTED_INDEX, Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
-				else
-					Main.LIST_MODEL.add(Main.SELECTED_INDEX, "NEW");				
-								
-				Main.SELECTED_INDEX += 1;
+				//add FIELDS item to LIST_MODEL
+				StringBuilder sb = new StringBuilder();
+				if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty()) {
+					sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());					
+				}
 				
+				if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty() &&
+					!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+					sb.append(" / ");
+				}
+				
+				if (!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+					sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName() + " ");
+				}
+				
+				if (sb.toString().isEmpty())
+					Main.LIST_MODEL.add(Main.SELECTED_INDEX, "NEW");
+				else 
+					Main.LIST_MODEL.add(Main.SELECTED_INDEX, sb.toString());
+				
+				Main.SELECTED_INDEX += 1;
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
