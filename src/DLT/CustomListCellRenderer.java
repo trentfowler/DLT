@@ -8,7 +8,12 @@ import javax.swing.ListCellRenderer;
 
 import org.joda.time.LocalDate;
 
-
+/**
+ * Determines the color of each cell in the case list according to its status.
+ * 
+ * @author Trent
+ *
+ */
 public class CustomListCellRenderer extends JLabel implements ListCellRenderer {
 	
 	private static final long serialVersionUID = 2690029116548791087L;
