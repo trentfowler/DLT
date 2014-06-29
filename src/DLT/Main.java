@@ -271,9 +271,7 @@ public class Main {
 	
 	//contains the main method
 	public Main() {
-		
-		System.out.println("Git test");
-		
+				
 		//set margins for text fields/areas
 		Insets i = new Insets(1, 1, 1, 1);
 		Main.JTF_NAME.setMargin(i);
