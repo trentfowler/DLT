@@ -16,8 +16,8 @@ import javax.swing.event.DocumentListener;
  * 
  * ..
  * 
- * @author Trent
- *
+ * @author Trent Fowler
+ * @author Bryan W.W.
  */
 public class ContactPanel extends JPanel implements DocumentListener {
 	
@@ -109,7 +109,7 @@ public class ContactPanel extends JPanel implements DocumentListener {
 		contactContainer.add(Main.JTF_ALT_PHONE, gbc_Alt_Phone_Field);
 		
 		//address
-		JLabel jlAddress = new JLabel("     Address");
+		JLabel jlAddress = new JLabel("  Address Line#1");
 		
 		GridBagConstraints gbc_Address_Label = new GridBagConstraints();
 		gbc_Address_Label.anchor = GridBagConstraints.WEST;
@@ -125,13 +125,13 @@ public class ContactPanel extends JPanel implements DocumentListener {
 		
 		contactContainer.add(Main.JTF_ADDRESS, gbc_Address_Field);
 		
-		//city, state, zip
+		//made second line as address line#2:: used for APT,FLR,Suite,etc.
 		GridBagConstraints gbc_CSZ_Label = new GridBagConstraints();
 		gbc_CSZ_Label.anchor = GridBagConstraints.WEST;
 		gbc_CSZ_Label.gridx = 0;
 		gbc_CSZ_Label.gridy = 5;
 		
-		contactContainer.add(new JLabel(" "), gbc_CSZ_Label);
+		contactContainer.add(new JLabel("  Address Line#2"), gbc_CSZ_Label);
 		
 		GridBagConstraints gbc_CSZ_Field = new GridBagConstraints();
 		gbc_CSZ_Field.fill = GridBagConstraints.HORIZONTAL;
@@ -216,7 +216,8 @@ public class ContactPanel extends JPanel implements DocumentListener {
 		altContactContainer.add(Main.JTF_ALT_SECONDARY_PHONE, gbc_Alt_SP_Field);
 		
 		//alt address
-		JLabel jlAltAddress = new JLabel("     Address");
+		//used for city/state
+		JLabel jlAltAddress = new JLabel("     City");
 		
 		GridBagConstraints gbc_Alt_Address_Label = new GridBagConstraints();
 		gbc_Alt_Address_Label.anchor = GridBagConstraints.WEST;
@@ -232,12 +233,13 @@ public class ContactPanel extends JPanel implements DocumentListener {
 		altContactContainer.add(Main.JTF_ALT_ADDRESS, gbc_Alt_Address_Field);
 		
 		//alt city, state, zip
+		//used for postal code
 		GridBagConstraints gbc_Alt_CSZ_Label = new GridBagConstraints();
 		gbc_Alt_CSZ_Label.anchor = GridBagConstraints.WEST;
 		gbc_Alt_CSZ_Label.gridx = 0;
 		gbc_Alt_CSZ_Label.gridy = 5;
 		
-		altContactContainer.add(new JLabel(" "), gbc_Alt_CSZ_Label);
+		altContactContainer.add(new JLabel("  Postal Code"), gbc_Alt_CSZ_Label);
 		
 		GridBagConstraints gbc_Alt_CSZ_Field = new GridBagConstraints();
 		gbc_Alt_CSZ_Field.fill = GridBagConstraints.HORIZONTAL;
