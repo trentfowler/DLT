@@ -63,14 +63,14 @@ public class ContactPanel extends JPanel implements DocumentListener {
 		GridBagConstraints gbc_Email_Label = new GridBagConstraints();
 		gbc_Email_Label.anchor = GridBagConstraints.WEST;
 		gbc_Email_Label.gridx = 0;
-		gbc_Email_Label.gridy = 1;
+		gbc_Email_Label.gridy = 2;
 		
 		contactContainer.add(jlEmail, gbc_Email_Label);
 		
 		GridBagConstraints gbc_Email_Field = new GridBagConstraints();
 		gbc_Email_Field.fill = GridBagConstraints.HORIZONTAL;
 		gbc_Email_Field.gridx = 1;
-		gbc_Email_Field.gridy = 1;
+		gbc_Email_Field.gridy = 2;
 		
 		contactContainer.add(Main.JTF_EMAIL, gbc_Email_Field);
 		
@@ -80,14 +80,14 @@ public class ContactPanel extends JPanel implements DocumentListener {
 		GridBagConstraints gbc_Phone_Label = new GridBagConstraints();
 		gbc_Phone_Label.anchor = GridBagConstraints.WEST;
 		gbc_Phone_Label.gridx = 0;
-		gbc_Phone_Label.gridy = 2;
+		gbc_Phone_Label.gridy = 1;
 		
 		contactContainer.add(jlPhone, gbc_Phone_Label);
 		
 		GridBagConstraints gbc_Phone_Field = new GridBagConstraints();
 		gbc_Phone_Field.fill = GridBagConstraints.HORIZONTAL;
 		gbc_Phone_Field.gridx = 1;
-		gbc_Phone_Field.gridy = 2;
+		gbc_Phone_Field.gridy = 1;
 		
 		contactContainer.add(Main.JTF_PHONE, gbc_Phone_Field);
 		
