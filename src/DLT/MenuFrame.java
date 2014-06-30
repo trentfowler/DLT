@@ -263,8 +263,19 @@ public class MenuFrame extends JFrame implements WindowListener {
 				Main.LIST_MODEL.clear();
 				
 				Main.FIELDS = (ArrayList<DataField>) xstream.fromXML(chooser.getSelectedFile());
+				
+				//update list model
 				for (int i = 0; i < Main.FIELDS.size(); i++) {
-					Main.LIST_MODEL.add(i, Main.FIELDS.get(i).getServiceRequest());
+					StringBuilder sb = new StringBuilder();
+					sb.append(Main.FIELDS.get(i).getServiceRequest());
+					if (!Main.FIELDS.get(i).getServiceRequest().isEmpty() &&
+						!Main.FIELDS.get(i).getName().isEmpty()) {
+						sb.append(" / ");
+					}
+					sb.append(Main.FIELDS.get(i).getName());
+					if (!sb.toString().isEmpty()) {
+						Main.LIST_MODEL.add(i, sb.toString());
+					}
 				}
 				
 				Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
