@@ -18,9 +18,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * Delta Offline Logging Tool
+ * Backup Logging Tool
  * 
  * @author Trent Fowler
+ * @author Bryan W.W.
  */
 
 /**
