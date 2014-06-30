@@ -1,8 +1,6 @@
 /bin/
 .metadata
-/dependencies/
 /emails/
-/bin/
-/bin/
-/bin/
-/bin/
+Data.ser
+.classpath
+/.settings/
