@@ -147,7 +147,7 @@ public class MenuFrame extends JFrame implements WindowListener {
 		
 		this.setSize(Main.F_WIDTH, Main.F_HEIGHT);
 		this.setMinimumSize(new Dimension(Main.F_MIN_WIDTH, Main.F_MIN_HEIGHT));
-		this.setTitle("Trent's Delta Logging Tool");
+		this.setTitle("BLT Tool"); //Backup Logging Tool... Tool!
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setContentPane(mainPanel);
 		this.setResizable(true);
