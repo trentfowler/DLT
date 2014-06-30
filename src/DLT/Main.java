@@ -321,7 +321,7 @@ public class Main {
 				}
 				
 				if (!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
-					sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName() + " ");
+					sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName());
 				}
 				
 				if (sb.toString().isEmpty())

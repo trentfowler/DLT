@@ -72,8 +72,22 @@ public class ListPanel extends JPanel implements ActionListener {
 					Main.SAVE_CHANGEABLE_FIELDS();
 					
 					//update list model
+					StringBuilder sb = new StringBuilder();
 					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty()) {
-						Main.LIST_MODEL.set(Main.SELECTED_INDEX, Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
+						sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
+					}
+					
+					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty() &&
+						!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+						sb.append(" / ");
+					}
+
+					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+						sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName());
+					}
+					
+					if (!sb.toString().isEmpty()) {
+						Main.LIST_MODEL.set(Main.SELECTED_INDEX, sb.toString());
 					}
 					
 					//update view
@@ -111,8 +125,22 @@ public class ListPanel extends JPanel implements ActionListener {
 					Main.SAVE_CHANGEABLE_FIELDS();
 					
 					//update list model
+					StringBuilder sb = new StringBuilder();
 					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty()) {
-						Main.LIST_MODEL.set(Main.SELECTED_INDEX, Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
+						sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
+					}
+					
+					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty() &&
+						!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+						sb.append(" / ");
+					}
+
+					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+						sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName());
+					}
+					
+					if (!sb.toString().isEmpty()) {
+						Main.LIST_MODEL.set(Main.SELECTED_INDEX, sb.toString());
 					}
 					
 					//update view
@@ -136,8 +164,22 @@ public class ListPanel extends JPanel implements ActionListener {
 			Main.SAVE_CHANGEABLE_FIELDS();
 			
 			//update list model
+			StringBuilder sb = new StringBuilder();
 			if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty()) {
-				Main.LIST_MODEL.set(Main.SELECTED_INDEX, Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
+				sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
+			}
+			
+			if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty() &&
+				!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+				sb.append(" / ");
+			}
+
+			if (!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+				sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName());
+			}
+			
+			if (!sb.toString().isEmpty()) {
+				Main.LIST_MODEL.set(Main.SELECTED_INDEX, sb.toString());
 			}
 			
 			//add item
