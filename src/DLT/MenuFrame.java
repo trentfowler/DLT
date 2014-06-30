@@ -11,6 +11,7 @@ import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -26,6 +27,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import au.com.bytecode.opencsv.CSVReader;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -295,5 +298,20 @@ public class MenuFrame extends JFrame implements WindowListener {
 			JOptionPane.showMessageDialog(this, "Error importing file!");
 
 		}
+	}
+	
+	private void from_csv_file() {
+		String path = "output.csv"; //TODO get path to .csv from user
+		char delimiter = '\t';
+		try {
+			CSVReader reader = new CSVReader(new FileReader(path), delimiter);
+			String[] nextLine;
+			while ((nextLine = reader.readNext()) != null) {
+				System.out.println(nextLine[0]);
+			}
+			reader.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}		
 	}
 }
