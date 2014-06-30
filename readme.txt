@@ -1,4 +1,4 @@
-Delta Logging Tool
+Backup Logging Tool
 
 Authors:
 Trent F.
