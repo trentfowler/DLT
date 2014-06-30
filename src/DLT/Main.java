@@ -88,7 +88,7 @@ public class Main {
 	static JCheckBox JCHK_EMAIL_CAP = new JCheckBox("EMAIL CAP");
 	static JCheckBox JCHK_TARP = new JCheckBox("TARP");
 	static JCheckBox JCHK_POS = new JCheckBox("POS");
-	static JCheckBox JCHK_PAL = new JCheckBox("PAL");
+	static JCheckBox JCHK_PAL = new JCheckBox("OST DPS");
 	static JCheckBox JCHK_PLASTICS = new JCheckBox("CHK PLASTICS");
 	static JCheckBox JCHK_CIDAR = new JCheckBox("CIDAR");
 	static JTextField JTF_COMPANY = new JTextField();

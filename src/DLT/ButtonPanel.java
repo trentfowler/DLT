@@ -56,7 +56,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
 			if (Main.JCHK_VDI.isSelected()) sb.append(" VDI ");
 			if (Main.JCHK_TARP.isSelected()) sb.append(" TARP ");
 			if (Main.JCHK_POS.isSelected()) sb.append(" POS ");
-			if (Main.JCHK_PAL.isSelected()) sb.append(" PAL ");
+			if (Main.JCHK_PAL.isSelected()) sb.append(" OST DPS ");
 			if (Main.JCHK_PLASTICS.isSelected()) sb.append(" CHECK PLASTICS ");
 			if (Main.JCHK_CIDAR.isSelected()) sb.append(" CIDAR EXPLAINED ");
 			sb.append("***\n\n");
