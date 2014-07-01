@@ -167,34 +167,34 @@ public class ContactPanel extends JPanel implements DocumentListener {
 		altContactContainer.add(jlAltName, gbc_Alt_Name_Label);
 		altContactContainer.add(Main.JTF_ALT_NAME, gbc_Alt_Name_Field);
 		
-		//alt email
+		//alt email: arranged after alt primary phone
 		JLabel jlAltEmail = new JLabel("     E-mail");
 		
 		GridBagConstraints gbc_Alt_Email_Label = new GridBagConstraints();
 		gbc_Alt_Email_Label.anchor = GridBagConstraints.WEST;
 		gbc_Alt_Email_Label.gridx = 0;
-		gbc_Alt_Email_Label.gridy = 1;
+		gbc_Alt_Email_Label.gridy = 2;
 				
 		GridBagConstraints gbc_Alt_Email_Field = new GridBagConstraints();
 		gbc_Alt_Email_Field.fill = GridBagConstraints.HORIZONTAL;
 		gbc_Alt_Email_Field.gridx = 1;
-		gbc_Alt_Email_Field.gridy = 1;
+		gbc_Alt_Email_Field.gridy = 2;
 		
 		altContactContainer.add(jlAltEmail, gbc_Alt_Email_Label);
 		altContactContainer.add(Main.JTF_ALT_EMAIL, gbc_Alt_Email_Field);
 		
-		//alt primary phone
+		//alt primary phone: arranged before alt email
 		JLabel jlAltPrimaryPhone = new JLabel("     Phone");
 		
 		GridBagConstraints gbc_Alt_PP_Label = new GridBagConstraints();
 		gbc_Alt_PP_Label.anchor = GridBagConstraints.WEST;
 		gbc_Alt_PP_Label.gridx = 0;
-		gbc_Alt_PP_Label.gridy = 2;
+		gbc_Alt_PP_Label.gridy = 1;
 				
 		GridBagConstraints gbc_Alt_PP_Field = new GridBagConstraints();
 		gbc_Alt_PP_Field.fill = GridBagConstraints.HORIZONTAL;
 		gbc_Alt_PP_Field.gridx = 1;
-		gbc_Alt_PP_Field.gridy = 2;
+		gbc_Alt_PP_Field.gridy = 1;
 		
 		altContactContainer.add(jlAltPrimaryPhone, gbc_Alt_PP_Label);
 		altContactContainer.add(Main.JTF_ALT_PRIMARY_PHONE, gbc_Alt_PP_Field);
