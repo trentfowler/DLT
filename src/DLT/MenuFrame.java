@@ -11,6 +11,7 @@ import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -26,6 +27,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import au.com.bytecode.opencsv.CSVReader;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -43,8 +46,11 @@ public class MenuFrame extends JFrame implements WindowListener {
 	
 	private JMenuItem save = new JMenuItem("Save");
 	private JMenuItem export = new JMenuItem("Export");
-	private JMenuItem imprt = new JMenuItem("Import");
+	private JMenu imprt = new JMenu("Import");
 	private JMenuItem recover = new JMenuItem("Recover");
+	
+	private JMenuItem importCSV = new JMenuItem("CSV");
+	private JMenuItem importXML = new JMenuItem("XML");
 	
 	public MenuFrame() {
 		JMenuBar menu = new JMenuBar();
@@ -64,9 +70,9 @@ public class MenuFrame extends JFrame implements WindowListener {
 		export.setAccelerator(ctrl_e);
 		
 		fileMenu.add(imprt);
-		KeyStroke ctrl_i = KeyStroke.getKeyStroke(
-				KeyEvent.VK_I, InputEvent.CTRL_DOWN_MASK);
-		imprt.setAccelerator(ctrl_i);
+		
+		imprt.add(importCSV);
+		imprt.add(importXML);
 		
 		//user clicked save
 		save.addActionListener(new ActionListener() {
@@ -121,8 +127,18 @@ public class MenuFrame extends JFrame implements WindowListener {
 			}
 		});
 		
-		//user clicked import
-		imprt.addActionListener(new ActionListener() {
+		
+		//import
+		
+		//...csv
+		importCSV.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				from_csv_file();
+			}
+		});
+		
+		//...xml
+		importXML.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				from_file();
 			}
@@ -293,7 +309,149 @@ public class MenuFrame extends JFrame implements WindowListener {
 			
 			//output error message
 			JOptionPane.showMessageDialog(this, "Error importing file!");
-
 		}
 	}
+	
+	private void from_csv_file() {
+		
+		//get path to .csv from user
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(
+				"CSV Files", "csv");
+		chooser.setFileFilter(filter);
+		int choice = chooser.showOpenDialog(this);
+		if (choice != JFileChooser.OPEN_DIALOG) {
+			return;
+		}
+		
+		//extract data from .csv file
+		char delimiter = '\t';
+		try {
+			CSVReader reader = new CSVReader(
+					new FileReader(chooser.getSelectedFile()), delimiter);
+			String[] nextLine = reader.readNext(); //skip first line
+			while ((nextLine = reader.readNext()) != null) {
+				
+				//service request
+				StringBuilder serviceRequest = new StringBuilder();
+				if (nextLine.length > 3) {
+					for (int i = 3; i < nextLine[3].length() - 2; i += 2) {
+						serviceRequest.append(nextLine[3].charAt(i));
+					}
+				}
+				
+				//description
+				StringBuilder description = new StringBuilder();
+				if (nextLine.length > 4) {
+					for (int i = 3; i < nextLine[4].length() - 2; i += 2) {
+						description.append(nextLine[4].charAt(i));
+					}
+				}
+				
+				//service tag
+				StringBuilder serviceTag = new StringBuilder();
+				if (nextLine.length > 5) {
+					for (int i = 3; i < nextLine[5].length() - 2; i += 2) {
+						serviceTag.append(nextLine[5].charAt(i));
+					}
+				}
+				
+				//last name
+				StringBuilder lastName = new StringBuilder();
+				if (nextLine.length > 8) {
+					for (int i = 3; i < nextLine[8].length() - 2; i += 2) {
+						lastName.append(nextLine[8].charAt(i));
+					}
+				}
+				
+				//last name
+				StringBuilder firstName = new StringBuilder();
+				if (nextLine.length > 9) {
+					for (int i = 3; i < nextLine[9].length() - 2; i += 2) {
+						firstName.append(nextLine[9].charAt(i));
+					}
+				}
+				
+				//name
+				String name = firstName.toString() + " " + lastName.toString();
+				
+				//phone number
+				StringBuilder phone = new StringBuilder();
+				if (nextLine.length > 10) {
+					for (int i = 3; i < nextLine[10].length() - 2; i += 2) {
+						phone.append(nextLine[10].charAt(i));
+					}
+				}
+				
+				//email
+				StringBuilder email = new StringBuilder();
+				if (nextLine.length > 11) {
+					for (int i = 3; i < nextLine[11].length() - 2; i += 2) {
+						email.append(nextLine[11].charAt(i));
+					}
+				}
+				
+				//create data field object and populate
+				DataField df = new DataField();
+				df.setServiceRequest(serviceRequest.toString());
+				df.setDescription(description.toString());
+				df.setServiceTag(serviceTag.toString());
+				df.setName(name);
+				df.setPhone(phone.toString());
+				df.setEmail(email.toString());
+				
+				//check if SR is already in FIELDS
+				boolean hasSR = false;
+				for (int i = 0; i < Main.FIELDS.size(); i++) {
+					if (df.getServiceRequest().equals(Main.FIELDS.get(i).getServiceRequest())) {
+						hasSR = true;
+						break;
+					}
+				}
+				
+				//if not, add it
+				if (!hasSR && !df.getServiceRequest().isEmpty()) {
+					//add to FIELDS
+					Main.FIELDS.add(df);
+					
+					//add to LIST_MODEL
+					StringBuilder sb = new StringBuilder();
+					if (!df.getServiceRequest().isEmpty()) {
+						sb.append(df.getServiceRequest());
+					}
+					
+					if (!df.getServiceRequest().isEmpty() &&
+						!df.getName().isEmpty()) {
+						sb.append(" / ");
+					}
+					
+					if (!df.getName().isEmpty()) {
+						sb.append(df.getName());
+					}
+					
+					if (!sb.toString().isEmpty()) {
+						Main.LIST_MODEL.add(Main.FIELDS.size() - 1, sb.toString());
+					}
+					
+					//flag unsaved changes
+					Main.HAS_UNSAVED_CHANGES = true;
+				}
+			}
+			reader.close();
+		} catch (Exception ex) {
+			
+			//reset all fields
+			Main.FIELDS.clear();
+			Main.LIST_MODEL.clear();			
+			Main.SELECTED_INDEX = 0;
+			Main.FIELDS.add(new DataField());
+			Main.LIST_MODEL.add(Main.SELECTED_INDEX, "NEW");
+			Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
+			Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
+			
+			//output error message
+			JOptionPane.showMessageDialog(this, "Error importing file!");
+		}
+	}
+	
 }
