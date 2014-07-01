@@ -1,12 +1,13 @@
-//PP = preferred priority 
-
-In the file section:
-	Add calendar feature to RIGHTCLICKLIST.JAVA
+//PP = Preferred Priority 
 	
-In the checkbox field:
+File section:
+	Add calendar feature to RIGHTCLICKLIST.JAVA
+	sorting the cases based on priority and touch data (open cases higher on the list & closed cases on lower)
+	
+Checkbox field:
 //PPadd priority level
 
-In the contact info section:
+Contact info section:
 	make the header for the records copy contents to the clipboard
 	similiar to the 'generate description' and 'generate troubleshooting'
 	
@@ -14,16 +15,18 @@ In the contact info section:
 	
 //PPthe address field: separate sections for Address Line1, Address Line2, City, Zip Code
 	
-In the Generate field:
+Generate field:
 	names for the 'generate' buttons: change
 
 	either in a different field or an another subFile
 	 
-In the Button Panel Field:
+Button Panel Field:
 	add check box for DPS expectations	
 
-Misc changes:
-lighter color of opaque for the Red field
-add shortkey for adding calendar dates
-add button to add additional notes for the case
-search feature for SR & SRVTAG
+CHANGES misc:
+	lighter color of opaque for the Red field
+	add shortkey for adding calendar dates
+	add button to add additional notes for the case
+//PPsearch feature for SR & SRVTAG
+	all newly created cases as 'Touched'
+CHANGES implemented:
