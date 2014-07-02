@@ -38,11 +38,11 @@ public class CustomListCellRenderer extends JLabel implements ListCellRenderer {
 			}
 			
 			else if (status == Main.STATUS_IS_OVERDUE) {
-				setBackground(new Color(255, 81, 81)); //red
+				setBackground(new Color(255, 221, 221)); //red
 			}
 			
 			else if (status == Main.STATUS_IS_TOUCHED) {
-				setBackground(new Color(106, 255, 84)); //green
+				setBackground(new Color(221, 255, 221)); //green
 			}
 			
 			else if (status == Main.STATUS_IS_DUE) {

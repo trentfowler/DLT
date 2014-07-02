@@ -319,16 +319,16 @@ public class ContactPanel extends JPanel implements DocumentListener {
 		Main.HAS_UNSAVED_CHANGES = true;
 		
 		//name
-		if (Main.JTF_NAME.getText().length() < 3) Main.JTF_NAME.setBackground(new Color(255, 81, 81));
-		else Main.JTF_NAME.setBackground(new Color(106, 255, 84));
+		if (Main.JTF_NAME.getText().length() < 3) Main.JTF_NAME.setBackground(new Color(255, 221, 221)); //red
+		else Main.JTF_NAME.setBackground(new Color(221, 255, 221)); //green
 		
 		//e-mail
-		if (Main.JTF_EMAIL.getText().length() < 6) Main.JTF_EMAIL.setBackground(new Color(255, 81, 81));
-		else Main.JTF_EMAIL.setBackground(new Color(106, 255, 84));
+		if (Main.JTF_EMAIL.getText().length() < 6) Main.JTF_EMAIL.setBackground(new Color(255, 221, 221)); //red
+		else Main.JTF_EMAIL.setBackground(new Color(221, 255, 221)); //green
 		
 		//phone
 		if (Main.JTF_PHONE.getText().length() < 10) {
-			Main.JTF_PHONE.setBackground(new Color(255, 81, 81));
+			Main.JTF_PHONE.setBackground(new Color(255, 221, 221)); //red
 		} 
 		else {
 			int count = 0;
@@ -338,29 +338,29 @@ public class ContactPanel extends JPanel implements DocumentListener {
 				}
 			}
 			if (count >= 10) {
-				Main.JTF_PHONE.setBackground(new Color(106, 255, 84));	
+				Main.JTF_PHONE.setBackground(new Color(221, 255, 221)); //green	
 			}
 		}
 		
 		//company
-		if (Main.JTF_COMPANY.getText().length() < 3) Main.JTF_COMPANY.setBackground(new Color(255, 81, 81));
-		else Main.JTF_COMPANY.setBackground(new Color(106, 255, 84));
+		if (Main.JTF_COMPANY.getText().length() < 3) Main.JTF_COMPANY.setBackground(new Color(255, 221, 221)); //red
+		else Main.JTF_COMPANY.setBackground(new Color(221, 255, 221)); //green
 	}
 
 	@Override public void insertUpdate(DocumentEvent e) {
 		Main.HAS_UNSAVED_CHANGES = true;
 		
 		//name
-		if (Main.JTF_NAME.getText().length() < 3) Main.JTF_NAME.setBackground(new Color(255, 81, 81));
-		else Main.JTF_NAME.setBackground(new Color(106, 255, 84));
+		if (Main.JTF_NAME.getText().length() < 3) Main.JTF_NAME.setBackground(new Color(255, 221, 221)); //red
+		else Main.JTF_NAME.setBackground(new Color(221, 255, 221)); //green
 		
 		//e-mail
-		if (Main.JTF_EMAIL.getText().length() < 6) Main.JTF_EMAIL.setBackground(new Color(255, 81, 81));
-		else Main.JTF_EMAIL.setBackground(new Color(106, 255, 84));
+		if (Main.JTF_EMAIL.getText().length() < 6) Main.JTF_EMAIL.setBackground(new Color(255, 221, 221)); //red
+		else Main.JTF_EMAIL.setBackground(new Color(221, 255, 221)); //green
 		
 		//phone
 		if (Main.JTF_PHONE.getText().length() < 10) {
-			Main.JTF_PHONE.setBackground(new Color(255, 81, 81));
+			Main.JTF_PHONE.setBackground(new Color(255, 221, 221)); //red
 		} 
 		else {
 			int count = 0;
@@ -370,29 +370,29 @@ public class ContactPanel extends JPanel implements DocumentListener {
 				}
 			}
 			if (count >= 10) {
-				Main.JTF_PHONE.setBackground(new Color(106, 255, 84));	
+				Main.JTF_PHONE.setBackground(new Color(221, 255, 221)); //green	
 			}
 		}
 		
 		//company
-		if (Main.JTF_COMPANY.getText().length() < 3) Main.JTF_COMPANY.setBackground(new Color(255, 81, 81));
-		else Main.JTF_COMPANY.setBackground(new Color(106, 255, 84));
+		if (Main.JTF_COMPANY.getText().length() < 3) Main.JTF_COMPANY.setBackground(new Color(255, 221, 221)); //red
+		else Main.JTF_COMPANY.setBackground(new Color(221, 255, 221)); //green
 	}
 
 	@Override public void removeUpdate(DocumentEvent e) {
 		Main.HAS_UNSAVED_CHANGES = true;
 		
 		//name
-		if (Main.JTF_NAME.getText().length() < 3) Main.JTF_NAME.setBackground(new Color(255, 81, 81));
-		else Main.JTF_NAME.setBackground(new Color(106, 255, 84));
+		if (Main.JTF_NAME.getText().length() < 3) Main.JTF_NAME.setBackground(new Color(255, 221, 221)); //red
+		else Main.JTF_NAME.setBackground(new Color(221, 255, 221)); //green
 		
 		//e-mail
-		if (Main.JTF_EMAIL.getText().length() < 6) Main.JTF_EMAIL.setBackground(new Color(255, 81, 81));
-		else Main.JTF_EMAIL.setBackground(new Color(106, 255, 84));
+		if (Main.JTF_EMAIL.getText().length() < 6) Main.JTF_EMAIL.setBackground(new Color(255, 221, 221)); //red
+		else Main.JTF_EMAIL.setBackground(new Color(221, 255, 221)); //green
 		
 		//phone
 		if (Main.JTF_PHONE.getText().length() < 10) {
-			Main.JTF_PHONE.setBackground(new Color(255, 81, 81));
+			Main.JTF_PHONE.setBackground(new Color(255, 221, 221)); //red
 		} 
 		else {
 			int count = 0;
@@ -402,12 +402,12 @@ public class ContactPanel extends JPanel implements DocumentListener {
 				}
 			}
 			if (count >= 10) {
-				Main.JTF_PHONE.setBackground(new Color(106, 255, 84));	
+				Main.JTF_PHONE.setBackground(new Color(221, 255, 221)); //green	
 			}
 		}
 		
 		//company
-		if (Main.JTF_COMPANY.getText().length() < 3) Main.JTF_COMPANY.setBackground(new Color(255, 81, 81));
-		else Main.JTF_COMPANY.setBackground(new Color(106, 255, 84));
+		if (Main.JTF_COMPANY.getText().length() < 3) Main.JTF_COMPANY.setBackground(new Color(255, 221, 221)); //red
+		else Main.JTF_COMPANY.setBackground(new Color(221, 255, 221)); //green
 	}	
 }

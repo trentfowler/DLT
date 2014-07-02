@@ -87,7 +87,7 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		
 		//service tag color
 		if (Main.JTF_SERVICE_TAG.getText().length() < 7) {
-			Main.JTF_SERVICE_TAG.setBackground(new Color(255, 81, 81)); //red
+			Main.JTF_SERVICE_TAG.setBackground(new Color(255, 221, 221)); //red
 		} else {
 			int count = 0;
 			for (int i = 0; i < Main.JTF_SERVICE_TAG.getText().length(); i++) {
@@ -97,8 +97,8 @@ public class ServicePanel extends JPanel implements DocumentListener {
 				}
 			}
 			if (count % 7 == 0) {
-				Main.JTF_SERVICE_TAG.setBackground(new Color(106, 255, 84)); //green
-			} else Main.JTF_SERVICE_TAG.setBackground(new Color(255, 81, 81)); //red
+				Main.JTF_SERVICE_TAG.setBackground(new Color(221, 255, 221)); //green
+			} else Main.JTF_SERVICE_TAG.setBackground(new Color(255, 221, 221)); //red
 		}
 	}
 	
@@ -108,7 +108,7 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		
 		//service tag color
 		if (Main.JTF_SERVICE_TAG.getText().length() < 7) {
-			Main.JTF_SERVICE_TAG.setBackground(new Color(255, 81, 81)); //red
+			Main.JTF_SERVICE_TAG.setBackground(new Color(255, 221, 221)); //red
 		} else {
 			int count = 0;
 			for (int i = 0; i < Main.JTF_SERVICE_TAG.getText().length(); i++) {
@@ -118,8 +118,8 @@ public class ServicePanel extends JPanel implements DocumentListener {
 				}
 			}
 			if (count % 7 == 0) {
-				Main.JTF_SERVICE_TAG.setBackground(new Color(106, 255, 84)); //green
-			} else Main.JTF_SERVICE_TAG.setBackground(new Color(255, 81, 81)); //red
+				Main.JTF_SERVICE_TAG.setBackground(new Color(221, 255, 221)); //green
+			} else Main.JTF_SERVICE_TAG.setBackground(new Color(255, 221, 221)); //red
 		}
 	}
 	
@@ -129,7 +129,7 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		
 		//service tag color
 		if (Main.JTF_SERVICE_TAG.getText().length() < 7) {
-			Main.JTF_SERVICE_TAG.setBackground(new Color(255, 81, 81)); //red
+			Main.JTF_SERVICE_TAG.setBackground(new Color(255, 221, 221)); //red
 		} else {
 			int count = 0;
 			for (int i = 0; i < Main.JTF_SERVICE_TAG.getText().length(); i++) {
@@ -139,8 +139,8 @@ public class ServicePanel extends JPanel implements DocumentListener {
 				}
 			}
 			if (count % 7 == 0) {
-				Main.JTF_SERVICE_TAG.setBackground(new Color(106, 255, 84)); //green
-			} else Main.JTF_SERVICE_TAG.setBackground(new Color(255, 81, 81)); //red
+				Main.JTF_SERVICE_TAG.setBackground(new Color(221, 255, 221)); //green
+			} else Main.JTF_SERVICE_TAG.setBackground(new Color(255, 221, 221)); //red
 		}
 	}
 }
