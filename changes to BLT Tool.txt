@@ -1,12 +1,13 @@
 //PP = Preferred Priority 
 	
 File section:
-	Add calendar feature to RIGHTCLICKLIST.JAVA
+	Add calendar feature to RIGHTCLICKLIST
 	sorting the cases based on priority and touch data (open cases higher on the list & closed cases on lower)
 	
 Checkbox field:
 //PPadd priority level
-
+	add No ALT Contact
+	
 Contact info section:
 	make the header for the records copy contents to the clipboard
 	similiar to the 'generate description' and 'generate troubleshooting'
@@ -24,9 +25,9 @@ Button Panel Field:
 	add check box for DPS expectations	
 
 CHANGES misc:
-	lighter color of opaque for the Red field
 	add shortkey for adding calendar dates
 	add button to add additional notes for the case
 //PPsearch feature for SR & SRVTAG
 	all newly created cases as 'Touched'
 CHANGES implemented:
+	lighter color of opaque for the Red field
