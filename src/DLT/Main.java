@@ -227,18 +227,18 @@ public class Main {
 		} else Main.JCHK_POS.setEnabled(true);
 		
 		//set colors
-		if (Main.JTF_COMPANY.getText().length() < 3) Main.JTF_COMPANY.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_COMPANY.setBackground(new Color(221, 255, 221)); //green
+		if (Main.JTF_COMPANY.getText().length() < 3) Main.JTF_COMPANY.setBackground(new Color(255, 181, 181)); //red
+		else Main.JTF_COMPANY.setBackground(new Color(161, 255, 161)); //green
 		
-		if (Main.JTF_NAME.getText().length() < 3) Main.JTF_NAME.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_NAME.setBackground(new Color(221, 255, 221)); //green
+		if (Main.JTF_NAME.getText().length() < 3) Main.JTF_NAME.setBackground(new Color(255, 181, 181)); //red
+		else Main.JTF_NAME.setBackground(new Color(161, 255, 161)); //green
 		
-		if (Main.JTF_EMAIL.getText().length() < 6) Main.JTF_EMAIL.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_EMAIL.setBackground(new Color(221, 255, 221)); //green
+		if (Main.JTF_EMAIL.getText().length() < 6) Main.JTF_EMAIL.setBackground(new Color(255, 181, 181)); //red
+		else Main.JTF_EMAIL.setBackground(new Color(161, 255, 161)); //green
 		
 		//phone
 		if (Main.JTF_PHONE.getText().length() < 10) {
-			Main.JTF_PHONE.setBackground(new Color(255, 221, 221)); //red
+			Main.JTF_PHONE.setBackground(new Color(255, 181, 181)); //red
 		} 
 		else {
 			int count = 0;
@@ -248,13 +248,13 @@ public class Main {
 				}
 			}
 			if (count >= 10) {
-				Main.JTF_PHONE.setBackground(new Color(221, 255, 221));	//green
+				Main.JTF_PHONE.setBackground(new Color(161, 255, 161));	//green
 			}
 		}
 		
 		//service tag
 		if (Main.JTF_SERVICE_TAG.getText().length() < 7) {
-			Main.JTF_SERVICE_TAG.setBackground(new Color(255, 221, 221)); //red
+			Main.JTF_SERVICE_TAG.setBackground(new Color(255, 181, 181)); //red
 		} else {
 			int count = 0;
 			for (int i = 0; i < Main.JTF_SERVICE_TAG.getText().length(); i++) {
@@ -264,8 +264,8 @@ public class Main {
 				}
 			}
 			if (count % 7 == 0) {
-				Main.JTF_SERVICE_TAG.setBackground(new Color(221, 255, 221)); //green
-			} else Main.JTF_SERVICE_TAG.setBackground(new Color(255, 221, 221)); //red
+				Main.JTF_SERVICE_TAG.setBackground(new Color(161, 255, 161)); //green
+			} else Main.JTF_SERVICE_TAG.setBackground(new Color(255, 181, 181)); //red
 		}
 		
 	}
