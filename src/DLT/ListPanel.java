@@ -16,6 +16,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.joda.time.LocalDate;
+
 
 
 /**
@@ -185,6 +187,18 @@ public class ListPanel extends JPanel implements ActionListener {
 			Main.FIELDS.add(new DataField());
 			Main.SELECTED_INDEX = Main.FIELDS.size() - 1;
 			
+			//set initial status to touched and committed date to next business day
+			LocalDate today = new LocalDate();
+			int days = 1;
+			while (days < 4) {
+				if (Main.FIELDS.get(Main.SELECTED_INDEX).workingDaysBetween(today, today.plusDays(days)) == 1)
+					break;
+				else days++;
+			}
+			Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
+			Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
+			
+			//add new item to case list
 			Main.LIST_MODEL.addElement("NEW");
 			Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
 			Main.LIST.ensureIndexIsVisible(Main.SELECTED_INDEX);
