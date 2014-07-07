@@ -28,6 +28,10 @@ import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import au.com.bytecode.opencsv.CSVReader;
 
 import com.thoughtworks.xstream.XStream;
@@ -391,6 +395,24 @@ public class MenuFrame extends JFrame implements WindowListener {
 					}
 				}
 				
+				//committed date
+				StringBuilder committedDateString = new StringBuilder();
+				if (nextLine.length > 42) {
+					for (int i = 3; i < nextLine[42].length() - 2; i+= 2) {
+						committedDateString.append(nextLine[42].charAt(i));
+					}
+				}
+				String[] stringDate = committedDateString.toString()
+					.split(" ")[0].split("/"); //{month, day, year}
+				boolean hasCommittedDate = false;
+				LocalDate committedDate = new LocalDate();
+				if (stringDate.length >= 3) {
+					hasCommittedDate = true;
+					committedDate = new LocalDate(Integer.parseInt(stringDate[2]), 
+										 Integer.parseInt(stringDate[0]), 
+										 Integer.parseInt(stringDate[1]));
+				}
+				
 				//create data field object and populate
 				DataField df = new DataField();
 				df.setServiceRequest(serviceRequest.toString());
@@ -399,17 +421,34 @@ public class MenuFrame extends JFrame implements WindowListener {
 				df.setName(name);
 				df.setPhone(phone.toString());
 				df.setEmail(email.toString());
+				if (hasCommittedDate) {
+					df.setCommittedDate(committedDate);
+					LocalDate today = new LocalDate();
+					if (df.getCommittedDate().equals(today)) {
+						df.setStatus(Main.STATUS_IS_DUE);
+					}
+					
+					else if (df.getCommittedDate().isBefore(today)) {
+						df.setStatus(Main.STATUS_IS_OVERDUE);
+					}
+					
+					else if (df.getCommittedDate().isAfter(today)) {
+						df.setStatus(Main.STATUS_IS_TOUCHED);
+					}
+				}
 				
-				//check if SR is already in FIELDS
+				//check if SR already exists
 				boolean hasSR = false;
+				int indexOfSR = 0;
 				for (int i = 0; i < Main.FIELDS.size(); i++) {
 					if (df.getServiceRequest().equals(Main.FIELDS.get(i).getServiceRequest())) {
 						hasSR = true;
+						indexOfSR = i;
 						break;
 					}
 				}
 				
-				//if not, add it
+				//...if not, add it
 				if (!hasSR && !df.getServiceRequest().isEmpty()) {
 					//add to FIELDS
 					Main.FIELDS.add(df);
@@ -432,6 +471,27 @@ public class MenuFrame extends JFrame implements WindowListener {
 					if (!sb.toString().isEmpty()) {
 						Main.LIST_MODEL.add(Main.FIELDS.size() - 1, sb.toString());
 					}
+					
+					//flag unsaved changes
+					Main.HAS_UNSAVED_CHANGES = true;
+				}
+				
+				//...if yes, set committed date to committed date from .csv
+				if (hasSR & hasCommittedDate) {
+					Main.FIELDS.get(indexOfSR).setCommittedDate(df.getCommittedDate());
+					LocalDate today = new LocalDate();
+					if (Main.FIELDS.get(indexOfSR).getCommittedDate().isBefore(today)) {
+						Main.FIELDS.get(indexOfSR).setStatus(Main.STATUS_IS_OVERDUE);
+					}
+					
+					else if (Main.FIELDS.get(indexOfSR).getCommittedDate().isAfter(today)) {
+						Main.FIELDS.get(indexOfSR).setStatus(Main.STATUS_IS_TOUCHED);
+					}
+					
+					else if (Main.FIELDS.get(indexOfSR).getCommittedDate().equals(today)) {
+						Main.FIELDS.get(indexOfSR).setStatus(Main.STATUS_IS_DUE);
+					}
+					Main.LIST.repaint();
 					
 					//flag unsaved changes
 					Main.HAS_UNSAVED_CHANGES = true;
