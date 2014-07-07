@@ -32,7 +32,7 @@ public class CustomListCellRenderer extends JLabel implements ListCellRenderer {
 		setText(value.toString());
 		
 		if (Main.FIELDS.size() > 0) {
-			int status = Main.FIELDS.get(index).getFollowUpStatus();
+			int status = Main.FIELDS.get(index).getStatus();
 			if (status == Main.STATUS_IS_UNKNOWN || status == Main.STATUS_IS_CLOSED) {
 				setBackground(Color.WHITE);
 			}

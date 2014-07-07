@@ -1,7 +1,5 @@
 package DLT;
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -19,14 +17,6 @@ public class DataField implements Serializable {
 	
 	private static final long serialVersionUID = -153071025273346052L;
 	
-	private int month;
-	private int day;
-	private int year;
-	
-	private int expirationMonth;
-	private int expirationDay;
-	private int expirationYear;
-	
 	private boolean vaIsChecked;
 	private boolean toadeIsChecked;
 	private boolean vdiIsChecked;
@@ -36,62 +26,33 @@ public class DataField implements Serializable {
 	private boolean palIsChecked;
 	private boolean plasticsIsChecked;
 	private boolean cidarIsChecked;
-	
 	private String company;
-	
 	private String name;
 	private String email;
 	private String phone;
 	private String altPhone;
 	private String address;
-	private String cityStateZip;
-	
 	private String altName;
 	private String altEmail;
 	private String altPrimaryPhone;
 	private String altSecondaryPhone;
 	private String altAddress;
-	private String altCityStateZip;
-	
 	private String serviceTag;
 	private String serviceRequest;
-	private String orderNumber;
-	
-	private String warrantyType;
-	
-	private String model;
-	private String formFactor;
-	private String OS;
-	
 	private String symptoms;
 	private String troubleshooting;
 	private String conclusion;
 	private String description;
 	private String notes;
+	private int status;
+	private LocalDate committedDate;
 	
-	LocalDate dateAssignedFollowUp;
-	private int followUpStatus;
-	private int followUpIn;
-	
+	/**
+	 * DataField constructor
+	 * 
+	 * Creates a new DataField and initializes the values to default values.
+	 */
 	public DataField() {
-		this.month = 5;
-		this.day = 0;
-		this.year = 0;
-		try {
-			this.month = Calendar.getInstance().get(Calendar.MONTH);
-			this.day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) - 1;
-			this.year = Calendar.getInstance().get(Calendar.YEAR) - Main.START_YEAR;
-		//if you catch an exception, just set to default
-		} catch (Exception e) {
-			this.month = 0;
-			this.day = 0;
-			this.year = 0;
-		}
-		
-		this.expirationMonth = 0;
-		this.expirationDay = 0;
-		this.expirationYear = 0;
-		
 		this.vaIsChecked = false;
 		this.toadeIsChecked = false;
 		this.vdiIsChecked = false;
@@ -101,52 +62,36 @@ public class DataField implements Serializable {
 		this.palIsChecked = false;
 		this.plasticsIsChecked = false;
 		this.cidarIsChecked = false;
-		
 		this.company = "";
-		
 		this.name = "";
 		this.email = "";
 		this.phone = "";
 		this.altPhone = "";
 		this.address = "";
-		this.cityStateZip = "";
-		
 		this.altName = "";
 		this.altEmail = "";
 		this.altPrimaryPhone = "";
 		this.altSecondaryPhone = "";
 		this.altAddress = "";
-		this.altCityStateZip = "";
-		
 		this.serviceTag = "";
 		this.serviceRequest = "";
-		this.orderNumber = "";
-		this.warrantyType = "";
-		
-		this.model = "";
-		this.formFactor = "";
-		this.OS = "";
-		
 		this.symptoms = "";
 		this.troubleshooting = "";
 		this.conclusion = "";
 		this.description = "";
 		this.notes = "";
-		
-		this.dateAssignedFollowUp = new LocalDate();
-		this.followUpStatus = Main.STATUS_IS_UNKNOWN;
-		this.followUpIn = 0;
+		this.status = Main.STATUS_IS_CLOSED;
+		this.committedDate = new LocalDate();
 	}
 	
+	/**
+	 * DataField constructor
+	 * 
+	 * Creates a new DataField and initializes the values.
+	 * 
+	 * @param df	The DataField object to copy values from.
+	 */
 	public DataField(DataField df) {
-		this.month = df.getMonth();
-		this.day = df.getDay();
-		this.year = df.getYear();
-		
-		this.expirationMonth = df.getExpirationMonth();
-		this.expirationDay = df.getExpirationDay();
-		this.expirationYear = df.getExpirationYear();
-		
 		this.vaIsChecked = df.getVAIsChecked();
 		this.toadeIsChecked = df.getTOADEIsChecked();
 		this.vdiIsChecked = df.getVDIIsChecked();
@@ -156,68 +101,29 @@ public class DataField implements Serializable {
 		this.palIsChecked = df.getPALIsChecked();
 		this.plasticsIsChecked = df.getPlasticsIsChecked();
 		this.cidarIsChecked = df.getCIDARIsChecked();
-		
 		this.company = df.getCompany();
-		
 		this.name = df.getName();
 		this.email = df.getEmail();
 		this.phone = df.getPhone();
 		this.altPhone = df.getAltPhone();
 		this.address = df.getAddress();
-		this.cityStateZip = df.getCityStateZip();
-		
 		this.altName = df.getAltName();
 		this.altEmail = df.getAltEmail();
 		this.altPrimaryPhone = df.getAltPrimaryPhone();
 		this.altSecondaryPhone = df.getAltSecondaryPhone();
 		this.altAddress = df.getAltAddress();
-		this.altCityStateZip = df.getAltCityStateZip();
-		
 		this.serviceTag = df.getServiceTag();
 		this.serviceRequest = df.getServiceRequest();
-		this.orderNumber = df.getOrderNumber();
-		this.warrantyType = df.getWarrantyType();
-		
-		this.model = df.getModel();
-		this.formFactor = df.getFormFactor();
-		this.OS = df.getOS();
-		
 		this.symptoms = df.getSymptoms();
 		this.troubleshooting = df.getTroubleshooting();
 		this.conclusion = df.getConclusion();
 		this.description = df.getDescription();
 		this.notes = df.getNotes();
-		
-		this.dateAssignedFollowUp = df.getDateAssignedFollowUp();
-		this.followUpStatus = df.getFollowUpStatus();
-		this.followUpIn = df.getFollowUpIn();
+		this.status = df.getStatus();
+		this.committedDate = df.getCommittedDate();
 	}
 	
 	//getters
-	int getMonth() {
-		return this.month;
-	}
-	
-	int getDay() {
-		return this.day;
-	}
-	
-	int getYear() {
-		return this.year;
-	}
-	
-	int getExpirationMonth() {
-		return this.expirationMonth;
-	}
-	
-	int getExpirationDay() {
-		return this.expirationDay;
-	}
-	
-	int getExpirationYear() {
-		return this.expirationYear;
-	}
-	
 	boolean getVAIsChecked() {
 		return this.vaIsChecked;
 	}
@@ -278,10 +184,6 @@ public class DataField implements Serializable {
 		return this.address;
 	}
 	
-	String getCityStateZip() {
-		return this.cityStateZip;
-	}
-	
 	String getAltName() {
 		return this.altName;
 	}
@@ -302,36 +204,12 @@ public class DataField implements Serializable {
 		return this.altAddress;
 	}
 	
-	String getAltCityStateZip() {
-		return this.altCityStateZip;
-	}
-	
 	String getServiceTag() {
 		return this.serviceTag;
 	}
 	
 	String getServiceRequest() {
 		return this.serviceRequest;
-	}
-	
-	String getOrderNumber() {
-		return this.orderNumber;
-	}
-	
-	String getWarrantyType() {
-		return this.warrantyType;
-	}
-	
-	String getModel() {
-		return this.model;
-	}
-	
-	String getFormFactor() {
-		return this.formFactor;
-	}
-	
-	String getOS() {
-		return this.OS;
 	}
 	
 	String getSymptoms() {
@@ -354,43 +232,15 @@ public class DataField implements Serializable {
 		return this.notes;
 	}
 	
-	LocalDate getDateAssignedFollowUp() {
-		return this.dateAssignedFollowUp;
+	int getStatus() {
+		return this.status;
 	}
 	
-	int getFollowUpStatus() {
-		return this.followUpStatus;
-	}
-	
-	int getFollowUpIn() {
-		return this.followUpIn;
+	LocalDate getCommittedDate() {
+		return this.committedDate;
 	}
 	
 	//setters
-	void setMonth(int newMonth) {
-		this.month = newMonth;
-	}
-	
-	void setDay(int newDay) {
-		this.day = newDay;
-	}
-	
-	void setYear(int newYear) {
-		this.year = newYear;
-	}
-	
-	void setExpirationMonth(int newMonth) {
-		this.expirationMonth = newMonth;
-	}
-	
-	void setExpirationDay(int newDay) {
-		this.expirationDay = newDay;
-	}
-	
-	void setExpirationYear(int newYear) {
-		this.expirationYear = newYear;
-	}
-	
 	void setVAIsChecked(boolean newVAIsChecked) {
 		this.vaIsChecked = newVAIsChecked;
 	}
@@ -451,10 +301,6 @@ public class DataField implements Serializable {
 		this.address = newAddress;
 	}
 	
-	void setCityStateZip(String newCityStateZip) {
-		this.cityStateZip = newCityStateZip;
-	}
-	
 	void setAltName(String newAltName) {
 		this.altName = newAltName;
 	}
@@ -475,36 +321,12 @@ public class DataField implements Serializable {
 		this.altAddress = newAltAddress;
 	}
 	
-	void setAltCityStateZip(String newAltCityStateZip) {
-		this.altCityStateZip = newAltCityStateZip;
-	}
-	
 	void setServiceTag(String newServiceTag) {
 		this.serviceTag = newServiceTag;
 	}
 	
 	void setServiceRequest(String newServiceRequest) {
 		this.serviceRequest = newServiceRequest;
-	}
-	
-	void setOrderNumber(String newOrderNumber) {
-		this.orderNumber = newOrderNumber;
-	}
-	
-	void setWarrantyType(String newWarrantyType) {
-		this.warrantyType = newWarrantyType;
-	}
-	
-	void setModel(String newModel) {
-		this.model = newModel;
-	}
-	
-	void setFormFactor(String newFormFactor) {
-		this.formFactor = newFormFactor;
-	}
-	
-	void setOS(String newOS) {
-		this.OS = newOS;
 	}
 	
 	void setSymptoms(String newSymptoms) {
@@ -527,49 +349,37 @@ public class DataField implements Serializable {
 		this.notes = newNotes;
 	}
 	
-	void setDateAssignedFollowUp(LocalDate newDateAssignedFollowUp) {
-		this.dateAssignedFollowUp = newDateAssignedFollowUp;
+	void setStatus(int newStatus) {
+		this.status = newStatus;
 	}
 	
-	void setFollowUpStatus(int newFollowUpStatus) {
-		this.followUpStatus = newFollowUpStatus;
-	}
-	
-	void setFollowUpIn(int newFollowUpIn) {
-		this.followUpIn = newFollowUpIn;
+	void setCommittedDate(LocalDate newCommittedDate) {
+		this.committedDate = newCommittedDate;
 	}
 	
 	/**
-	 * TODO
+	 * Sets the status of the case to DUE if committed date is today, OVERDUE if 
+	 * committed date is before today, and TOUCHED if committed date is after 
+	 * today. This method should be called when the program is launched.
 	 */
 	void initializeStatus() {
-		if (this.getFollowUpStatus() != Main.STATUS_IS_CLOSED &&
-				this.getFollowUpStatus() != Main.STATUS_IS_UNKNOWN) {
+		if (this.getStatus() != Main.STATUS_IS_CLOSED &&
+			this.getStatus() != Main.STATUS_IS_UNKNOWN) {
 			LocalDate today = new LocalDate();
-			if (this.dateAssignedFollowUp.isBefore(today))
-				this.followUpIn -= workingDaysBetween(this.dateAssignedFollowUp, today);
-			else
-				this.followUpIn += workingDaysBetween(this.dateAssignedFollowUp, today);
-			
-			this.dateAssignedFollowUp = today;
-			
-			if (followUpIn == 0) {
-				this.setFollowUpStatus(Main.STATUS_IS_DUE);
+			if (this.committedDate.equals(today)) {
+				this.setStatus(Main.STATUS_IS_DUE);
 			}
-			
-			else if (followUpIn < 0) {
-				this.setFollowUpStatus(Main.STATUS_IS_OVERDUE);
+			else if (this.committedDate.isAfter(today)) {
+				this.setStatus(Main.STATUS_IS_TOUCHED);
 			}
-					
-			else if (followUpIn > 0) {
-				this.setFollowUpStatus(Main.STATUS_IS_TOUCHED);
+			else if (this.committedDate.isBefore(today)) {
+				this.setStatus(Main.STATUS_IS_OVERDUE);
 			}
-			
 		}
 	}
 	
 	/**
-	 * Tells you how many business days are between any two dates
+	 * Tells you how many business days are between any two dates.
 	 * 
 	 * @param 	date1	LocalDate variable
 	 * @param 	date2	LocalDate variable
@@ -597,7 +407,7 @@ public class DataField implements Serializable {
 	/**
 	 * Overridden toString method, output formatted as follows:
 	 * 
-	 * TODO
+	 * TODO empty string
 	 * 
 	 */
 	@Override public String toString() {

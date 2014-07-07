@@ -2,166 +2,91 @@ package DLT;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.border.BevelBorder;
+
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 import org.joda.time.LocalDate;
 
 
-public class RightClickList extends JPopupMenu implements ActionListener {
+public class RightClickList extends JPopupMenu {
 
 	private static final long serialVersionUID = -1474472275653429868L;
 	
-	private JMenuItem touch = new JMenuItem("Touch");
-	private JMenuItem close = new JMenuItem("Close case");
-	private JMenuItem open = new JMenuItem("Open case");
-	private JMenuItem follow = new JMenuItem("Follow up in X days");
-	private JMenuItem follow2 = new JMenuItem("Follow up in 2 days");
-	private JMenuItem follow3 = new JMenuItem("Follow up in 3 days");
-	private JMenuItem followOnDate = new JMenuItem("Follow up on...");
+	private JMenuItem open;
+	private JMenuItem close;
+	private UtilDateModel model = new UtilDateModel();
+	private JDatePanelImpl datePanel = new JDatePanelImpl(model);
+	private JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
 	
 	public RightClickList() {
+		//initialize components
 		this.setOpaque(true);
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		close = new JMenuItem("Close case");
 		close.setOpaque(true);
 		close.setBackground(Color.WHITE);
-		
+		open = new JMenuItem("Open case");
 		open.setOpaque(true);
 		open.setBackground(Color.WHITE);
+		if (Main.FIELDS.get(Main.SELECTED_INDEX).getStatus() != Main.STATUS_IS_CLOSED) {
+			this.model.setDate(Main.FIELDS.get(Main.SELECTED_INDEX).getCommittedDate().getYear(),
+								Main.FIELDS.get(Main.SELECTED_INDEX).getCommittedDate().getMonthOfYear() - 1,
+								Main.FIELDS.get(Main.SELECTED_INDEX).getCommittedDate().getDayOfMonth());
+			this.model.setSelected(true);
+		}
 		
-		if (Main.FIELDS.get(Main.SELECTED_INDEX).getFollowUpStatus() == Main.STATUS_IS_CLOSED ||
-			Main.FIELDS.get(Main.SELECTED_INDEX).getFollowUpStatus() == Main.STATUS_IS_UNKNOWN) {
+		//add components
+		if (Main.FIELDS.get(Main.SELECTED_INDEX).getStatus() == Main.STATUS_IS_CLOSED ||
+			Main.FIELDS.get(Main.SELECTED_INDEX).getStatus() == Main.STATUS_IS_UNKNOWN)
 			this.add(open);
-			touch.setEnabled(false);
-			follow.setEnabled(false);
-			follow2.setEnabled(false);
-			follow3.setEnabled(false);
-			followOnDate.setEnabled(false);
-		} else {
-			this.add(close);
-			touch.setEnabled(true);
-			follow.setEnabled(true);
-			follow2.setEnabled(true);
-			follow3.setEnabled(true);
-			followOnDate.setEnabled(true);
-		}
-		
+		else this.add(close);
 		this.addSeparator();
+		this.add(datePicker);
 		
-		touch.setOpaque(true);
-		touch.setBackground(Color.WHITE);
-		this.add(touch);
+		//add listeners
+		open.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				LocalDate today = new LocalDate();
+				Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(1));
+				Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
+				Main.HAS_UNSAVED_CHANGES = true;
+			}
+		});
 		
-		follow2.setOpaque(true);
-		follow2.setBackground(Color.WHITE);
-		this.add(follow2);
+		close.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_CLOSED);
+				Main.HAS_UNSAVED_CHANGES = true;
+			}
+		});
 		
-		follow3.setOpaque(true);
-		follow3.setBackground(Color.WHITE);
-		this.add(follow3);
-		
-		follow.setOpaque(true);
-		follow.setBackground(Color.WHITE);
-		this.add(follow);
-		
-		followOnDate.setOpaque(true);
-		followOnDate.setBackground(Color.WHITE);
-		//this.add(followOnDate);
-		
-		touch.addActionListener(this);
-		open.addActionListener(this);
-		close.addActionListener(this);
-		follow2.addActionListener(this);
-		follow3.addActionListener(this);
-		follow.addActionListener(this);
-		followOnDate.addActionListener(this);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		LocalDate today = new LocalDate();
-		if (e.getSource() == touch) {
-			Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpStatus(
-					Main.STATUS_IS_TOUCHED);
-			Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpIn(1);
-			Main.FIELDS.get(Main.SELECTED_INDEX).setDateAssignedFollowUp(today);
-		}
-		
-		else if (e.getSource() == open) {
-			Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpStatus(
-					Main.STATUS_IS_DUE);
-			Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpIn(0);
-			Main.FIELDS.get(Main.SELECTED_INDEX).setDateAssignedFollowUp(today);
-		}
-		
-		else if (e.getSource() == close) {
-			Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpStatus(
-					Main.STATUS_IS_CLOSED);
-			Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpIn(0);
-			Main.FIELDS.get(Main.SELECTED_INDEX).setDateAssignedFollowUp(today); //TODO
-		}
+		datePicker.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				Date date = (Date) datePicker.getModel().getValue();
+				Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(new LocalDate(date));
+				LocalDate today = new LocalDate();
+				if (Main.FIELDS.get(Main.SELECTED_INDEX).getCommittedDate().isAfter(today)) {
+					Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
+				}
 				
-		else if (e.getSource() == follow2) {
-			Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpStatus(
-					Main.STATUS_IS_TOUCHED);
-			Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpIn(2);
-			Main.FIELDS.get(Main.SELECTED_INDEX).setDateAssignedFollowUp(today);
-		}
-		
-		else if (e.getSource() == follow3) {
-			Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpStatus(
-					Main.STATUS_IS_TOUCHED);
-			Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpIn(3);
-			Main.FIELDS.get(Main.SELECTED_INDEX).setDateAssignedFollowUp(today);
-		}
-		
-		//...
-		else if (e.getSource() == follow) {
-			String sDays = JOptionPane.showInputDialog(Main.f, "How many days?");
-			
-			int days = -400;
-			try {
-				days = Integer.parseInt(sDays);
-			} catch (NumberFormatException nfe) {
-				days = -400;
-				//TODO show dialog for invalid input
-				JOptionPane.showMessageDialog(Main.f, "Invalid input!");
+				else if (Main.FIELDS.get(Main.SELECTED_INDEX).getCommittedDate().isBefore(today)) {
+					Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_OVERDUE);
+				}
+				
+				else if (Main.FIELDS.get(Main.SELECTED_INDEX).getCommittedDate().equals(today)) {
+					Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_DUE);
+				}
+				Main.HAS_UNSAVED_CHANGES = true;
 			}
-			
-			if (days == -400) {
-				//do nothing
-			}
-			else if (days < 0) {
-				Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpStatus(
-						Main.STATUS_IS_OVERDUE);
-				Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpIn(days);
-				Main.FIELDS.get(Main.SELECTED_INDEX).setDateAssignedFollowUp(today);
-			}
-			
-			else if (days > 0) {
-				Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpStatus(
-						Main.STATUS_IS_TOUCHED);
-				Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpIn(days);
-				Main.FIELDS.get(Main.SELECTED_INDEX).setDateAssignedFollowUp(today);
-			}
-			
-			else if (days == 0) {
-				Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpStatus(
-						Main.STATUS_IS_DUE);
-				Main.FIELDS.get(Main.SELECTED_INDEX).setFollowUpIn(days);
-				Main.FIELDS.get(Main.SELECTED_INDEX).setDateAssignedFollowUp(today);
-			}
-		}
-		
-		else if (e.getSource() == followOnDate) {
-			//TODO
-		}
-		
-		Main.HAS_UNSAVED_CHANGES = true;
-	}
+		});
+	}	
 }
