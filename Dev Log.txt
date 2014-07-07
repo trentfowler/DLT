@@ -1,33 +1,30 @@
 //PP = Preferred Priority 
 	
-File section:
-	Add calendar feature to RIGHTCLICKLIST
+	FILE SECTION:
+	
 	sorting the cases based on priority and touch data (open cases higher on the list & closed cases on lower)
 	
-Checkbox field:
+***CHECKBOX SECTION:
+	
 //PPadd priority level
 	add No ALT Contact
 	
-Contact info section:
+***CONTACT INFO SECTION:
+	
 	make the header for the records copy contents to the clipboard
 	similiar to the 'generate description' and 'generate troubleshooting'
-	
 //PPthe phone field: separate sections for "area code", "Last 7"
-	
 //PPthe address field: separate sections for Address Line1, Address Line2, City, Zip Code
 	
-Generate field:
+***GENERATE SECTION:
+	
 	names for the 'generate' buttons: change
 
-	either in a different field or an another subFile
-	 
-Button Panel Field:
+***BUTTON PANEL SECTION:
+	
 	add check box for DPS expectations	
 
-CHANGES misc:
-	add shortkey for adding calendar dates
+***CHANGES MISC:
+
 	add button to add additional notes for the case
 //PPsearch feature for SR & SRVTAG
-	all newly created cases as 'Touched'
-CHANGES implemented:
-	lighter color of opaque for the Red field
