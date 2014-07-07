@@ -1,7 +1,6 @@
 package DLT;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.GridLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -19,32 +18,29 @@ public class InfoPanel extends JPanel {
 	private static final long serialVersionUID = 8395942318689747627L;
 
 	public InfoPanel() {
-		setOpaque(true);
-		setBackground(Color.WHITE);
+		this.setOpaque(true);
+		this.setBackground(Color.WHITE);
+		this.setLayout(new BorderLayout());
 		
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		JPanel main = new JPanel();
+		main.setOpaque(true);
+		main.setBackground(Color.WHITE);
+		main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
+		main.add(new CheckBoxPanel());
+		main.add(new ServicePanel());
+		main.add(new ContactPanel());
+		main.add(new DescriptionPanel());
+		main.add(new TroubleshootingPanel());
+		main.add(new ConclusionPanel());
 		
-		add(new CheckBoxPanel());
-		add(new ServicePanel());
-		add(new ContactPanel());
-		//add(new AssetPanel());
-		add(new DescriptionPanel());
+		JPanel flex = new JPanel();
+		flex.setOpaque(true);
+		flex.setBackground(Color.WHITE);
+		flex.setLayout(new BorderLayout());
+		flex.add(new NotesPanel(), BorderLayout.CENTER);
+		flex.add(new ButtonPanel(), BorderLayout.SOUTH);
 		
-		/* for split between troubleshooting and symptoms
-		JPanel jpContainer = new JPanel();
-		jpContainer.setLayout(new GridLayout(1, 2));
-		jpContainer.add(new SymptomPanel());
-		jpContainer.add(new TroubleshootingPanel());
-		add(jpContainer);
-		*/
-		
-		add(new TroubleshootingPanel());
-		add(new ConclusionPanel());
-		add(new NotesPanel());
-		add(new ButtonPanel());
-	}
-	
-	@Override public void paintComponent(Graphics g) {
-		
+		this.add(main, BorderLayout.NORTH);
+		this.add(flex, BorderLayout.CENTER);
 	}
 }
