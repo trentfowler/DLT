@@ -39,14 +39,12 @@ public class Main {
 	static final int STATUS_IS_CLOSED = 3;
 	static final int STATUS_IS_DUE = 4;
 	static final int STATUS_IS_OVERDUE = 5;
-	static final int STATUS_IS_OPEN = 8;
 	
 	//frame dimensions
 	static int F_MIN_WIDTH = 300;
 	static int F_MIN_HEIGHT = 300;
 	
-	static int F_WIDTH = 945;
-	//static int F_HEIGHT = 597;
+	static int F_WIDTH = 1000;
 	static int F_HEIGHT = 618;
 	
 	static boolean HAS_UNSAVED_CHANGES = false;

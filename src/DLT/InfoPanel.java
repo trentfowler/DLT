@@ -22,25 +22,31 @@ public class InfoPanel extends JPanel {
 		this.setBackground(Color.WHITE);
 		this.setLayout(new BorderLayout());
 		
-		JPanel main = new JPanel();
-		main.setOpaque(true);
-		main.setBackground(Color.WHITE);
-		main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
-		main.add(new CheckBoxPanel());
-		main.add(new ServicePanel());
-		main.add(new ContactPanel());
-		main.add(new DescriptionPanel());
-		main.add(new TroubleshootingPanel());
-		main.add(new ConclusionPanel());
+		JPanel top = new JPanel();
+		top.setOpaque(true);
+		top.setBackground(Color.WHITE);
+		top.setLayout(new BoxLayout(top, BoxLayout.Y_AXIS));
+		top.add(new CheckBoxPanel());
+		top.add(new ServicePanel());
+		top.add(new ContactPanel());
+		top.add(new DescriptionPanel());
+				
+		JPanel bottom = new JPanel();
+		bottom.setOpaque(true);
+		bottom.setBackground(Color.WHITE);
+		bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+		bottom.add(new ConclusionPanel());
+		bottom.add(new NotesPanel());
+		bottom.add(new ButtonPanel());
 		
 		JPanel flex = new JPanel();
 		flex.setOpaque(true);
 		flex.setBackground(Color.WHITE);
 		flex.setLayout(new BorderLayout());
-		flex.add(new NotesPanel(), BorderLayout.CENTER);
-		flex.add(new ButtonPanel(), BorderLayout.SOUTH);
+		flex.add(new TroubleshootingPanel(), BorderLayout.CENTER);
+		flex.add(bottom, BorderLayout.SOUTH);
 		
-		this.add(main, BorderLayout.NORTH);
+		this.add(top, BorderLayout.NORTH);
 		this.add(flex, BorderLayout.CENTER);
 	}
 }
