@@ -23,9 +23,9 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID = -2498243794148353449L;
 	
-	private JButton jbGenerateDescription = new JButton ("Generate Description");	
-	private JButton jbGenerateTroubleshooting = new JButton("Generate Troubleshooting");	
-	private JButton jbGenerateConclusion = new JButton("Generate Conclusion");
+	private JButton jbGenerateDescription = new JButton ("Copy Description");	
+	private JButton jbGenerateTroubleshooting = new JButton("Copy Troubleshooting");	
+	private JButton jbGenerateConclusion = new JButton("Copy Conclusion");
 	private JButton jbGenerateSummary = new JButton("Generate Summary");
 	
 	public ButtonPanel() {

@@ -33,6 +33,7 @@ public class DataField implements Serializable {
 	private String altPhone;
 	private String address;
 	private String address2;
+	private String zip;
 	private String altName;
 	private String altEmail;
 	private String altPrimaryPhone;
@@ -70,6 +71,7 @@ public class DataField implements Serializable {
 		this.altPhone = "";
 		this.address = "";
 		this.address2 = "";
+		this.zip = "";
 		this.altName = "";
 		this.altEmail = "";
 		this.altPrimaryPhone = "";
@@ -110,6 +112,7 @@ public class DataField implements Serializable {
 		this.altPhone = df.getAltPhone();
 		this.address = df.getAddress();
 		this.address2 = df.getAddress2();
+		this.zip = df.getZip();
 		this.altName = df.getAltName();
 		this.altEmail = df.getAltEmail();
 		this.altPrimaryPhone = df.getAltPrimaryPhone();
@@ -189,6 +192,10 @@ public class DataField implements Serializable {
 	
 	String getAddress2() {
 		return this.address2;
+	}
+	
+	String getZip() {
+		return this.zip;
 	}
 	
 	String getAltName() {
@@ -310,6 +317,10 @@ public class DataField implements Serializable {
 	
 	void setAddress2(String newAddress2) {
 		this.address2 = newAddress2;
+	}
+	
+	void setZip(String newZip) {
+		this.zip = newZip;
 	}
 	
 	void setAltName(String newAltName) {

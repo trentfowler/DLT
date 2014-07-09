@@ -134,6 +134,7 @@ public class Main {
 		Main.FIELDS.get(Main.SELECTED_INDEX).setAltPhone(Main.JTF_ALT_PHONE.getText());
 		Main.FIELDS.get(Main.SELECTED_INDEX).setAddress(Main.JTF_ADDRESS.getText());
 		Main.FIELDS.get(Main.SELECTED_INDEX).setAddress2(Main.JTF_CITY_STATE_ZIP.getText()); //TODO
+		Main.FIELDS.get(Main.SELECTED_INDEX).setZip(Main.JTF_ALT_CITY_STATE_ZIP.getText()); //TODO
 		Main.FIELDS.get(Main.SELECTED_INDEX).setAltName(Main.JTF_ALT_NAME.getText());
 		Main.FIELDS.get(Main.SELECTED_INDEX).setAltEmail(Main.JTF_ALT_EMAIL.getText());
 		Main.FIELDS.get(Main.SELECTED_INDEX).setAltPrimaryPhone(Main.JTF_ALT_PRIMARY_PHONE.getText());
@@ -166,6 +167,7 @@ public class Main {
 		Main.JTF_ALT_PHONE.setText(Main.FIELDS.get(index).getAltPhone());
 		Main.JTF_ADDRESS.setText(Main.FIELDS.get(index).getAddress());
 		Main.JTF_CITY_STATE_ZIP.setText(Main.FIELDS.get(index).getAddress2()); //TODO
+		Main.JTF_ALT_CITY_STATE_ZIP.setText(Main.FIELDS.get(index).getZip()); //TODO
 		Main.JTF_ALT_NAME.setText(Main.FIELDS.get(index).getAltName());
 		Main.JTF_ALT_EMAIL.setText(Main.FIELDS.get(index).getAltEmail());
 		Main.JTF_ALT_PRIMARY_PHONE.setText(Main.FIELDS.get(index).getAltPrimaryPhone());
