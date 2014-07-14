@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -25,12 +27,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.KeyStroke;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -50,11 +54,22 @@ public class MenuFrame extends JFrame implements WindowListener {
 	
 	private JMenuItem save = new JMenuItem("Save");
 	private JMenuItem export = new JMenuItem("Export");
-	private JMenu imprt = new JMenu("Import");
 	private JMenuItem recover = new JMenuItem("Recover");
 	
+	private JMenu imprt = new JMenu("Import");
 	private JMenuItem importCSV = new JMenuItem("CSV");
 	private JMenuItem importXML = new JMenuItem("XML");
+	
+	private JMenu view = new JMenu("View");
+	private JMenu show_hide = new JMenu("Show / Hide");
+	private JCheckBoxMenuItem viewClosedCases = new JCheckBoxMenuItem("Closed cases");
+	private JCheckBoxMenuItem viewTouchedCases = new JCheckBoxMenuItem("Touched cases");
+	private JCheckBoxMenuItem viewDueCases = new JCheckBoxMenuItem("Due cases");
+	private JCheckBoxMenuItem viewOverdueCases = new JCheckBoxMenuItem("Past due cases");
+	private JMenuItem viewShowAllCases = new JMenuItem("Show all cases");
+	private JMenu sort = new JMenu("Sort");
+	
+	private JButton jbSearch = new JButton("Search");
 	
 	public MenuFrame() {
 		JMenuBar menu = new JMenuBar();
@@ -74,9 +89,48 @@ public class MenuFrame extends JFrame implements WindowListener {
 		export.setAccelerator(ctrl_e);
 		
 		fileMenu.add(imprt);
-		
 		imprt.add(importCSV);
 		imprt.add(importXML);
+		
+		//menu.add(view);
+		view.add(show_hide);
+		show_hide.add(viewClosedCases);
+		show_hide.add(viewTouchedCases);
+		show_hide.add(viewDueCases);
+		show_hide.add(viewOverdueCases);
+		show_hide.addSeparator();
+		show_hide.add(viewShowAllCases);
+		view.add(sort);
+		
+		viewClosedCases.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				update_list_items();
+			}
+		});
+		
+		viewTouchedCases.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				update_list_items();
+			}
+		});
+		
+		viewDueCases.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				update_list_items();	
+			}
+		});
+		
+		viewClosedCases.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				update_list_items();
+			}
+		});
+		
+		viewShowAllCases.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				update_list_items();
+			}
+		});
 		
 		//user clicked save
 		save.addActionListener(new ActionListener() {
@@ -155,24 +209,122 @@ public class MenuFrame extends JFrame implements WindowListener {
 			}
 		});
 		
-		//...
+		/*
 		JPanel mainPanel = new JPanel();
 		mainPanel.setOpaque(true);
 		mainPanel.setBackground(Color.WHITE);
 		mainPanel.setLayout(new BorderLayout());
+		*/
 		JScrollPane jspInfo = new JScrollPane(new InfoPanel());
 		jspInfo.getVerticalScrollBar().setUnitIncrement(16);
-		mainPanel.add(new ListPanel(), BorderLayout.WEST);
-		mainPanel.add(jspInfo, BorderLayout.CENTER);
+		
+		JPanel searchPanel = new JPanel();
+		searchPanel.setBorder(new EmptyBorder(5, 4, 5, 4));
+		searchPanel.setLayout(new BorderLayout());
+		jbSearch.setEnabled(false);
+		searchPanel.add(jbSearch, BorderLayout.EAST);
+		searchPanel.add(Main.JTF_SEARCH_FIELD, BorderLayout.CENTER);
+		
+		JPanel leftPanel = new JPanel();
+		leftPanel.setOpaque(true);
+		leftPanel.setBackground(Color.WHITE);
+		leftPanel.setLayout(new BorderLayout());
+		leftPanel.add(searchPanel, BorderLayout.NORTH);
+		leftPanel.add(new ListPanel(), BorderLayout.CENTER);
+		
+		//mainPanel.add(leftPanel, BorderLayout.WEST);
+		//mainPanel.add(jspInfo, BorderLayout.CENTER);
+		
+		JSplitPane jsp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, jspInfo);
 		
 		this.setSize(Main.F_WIDTH, Main.F_HEIGHT);
 		this.setMinimumSize(new Dimension(Main.F_MIN_WIDTH, Main.F_MIN_HEIGHT));
 		this.setTitle("BLT Tool"); //Backup Logging Tool... Tool!
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.setContentPane(mainPanel);
+		this.setContentPane(jsp);
+		//this.setContentPane(mainPanel);
 		this.setResizable(true);
 		this.addWindowListener(this);
 		this.setVisible(true);
+		
+		Main.JTF_SEARCH_FIELD.getDocument().addDocumentListener(new DocumentListener() {
+			@Override public void changedUpdate(DocumentEvent e) {
+				//Main.JTF_SEARCH_FIELD.setBackground(Color.WHITE);
+				if (Main.JTF_SEARCH_FIELD.getText().isEmpty())
+					jbSearch.setEnabled(false);
+				else jbSearch.setEnabled(true);
+			}
+
+			@Override public void insertUpdate(DocumentEvent e) {
+				//Main.JTF_SEARCH_FIELD.setBackground(Color.WHITE);
+				if (Main.JTF_SEARCH_FIELD.getText().isEmpty())
+					jbSearch.setEnabled(false);
+				else jbSearch.setEnabled(true);
+			}
+
+			@Override public void removeUpdate(DocumentEvent e) {
+				//Main.JTF_SEARCH_FIELD.setBackground(Color.WHITE);
+				if (Main.JTF_SEARCH_FIELD.getText().isEmpty())
+					jbSearch.setEnabled(false);
+				else jbSearch.setEnabled(true);
+			}
+		});
+		
+		//search
+		jbSearch.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				int newSelectedIndex = 0;
+				for (DataField d: Main.FIELDS) {
+					if (Main.JTF_SEARCH_FIELD.getText().toLowerCase().contains(
+								d.getServiceRequest().toLowerCase()) ||
+							Main.JTF_SEARCH_FIELD.getText().toLowerCase().contains(
+								d.getServiceTag().toLowerCase())) {
+						
+						//Main.JTF_SEARCH_FIELD.setBackground(new Color(161, 255, 161));
+						
+						boolean hasUnsavedChanges = Main.HAS_UNSAVED_CHANGES;
+						
+						//save current
+						Main.SAVE_CHANGEABLE_FIELDS();
+						
+						StringBuilder sb = new StringBuilder();
+						if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty()) {
+							sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
+						}
+						
+						if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty() &&
+							!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+							sb.append(" / ");
+						}
+
+						if (!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+							sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName());
+						}
+						
+						if (!sb.toString().isEmpty()) {
+							Main.LIST_MODEL.set(Main.SELECTED_INDEX, sb.toString());
+						}
+						
+						Main.HAS_UNSAVED_CHANGES = hasUnsavedChanges;
+						
+						//move to found index
+						Main.SELECTED_INDEX = newSelectedIndex;
+						Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
+						Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
+						Main.LIST.ensureIndexIsVisible(Main.SELECTED_INDEX);
+						break;
+					}
+					newSelectedIndex++;
+				}
+				
+				//not found
+				/*
+				if (newSelectedIndex == Main.FIELDS.size()) {
+					Main.JTF_SEARCH_FIELD.setBackground(new Color(255, 181, 181));
+				}
+				*/
+			}
+		});
 	}
 
 	@Override public void windowActivated(WindowEvent e) {
@@ -514,4 +666,7 @@ public class MenuFrame extends JFrame implements WindowListener {
 		}
 	}
 	
+	void update_list_items() {
+		
+	}
 }

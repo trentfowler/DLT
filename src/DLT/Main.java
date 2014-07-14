@@ -115,6 +115,7 @@ public class Main {
 	static JButton JB_REMOVE = new JButton("Remove");
 	static DefaultListModel LIST_MODEL = new DefaultListModel();
 	static JList LIST = new JList(Main.LIST_MODEL);
+	static JTextField JTF_SEARCH_FIELD = new JTextField();
 	
 	//saves content of the view to the FIELDS object
 	static void SAVE_CHANGEABLE_FIELDS() {
@@ -271,6 +272,7 @@ public class Main {
 		Main.JTA_CONCLUSION.setMargin(i);
 		Main.JTA_NOTES.setMargin(i);
 		Main.JTF_DESCRIPTION.setMargin(i);		
+		Main.JTF_SEARCH_FIELD.setMargin(i);
 		
 		//add objects from "Data.ser" and populate JList with those objects
 		try {

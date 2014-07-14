@@ -1,5 +1,6 @@
 package DLT;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -45,6 +46,9 @@ public class ListPanel extends JPanel implements ActionListener {
 		container.setLayout(new BorderLayout());
 		container.setBorder(new EmptyBorder(0, 3, 0, 3));
 		JScrollPane jspList = new JScrollPane(Main.LIST);
+		Dimension d = Main.LIST.getPreferredSize();
+		d.width = 225;
+		jspList.setPreferredSize(d);
 		container.add(jspList, BorderLayout.CENTER);
 		
 		this.add(container, BorderLayout.CENTER);
