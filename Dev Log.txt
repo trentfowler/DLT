@@ -1,24 +1,33 @@
 //PP = Preferred Priority 
 	
-	FILE SECTION:
+***FILE SECTION:
 	
-	sorting the cases based on priority and touch data (open cases higher on the list & closed cases on lower)
+//PP	sorting the cases based on priority and touch data (open cases higher on the list & closed cases on lower)
 	
 ***CHECKBOX SECTION:
 	
-//PPadd priority level
+//PP	add priority level
+	
 	add No ALT Contact
 	
 ***CONTACT INFO SECTION:
 	
 	make the header for the records copy contents to the clipboard
-	similiar to the 'generate description' and 'generate troubleshooting'
-//PPthe phone field: separate sections for "area code", "Last 7"
-//PPthe address field: separate sections for Address Line1, Address Line2, City, Zip Code
+		-similiar to the 'copy description' and 'copy troubleshooting'
+	the phone field: separate sections for "area code", "Last 7"
+	the address field: separate sections for Address Line1, Address Line2, City, Zip Code
+		-possibly as seperate section
+	Blackout address field unless 'POS' or 'OST DPS' selected
+			- ex: if(Main.JCHK_POS.isSelected or Main.JCHK_PAL.isSelected) {Blackout_Add.status(false)}
+			        else {Blackout_Add.status(true)}
+	Blackout Alt Contact info unless checkbox selected
+	Button for "Alt contact"
+			- ex: if(JCHK_ALT_CONTACT.isSelected){Blackout_ALT_CONTACT.status(false)}
+		      		else{Blackout_ALT_CONTACT.status(true)}	
 	
-***GENERATE SECTION:
+***COPY SECTION:
 	
-	names for the 'generate' buttons: change
+	
 
 ***BUTTON PANEL SECTION:
 	
@@ -26,5 +35,19 @@
 
 ***CHANGES MISC:
 
-	add button to add additional notes for the case
-//PPsearch feature for SR & SRVTAG
+	shortcuts keys for Copy Buttons
+			- ie: use combo -> Button Click
+			- ex:
+		    		Ctrl + 1 = Copy Description
+		    		Ctrl + 2 = Copy Troubleshooting
+		    		Ctrl + 3 = Copy Conclusion
+
+	add button to add additional Notes for the case
+			- ie: Button Click-> insert { %DATETIME%;\n } into Note Panel
+			- ex:
+				//current notes
+				7/14
+					These are the current notes for the case.
+				//Button Click
+				%DATATIME%
+					Now I can type new notes here. Without having to enter the date or press enter
