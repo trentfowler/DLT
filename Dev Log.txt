@@ -11,6 +11,7 @@
 	add No ALT Contact
 	
 ***CONTACT INFO SECTION:
+	***possibly another layout api
 	
 	make the header for the records copy contents to the clipboard
 		-similiar to the 'copy description' and 'copy troubleshooting'
