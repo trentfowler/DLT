@@ -10,6 +10,8 @@
 	
 	add No ALT Contact
 	
+	add NOI = "No Other Issue"
+	
 ***CONTACT INFO SECTION:
 	***possibly another layout api
 	
