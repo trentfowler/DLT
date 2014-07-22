@@ -49,17 +49,17 @@ public class ButtonPanel extends JPanel implements ActionListener {
 		if (e.getSource() == jbGenerateTroubleshooting) {
 			
 			//build troubleshooting string based on field data
-			StringBuilder sb = new StringBuilder("***");
-			if (Main.JCHK_VA.isSelected()) sb.append(" VA ");
-			if (Main.JCHK_TOADE.isSelected()) sb.append(" TOADE ");
-			if (Main.JCHK_EMAIL_CAP.isSelected()) sb.append(" EMAILCAP ");
-			if (Main.JCHK_VDI.isSelected()) sb.append(" VDI ");
-			if (Main.JCHK_TARP.isSelected()) sb.append(" TARP ");
-			if (Main.JCHK_POS.isSelected()) sb.append(" POS ");
-			if (Main.JCHK_PAL.isSelected()) sb.append(" OST DPS ");
-			if (Main.JCHK_PLASTICS.isSelected()) sb.append(" CHECK PLASTICS ");
-			if (Main.JCHK_CIDAR.isSelected()) sb.append(" CIDAR EXPLAINED ");
-			sb.append("***\n\n");
+			StringBuilder sb = new StringBuilder("***\n");
+			if (Main.JCHK_VA.isSelected()) sb.append(" VA \n");
+			if (Main.JCHK_TOADE.isSelected()) sb.append(" TOADE \n");
+			if (Main.JCHK_EMAIL_CAP.isSelected()) sb.append(" EMAILCAP \n");
+			if (Main.JCHK_VDI.isSelected()) sb.append(" VDI \n");
+			if (Main.JCHK_TARP.isSelected()) sb.append(" TARP \n");
+			if (Main.JCHK_POS.isSelected()) sb.append(" POS \n");
+			if (Main.JCHK_PAL.isSelected()) sb.append(" OST DPS \n");
+			if (Main.JCHK_PLASTICS.isSelected()) sb.append(" CHECK PLASTICS \n");
+			if (Main.JCHK_CIDAR.isSelected()) sb.append(" CIDAR EXPLAINED \n");
+			sb.append("***\n");
 			if (!Main.JTF_SERVICE_TAG.getText().isEmpty()) {
 				sb.append("ST:" + Main.JTF_SERVICE_TAG.getText() + " ");
 			}
@@ -71,8 +71,9 @@ public class ButtonPanel extends JPanel implements ActionListener {
 				sb.append(" SR#" + Main.JTF_SERVICE_REQUEST.getText() + " ");
 			}
 			if (!Main.JTA_TROUBLESHOOTING.getText().isEmpty()) {
-				sb.append("\n\n" + Main.JTA_TROUBLESHOOTING.getText() + "\n");
+				sb.append("\n\n" + Main.JTA_TROUBLESHOOTING.getText() + "\n\n ***NO OTHER ISSUES RAISED***");
 			}
+			if (Main.JCHK_NOC.isSelected()) sb.append("\n ***NO ALT CONTACT*** ");
 			
 			//clean up -- no consecutive space characters
 			for (int i = 0; i < sb.length() - 1; i++) {
@@ -99,12 +100,12 @@ public class ButtonPanel extends JPanel implements ActionListener {
 			
 			//build description string based on field data
 			StringBuilder sb = new StringBuilder();
-			if (!Main.JTF_SERVICE_TAG.getText().isEmpty()) {
+			/*if (!Main.JTF_SERVICE_TAG.getText().isEmpty()) {
 				sb.append("ST:" + Main.JTF_SERVICE_TAG.getText() + " // ");
 			}
 			if (!Main.JTF_SERVICE_REQUEST.getText().isEmpty()) {
 				sb.append("SR#" + Main.JTF_SERVICE_REQUEST.getText() + " // ");
-			}
+			}*/
 			if (!Main.JTF_DESCRIPTION.getText().isEmpty()) {
 				sb.append(Main.JTF_DESCRIPTION.getText());
 			}

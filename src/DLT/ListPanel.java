@@ -7,6 +7,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -34,6 +35,7 @@ public class ListPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -5490951413959124676L;
 	
 	private JButton jbAdd = new JButton("Add");
+	private JButton jbSort = new JButton("Sort");
 	
 	public ListPanel() {
 		this.setLayout(new BorderLayout());
@@ -41,6 +43,7 @@ public class ListPanel extends JPanel implements ActionListener {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.add(jbAdd);
 		buttonPanel.add(Main.JB_REMOVE);
+		buttonPanel.add(jbSort);
 		
 		JPanel container = new JPanel();
 		container.setLayout(new BorderLayout());
@@ -160,6 +163,7 @@ public class ListPanel extends JPanel implements ActionListener {
 		
 		jbAdd.addActionListener(this);
 		Main.JB_REMOVE.addActionListener(this);
+		jbSort.addActionListener(this);
 	}
 	
 	@Override public void actionPerformed(ActionEvent e) {
@@ -186,9 +190,10 @@ public class ListPanel extends JPanel implements ActionListener {
 			if (!sb.toString().isEmpty()) {
 				Main.LIST_MODEL.set(Main.SELECTED_INDEX, sb.toString());
 			}
-			
+						
 			//add item
 			Main.FIELDS.add(new DataField());
+			
 			Main.SELECTED_INDEX = Main.FIELDS.size() - 1;
 			
 			//set initial status to touched and committed date to next business day
@@ -201,12 +206,13 @@ public class ListPanel extends JPanel implements ActionListener {
 			}
 			Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
 			Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
+			Main.FIELDS.get(Main.SELECTED_INDEX).setTroubleshooting("ISSUE***\n\n"
+					+ "TS***\n\n");
 			
 			//add new item to case list
 			Main.LIST_MODEL.addElement("NEW");
 			Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
 			Main.LIST.ensureIndexIsVisible(Main.SELECTED_INDEX);
-			
 			Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
 		}
 		
@@ -236,6 +242,107 @@ public class ListPanel extends JPanel implements ActionListener {
 				Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
 				Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
 			}
+		}
+		
+		//user clicked sort
+		else if (e.getSource() == jbSort) {
+			
+			String selectedIndexSR = Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest();
+			
+			//sort by committed date
+			int noSwapCounter = 0;
+			while (noSwapCounter < 2) {
+				boolean didSwap = false;
+				for (int i = 0; i < Main.FIELDS.size() - 1; i++) {
+					if (Main.FIELDS.get(i).getCommittedDate().isAfter(
+							Main.FIELDS.get(i + 1).getCommittedDate())) {
+						DataField temp = new DataField(Main.FIELDS.get(i));
+						Main.FIELDS.set(i, new DataField(Main.FIELDS.get(i + 1)));
+						Main.FIELDS.set(i + 1, temp);
+						didSwap = true;
+						break;
+					}
+				}
+				if (didSwap == false) {
+					noSwapCounter++;
+				}
+			}
+			
+			//bubble down closed cases
+			noSwapCounter = 0;
+			while (noSwapCounter < 2) {
+				boolean didSwap = false;
+				for (int i = 0; i < Main.FIELDS.size() - 1; i++) {
+					if ((Main.FIELDS.get(i).getStatus() == Main.STATUS_IS_CLOSED) && 
+						(Main.FIELDS.get(i + 1).getStatus() != Main.STATUS_IS_CLOSED)) {
+						DataField temp = new DataField(Main.FIELDS.get(i));
+						Main.FIELDS.set(i, new DataField(Main.FIELDS.get(i + 1)));
+						Main.FIELDS.set(i + 1, temp);
+						didSwap = true;
+					}
+				}
+				if (didSwap == false) {
+					noSwapCounter++;
+				}
+			}
+			
+			//then sort by case age
+			noSwapCounter = 0;
+			while (noSwapCounter < 2) {
+				boolean didSwap = false;
+				for (int i = 0; i < Main.FIELDS.size() - 1; i++) {
+					if (Main.FIELDS.get(i).getCommittedDate().equals(
+							Main.FIELDS.get(i + 1).getCommittedDate())) {
+						if (Main.FIELDS.get(i).getOpenedDate().isAfter(
+								Main.FIELDS.get(i + 1).getOpenedDate())) {
+							DataField temp = new DataField(Main.FIELDS.get(i));
+							Main.FIELDS.set(i, new DataField(Main.FIELDS.get(i + 1)));
+							Main.FIELDS.set(i + 1, temp);
+							didSwap = true;
+							break;
+						}
+					}
+				}
+				if (didSwap == false) {
+					noSwapCounter++;
+				}
+			}
+			
+			//update list model
+			for (int i = 0; i < Main.FIELDS.size(); i++) {
+				StringBuilder sb = new StringBuilder();
+				if (!Main.FIELDS.get(i).getServiceRequest().isEmpty()) {
+					sb.append(Main.FIELDS.get(i).getServiceRequest());
+				}
+				
+				if (!Main.FIELDS.get(i).getServiceRequest().isEmpty() &&
+						!Main.FIELDS.get(i).getName().isEmpty()) {
+					 sb.append(" / ");
+				}
+				
+				if (!Main.FIELDS.get(i).getName().isEmpty()) {
+					sb.append(Main.FIELDS.get(i).getName());
+				}
+				
+				if (!sb.toString().isEmpty()) {
+					Main.LIST_MODEL.set(i, sb.toString());
+				} 
+				else Main.LIST_MODEL.set(i, "NEW");
+			}
+			
+			//set selected index
+			if (!selectedIndexSR.isEmpty()) {
+				for (int i = 0; i < Main.FIELDS.size(); i++) {
+					if (Main.FIELDS.get(i).getServiceRequest().equals(selectedIndexSR)) {
+						Main.SELECTED_INDEX = i;
+						break;
+					}
+				}
+			}
+			Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
+			Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
+			
+			Main.HAS_UNSAVED_CHANGES = true;
 		}
 	}
 }

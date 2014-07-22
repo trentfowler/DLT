@@ -2,6 +2,9 @@ package DLT;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -46,7 +49,7 @@ import com.thoughtworks.xstream.XStream;
  * ...
  * 
  * @author Trent
- *
+ * @author Bryan
  */
 public class MenuFrame extends JFrame implements WindowListener {
 	
@@ -55,6 +58,8 @@ public class MenuFrame extends JFrame implements WindowListener {
 	private JMenuItem save = new JMenuItem("Save");
 	private JMenuItem export = new JMenuItem("Export");
 	private JMenuItem recover = new JMenuItem("Recover");
+	private JMenuItem description = new JMenuItem("Copy-Description");
+	private JMenuItem troubleshooting = new JMenuItem("Copy-Troubleshooting");
 	
 	private JMenu imprt = new JMenu("Import");
 	private JMenuItem importCSV = new JMenuItem("CSV");
@@ -88,9 +93,27 @@ public class MenuFrame extends JFrame implements WindowListener {
 				KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK);
 		export.setAccelerator(ctrl_e);
 		
+		fileMenu.add(description);
+		KeyStroke ctrl_d = KeyStroke.getKeyStroke(
+				KeyEvent.VK_D, InputEvent.CTRL_DOWN_MASK);
+		description.setAccelerator(ctrl_d);
+		
+		fileMenu.add(troubleshooting);
+		KeyStroke ctrl_t = KeyStroke.getKeyStroke(
+				KeyEvent.VK_1, InputEvent.CTRL_DOWN_MASK);
+		troubleshooting.setAccelerator(ctrl_t);
+		
 		fileMenu.add(imprt);
 		imprt.add(importCSV);
+		KeyStroke ctrl_q = KeyStroke.getKeyStroke(
+				KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK);
+		importCSV.setAccelerator(ctrl_q);
 		imprt.add(importXML);
+		KeyStroke ctrl_w = KeyStroke.getKeyStroke(
+				KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK);
+		importXML.setAccelerator(ctrl_w);
+		
+		
 		
 		//menu.add(view);
 		view.add(show_hide);
@@ -102,6 +125,73 @@ public class MenuFrame extends JFrame implements WindowListener {
 		show_hide.add(viewShowAllCases);
 		view.add(sort);
 		
+		description.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == description) {
+					//build description string based on field data
+					StringBuilder sb = new StringBuilder();
+					/*
+					if (!Main.JTF_SERVICE_TAG.getText().isEmpty()) {
+						sb.append("ST:" + Main.JTF_SERVICE_TAG.getText() + " // ");
+					}
+					if (!Main.JTF_SERVICE_REQUEST.getText().isEmpty()) {
+						sb.append("SR#" + Main.JTF_SERVICE_REQUEST.getText() + " // ");
+					}
+					*/
+					if (!Main.JTF_DESCRIPTION.getText().isEmpty()) {
+						sb.append(Main.JTF_DESCRIPTION.getText());
+					}
+					
+					//copy to clipboard
+					StringSelection stringSelection = new StringSelection(sb.toString());
+					Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+					clpbrd.setContents(stringSelection, null);
+				}
+			}
+		});
+		
+		troubleshooting.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == troubleshooting) {
+					//build troubleshooting string based on field data
+					StringBuilder sb = new StringBuilder("***\n");
+					if (Main.JCHK_VA.isSelected()) sb.append(" VA \n");
+					if (Main.JCHK_TOADE.isSelected()) sb.append(" TOADE \n");
+					if (Main.JCHK_EMAIL_CAP.isSelected()) sb.append(" EMAILCAP \n");
+					if (Main.JCHK_VDI.isSelected()) sb.append(" VDI \n");
+					if (Main.JCHK_TARP.isSelected()) sb.append(" TARP \n");
+					if (Main.JCHK_POS.isSelected()) sb.append(" POS \n");
+					if (Main.JCHK_PAL.isSelected()) sb.append(" OST DPS \n");
+					if (Main.JCHK_PLASTICS.isSelected()) sb.append(" CHECK PLASTICS \n");
+					if (Main.JCHK_CIDAR.isSelected()) sb.append(" CIDAR EXPLAINED \n");
+					sb.append("***\n\n");
+					if (!Main.JTF_SERVICE_TAG.getText().isEmpty()) {
+						sb.append("ST:" + Main.JTF_SERVICE_TAG.getText() + " ");
+					}
+					if (!Main.JTF_SERVICE_TAG.getText().isEmpty() &&
+						!Main.JTF_SERVICE_REQUEST.getText().isEmpty()) {
+						sb.append(" // ");
+					}
+					if (!Main.JTF_SERVICE_REQUEST.getText().isEmpty()) {
+						sb.append(" SR#" + Main.JTF_SERVICE_REQUEST.getText() + " ");
+					}
+					if (!Main.JTA_TROUBLESHOOTING.getText().isEmpty()) {
+						sb.append("\n\n" + Main.JTA_TROUBLESHOOTING.getText() + "\n");
+					}
+					
+					//clean up -- no consecutive space characters
+					for (int i = 0; i < sb.length() - 1; i++) {
+						if (sb.charAt(i) == ' ' && sb.charAt(i + 1) == ' ') sb.deleteCharAt(i + 1);
+					}
+								
+					//copy to clipboard
+					StringSelection stringSelection = new StringSelection(sb.toString());
+					Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+					clpbrd.setContents(stringSelection, null);
+				}
+			}
+		});
+
 		viewClosedCases.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				update_list_items();
@@ -488,6 +578,23 @@ public class MenuFrame extends JFrame implements WindowListener {
 			String[] nextLine = reader.readNext(); //skip first line
 			while ((nextLine = reader.readNext()) != null) {
 				
+				//opened date
+				StringBuilder openedDateString = new StringBuilder();
+				if (nextLine.length > 1) {
+					for (int i = 3; i < nextLine[1].length() - 2; i += 2) {
+						openedDateString.append(nextLine[1].charAt(i));
+					}
+				}
+				String[] strDate = openedDateString.toString().split(" ")[0].split("/");
+				boolean hasOpenedDate = false;
+				LocalDate openedDate = new LocalDate();
+				if (strDate.length >= 3) {
+					hasOpenedDate = true;
+					openedDate = new LocalDate(Integer.parseInt(strDate[2]),
+										Integer.parseInt(strDate[0]),
+										Integer.parseInt(strDate[1]));
+				}
+				
 				//service request
 				StringBuilder serviceRequest = new StringBuilder();
 				if (nextLine.length > 3) {
@@ -588,6 +695,9 @@ public class MenuFrame extends JFrame implements WindowListener {
 						df.setStatus(Main.STATUS_IS_TOUCHED);
 					}
 				}
+				if (hasOpenedDate) {
+					df.setOpenedDate(openedDate);
+				}
 				
 				//check if SR already exists
 				boolean hasSR = false;
@@ -647,6 +757,11 @@ public class MenuFrame extends JFrame implements WindowListener {
 					
 					//flag unsaved changes
 					Main.HAS_UNSAVED_CHANGES = true;
+				}
+				
+				//...if yes, set opened date to opened date from .csv
+				if (hasSR & hasOpenedDate) {
+					Main.FIELDS.get(indexOfSR).setOpenedDate(df.getOpenedDate());
 				}
 			}
 			reader.close();

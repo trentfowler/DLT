@@ -25,6 +25,12 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		this.setBackground(Color.WHITE);
 		this.setLayout(new BorderLayout());
 		
+		JPanel jpInsertButtons = new JPanel();
+		jpInsertButtons.setBorder(new EmptyBorder(0, 0, 0, 5));
+		jpInsertButtons.setLayout(new BorderLayout(5,4));
+		jpInsertButtons.add(Main.JB_DCSID, BorderLayout.WEST);
+		jpInsertButtons.add(Main.JB_FILLER, BorderLayout.CENTER);
+		
 		JPanel jpServiceTag = new JPanel();
 		jpServiceTag.setOpaque(true);
 		jpServiceTag.setBackground(Color.WHITE);
@@ -53,8 +59,10 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		jpContainer.setBackground(Color.WHITE);
 		jpContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
 		jpContainer.setLayout(new GridLayout(1, 2));
+		jpContainer.add(jpInsertButtons);
 		jpContainer.add(jpServiceTag);
 		jpContainer.add(jpServiceRequest);
+		
 		
 		this.add(jl, BorderLayout.NORTH);
 		this.add(jpContainer, BorderLayout.CENTER);
@@ -65,6 +73,14 @@ public class ServicePanel extends JPanel implements DocumentListener {
 				StringSelection stringSelection = new StringSelection(Main.JTF_SERVICE_TAG.getText());
 				Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 				clpbrd.setContents(stringSelection, null);
+				
+			}
+		});
+		
+		//user press insert dell connect
+		Main.JB_DCSID.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				Main.JTA_TROUBLESHOOTING.append("DellConnectTSessionID#\n");
 			}
 		});
 		

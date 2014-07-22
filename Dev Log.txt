@@ -1,51 +1,50 @@
-//PP = Preferred Priority 
+//		Developer Log 
+//		      by 
+//		 Trent Fowler
+//	      Bryan Watkins Waner
+//
+//Generally used to log requested features to BLT Tool.
+//As well as potiential implementations of features.
+//
+//***LISTED BY PRIORITY***
+
+
+
 	
-***FILE SECTION:
-	
-//PP	sorting the cases based on priority and touch data (open cases higher on the list & closed cases on lower)
-	
-***CHECKBOX SECTION:
-	
-//PP	add priority level
-	
-	add No ALT Contact
-	
-	add NOI = "No Other Issue"
-	
+***LIST PANEL SECTION:
+Trent:	-sorting the cases based on:
+		1.CASE AGE
+		2.COMMITTED DATE
+		3.OPEN/CLOSED
+			-ex: See sort_mockup.png for reference
+
 ***CONTACT INFO SECTION:
-	***possibly another layout api
 	
-	make the header for the records copy contents to the clipboard
-		-similiar to the 'copy description' and 'copy troubleshooting'
-	the phone field: separate sections for "area code", "Last 7"
-	the address field: separate sections for Address Line1, Address Line2, City, Zip Code
-		-possibly as seperate section
-	Blackout address field unless 'POS' or 'OST DPS' selected
+Trent:	-potential new api
+	
+	-the phone field: separate sections for "area code", "Last 7"
+	-Blackout address field unless 'POS' or 'OST DPS' selected
 			- ex: if(Main.JCHK_POS.isSelected or Main.JCHK_PAL.isSelected) {Blackout_Add.status(false)}
 			        else {Blackout_Add.status(true)}
-	Blackout Alt Contact info unless checkbox selected
-	Button for "Alt contact"
+	-Button for "Alt contact" or "NO Alt Contact"
 			- ex: if(JCHK_ALT_CONTACT.isSelected){Blackout_ALT_CONTACT.status(false)}
 		      		else{Blackout_ALT_CONTACT.status(true)}	
+	-Blackout Alt Contact info unless checkbox selected
+	-make the header for each record copy contents to the clipboard
+		-similiar to the 'copy description' and 'copy troubleshooting' and 'service tag'
+Bryan:	-the address field: separate sections for Address Line1, Address Line2, City, Zip Code
+		-possibly as seperate section
 	
-***COPY SECTION:
-	
-	
-
-***BUTTON PANEL SECTION:
-	
-	add check box for DPS expectations	
-
 ***CHANGES MISC:
-
-	shortcuts keys for Copy Buttons
+	-shortcuts keys for Copy Buttons
 			- ie: use combo -> Button Click
 			- ex:
 		    		Ctrl + 1 = Copy Description
 		    		Ctrl + 2 = Copy Troubleshooting
 		    		Ctrl + 3 = Copy Conclusion
 
-	add button to add additional Notes for the case
+	-correct import CSV to allow different CSV ordering
+	-add button to add additional Notes for the case
 			- ie: Button Click-> insert { %DATETIME%;\n } into Note Panel
 			- ex:
 				//current notes
@@ -53,4 +52,10 @@
 					These are the current notes for the case.
 				//Button Click
 				%DATATIME%
-					Now I can type new notes here. Without having to enter the date or press enter
+					Now I can type new notes here. Without having to enter the date or press enter.
+					This will help in keeping track of timeline events during the service repair.
+
+***BUTTON PANEL SECTION:
+Trent:	-add button NOI = "No Other Issue"
+	
+	-add check box for DPS expectations	

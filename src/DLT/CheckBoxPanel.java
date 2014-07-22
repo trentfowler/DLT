@@ -35,6 +35,7 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		Main.JCHK_PAL.setBackground(Color.WHITE);
 		Main.JCHK_PLASTICS.setBackground(Color.WHITE);
 		Main.JCHK_CIDAR.setBackground(Color.WHITE);
+		Main.JCHK_NOC.setBackground(Color.WHITE);
 		
 		Main.JCHK_VA.setToolTipText("Verified Authorization");
 		Main.JCHK_TOADE.setToolTipText("Told Owner About Date of Expiration");
@@ -45,6 +46,8 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		Main.JCHK_PAL.setToolTipText("Parts and Labor");
 		Main.JCHK_PLASTICS.setToolTipText("Checked Plastics");
 		Main.JCHK_CIDAR.setToolTipText("Customer Induced Damage Explained");
+		Main.JCHK_NOC.setToolTipText("No Alternate Contact");
+		
 		
 		JPanel checkBoxPanel = new JPanel();
 		checkBoxPanel.setOpaque(true);
@@ -58,6 +61,7 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		checkBoxPanel.add(Main.JCHK_PAL);
 		checkBoxPanel.add(Main.JCHK_PLASTICS);
 		checkBoxPanel.add(Main.JCHK_CIDAR);
+		checkBoxPanel.add(Main.JCHK_NOC);
 		
 		JLabel jl = new JLabel(" ");
 		jl.setOpaque(true);
@@ -77,6 +81,7 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		Main.JCHK_PAL.addActionListener(this);
 		Main.JCHK_PLASTICS.addActionListener(this);
 		Main.JCHK_CIDAR.addActionListener(this);
+		Main.JCHK_NOC.addActionListener(this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -127,6 +132,10 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		}
 		
 		else if (e.getSource() == Main.JCHK_CIDAR) {
+			Main.HAS_UNSAVED_CHANGES = true;
+		}
+		
+		else if (e.getSource() == Main.JCHK_NOC) {
 			Main.HAS_UNSAVED_CHANGES = true;
 		}
 	}

@@ -87,6 +87,7 @@ public class Main {
 	static JCheckBox JCHK_PAL = new JCheckBox("OST DPS");
 	static JCheckBox JCHK_PLASTICS = new JCheckBox("CHK PLASTICS");
 	static JCheckBox JCHK_CIDAR = new JCheckBox("CIDAR");
+	static JCheckBox JCHK_NOC = new JCheckBox("NOAC");
 	static JTextField JTF_COMPANY = new JTextField();
 	static JTextField JTF_NAME = new JTextField();
 	static JTextField JTF_PHONE = new JTextField();
@@ -113,6 +114,8 @@ public class Main {
 	static JTextArea JTA_NOTES = new JTextArea();
 	static JTextField JTF_DESCRIPTION = new JTextField();
 	static JButton JB_REMOVE = new JButton("Remove");
+	static JButton JB_DCSID = new JButton("DellConnect");
+	static JButton JB_FILLER = new JButton("Filler Button");
 	static DefaultListModel LIST_MODEL = new DefaultListModel();
 	static JList LIST = new JList(Main.LIST_MODEL);
 	static JTextField JTF_SEARCH_FIELD = new JTextField();
@@ -128,6 +131,7 @@ public class Main {
 		Main.FIELDS.get(Main.SELECTED_INDEX).setPALIsChecked(Main.JCHK_PAL.isSelected());
 		Main.FIELDS.get(Main.SELECTED_INDEX).setPlasticsIsChecked(Main.JCHK_PLASTICS.isSelected());
 		Main.FIELDS.get(Main.SELECTED_INDEX).setCIDARIsChecked(Main.JCHK_CIDAR.isSelected());
+		Main.FIELDS.get(Main.SELECTED_INDEX).setNOCIsChecked(Main.JCHK_NOC.isSelected());
 		Main.FIELDS.get(Main.SELECTED_INDEX).setCompany(Main.JTF_COMPANY.getText());
 		Main.FIELDS.get(Main.SELECTED_INDEX).setName(Main.JTF_NAME.getText());
 		Main.FIELDS.get(Main.SELECTED_INDEX).setEmail(Main.JTF_EMAIL.getText());
@@ -161,6 +165,7 @@ public class Main {
 		Main.JCHK_PAL.setSelected(Main.FIELDS.get(index).getPALIsChecked());
 		Main.JCHK_PLASTICS.setSelected(Main.FIELDS.get(index).getPlasticsIsChecked());
 		Main.JCHK_CIDAR.setSelected(Main.FIELDS.get(index).getCIDARIsChecked());
+		Main.JCHK_NOC.setSelected(Main.FIELDS.get(index).getNocIsChecked());
 		Main.JTF_COMPANY.setText(Main.FIELDS.get(index).getCompany());
 		Main.JTF_NAME.setText(Main.FIELDS.get(index).getName());
 		Main.JTF_EMAIL.setText(Main.FIELDS.get(index).getEmail());
