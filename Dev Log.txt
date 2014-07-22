@@ -1,4 +1,14 @@
+//		Developer Log 
+//		 Developed by 
+//		 Trent Fowler
+//	      Bryan Watkins Waner
+//
+//For changes and new features to BLT Tool.
+//
 //PP = Preferred Priority 
+
+
+
 	
 ***FILE SECTION:
 	
@@ -38,6 +48,8 @@
 
 ***CHANGES MISC:
 
+	correct import CSV to allow different CSV ordering
+	
 	shortcuts keys for Copy Buttons
 			- ie: use combo -> Button Click
 			- ex:
