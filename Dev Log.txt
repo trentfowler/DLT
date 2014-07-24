@@ -11,11 +11,11 @@
 
 	
 ***FILE SECTION:
-	
+	Trent:
 //PP	sorting the cases based on priority and touch data (open cases higher on the list & closed cases on lower)
 	
 ***CHECKBOX SECTION:
-	
+	Trent:
 //PP	add priority level
 	
 	add No ALT Contact
@@ -23,6 +23,7 @@
 	add NOI = "No Other Issue"
 	
 ***CONTACT INFO SECTION:
+	Trent:
 	***possibly another layout api
 	
 	make the header for the records copy contents to the clipboard
