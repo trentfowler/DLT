@@ -29,14 +29,17 @@ Bryan:		-the address field: separate sections for Address Line1, Address Line2, 
 			-possibly as seperate section
 	
 ***CHANGES MISC:
+		-correct import CSV to allow different CSV ordering
+		-reorder output of alphabet soup
+			- ie: 'OST DPS' and 'POS' are located lower in the notes
+		-include 'CDO PRI'
+			- ie: priority level of the SR
 		-shortcuts keys for Copy Buttons
 			- ie: use combo -> Button Click
 			- ex:
 		    		Ctrl + 1 = Copy Description
 		    		Ctrl + 2 = Copy Troubleshooting
 		    		Ctrl + 3 = Copy Conclusion
-
-		-correct import CSV to allow different CSV ordering
 		-add button to add additional Notes for the case
 			- ie: Button Click-> insert { %DATETIME%;\n } into Note Panel
 			- ex:
