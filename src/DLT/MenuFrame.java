@@ -488,6 +488,23 @@ public class MenuFrame extends JFrame implements WindowListener {
 			String[] nextLine = reader.readNext(); //skip first line
 			while ((nextLine = reader.readNext()) != null) {
 				
+				//opened date
+				StringBuilder openedDateString = new StringBuilder();
+				if (nextLine.length > 1) {
+					for (int i = 3; i < nextLine[1].length() - 2; i += 2) {
+						openedDateString.append(nextLine[1].charAt(i));
+					}
+				}
+				String[] strDate = openedDateString.toString().split(" ")[0].split("/");
+				boolean hasOpenedDate = false;
+				LocalDate openedDate = new LocalDate();
+				if (strDate.length >= 3) {
+					hasOpenedDate = true;
+					openedDate = new LocalDate(Integer.parseInt(strDate[2]),
+										Integer.parseInt(strDate[0]),
+										Integer.parseInt(strDate[1]));
+				}
+				
 				//service request
 				StringBuilder serviceRequest = new StringBuilder();
 				if (nextLine.length > 3) {
@@ -588,6 +605,9 @@ public class MenuFrame extends JFrame implements WindowListener {
 						df.setStatus(Main.STATUS_IS_TOUCHED);
 					}
 				}
+				if (hasOpenedDate) {
+					df.setOpenedDate(openedDate);
+				}
 				
 				//check if SR already exists
 				boolean hasSR = false;
@@ -647,6 +667,11 @@ public class MenuFrame extends JFrame implements WindowListener {
 					
 					//flag unsaved changes
 					Main.HAS_UNSAVED_CHANGES = true;
+				}
+				
+				//...if yes, set opened date to opened date from .csv
+				if (hasSR & hasOpenedDate) {
+					Main.FIELDS.get(indexOfSR).setOpenedDate(df.getOpenedDate());
 				}
 			}
 			reader.close();

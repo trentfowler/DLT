@@ -48,6 +48,7 @@ public class DataField implements Serializable {
 	private String notes;
 	private int status;
 	private LocalDate committedDate;
+	private LocalDate openedDate;
 	
 	/**
 	 * DataField constructor
@@ -86,6 +87,7 @@ public class DataField implements Serializable {
 		this.notes = "";
 		this.status = Main.STATUS_IS_CLOSED;
 		this.committedDate = new LocalDate();
+		this.openedDate = new LocalDate();
 	}
 	
 	/**
@@ -127,6 +129,7 @@ public class DataField implements Serializable {
 		this.notes = df.getNotes();
 		this.status = df.getStatus();
 		this.committedDate = df.getCommittedDate();
+		this.openedDate = df.getOpenedDate();
 	}
 	
 	//getters
@@ -254,6 +257,10 @@ public class DataField implements Serializable {
 		return this.committedDate;
 	}
 	
+	LocalDate getOpenedDate() {
+		return this.openedDate;
+	}
+	
 	//setters
 	void setVAIsChecked(boolean newVAIsChecked) {
 		this.vaIsChecked = newVAIsChecked;
@@ -377,6 +384,10 @@ public class DataField implements Serializable {
 	
 	void setCommittedDate(LocalDate newCommittedDate) {
 		this.committedDate = newCommittedDate;
+	}
+	
+	void setOpenedDate(LocalDate newOpenedDate) {
+		this.openedDate = newOpenedDate;
 	}
 	
 	/**
