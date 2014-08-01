@@ -29,18 +29,23 @@ Bryan:		-the address field: separate sections for Address Line1, Address Line2, 
 			-possibly as seperate section
 	
 ***CHANGES MISC:
-		-correct import CSV to allow different CSV ordering
-		-reorder output of alphabet soup
+Trent:		-correct import CSV to allow different CSV ordering
+Bryan:		-reorder output of alphabet soup
 			- ie: 'OST DPS' and 'POS' are located lower in the notes
 		-include 'CDO PRI'
 			- ie: priority level of the SR
-		-shortcuts keys for Copy Buttons
+Bryan:		-shortcuts keys for Copy Buttons
 			- ie: use combo -> Button Click
 			- ex:
 		    		Ctrl + 1 = Copy Description
 		    		Ctrl + 2 = Copy Troubleshooting
 		    		Ctrl + 3 = Copy Conclusion
-		-add button to add additional Notes for the case
+		-add button to clear all Desc, TS, and Conclusion
+			- ie: every new interaction with cx requires new Desc, TS, and Conclusion
+		-move notes section [where 2 IDK]
+		-possibly rename the program
+			- ie: more unique
+Bryan:		-add button to add additional Notes for the case
 			- ie: Button Click-> insert { %DATETIME%;\n } into Note Panel
 			- ex:
 				//current notes
@@ -55,3 +60,4 @@ Bryan:		-the address field: separate sections for Address Line1, Address Line2, 
 Trent:	-add button NOI = "No Other Issue"
 	
 		-add check box for DPS expectations	
+	-update VA to "OKC CPS VA"
