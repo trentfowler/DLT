@@ -185,6 +185,9 @@ public class ListPanel extends JPanel implements ActionListener {
 			//add item
 			Main.FIELDS.add(new DataField());
 			Main.SELECTED_INDEX = Main.FIELDS.size() - 1;
+			Main.FIELDS.get(Main.SELECTED_INDEX).setTroubleshooting("\nISSUE:"
+										+ "\n\nTS:"
+										+ "\n\nFIX:");
 			
 			Main.LIST_MODEL.addElement("NEW");
 			Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
