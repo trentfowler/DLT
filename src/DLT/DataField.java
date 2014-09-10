@@ -26,6 +26,7 @@ public class DataField implements Serializable {
 	private boolean palIsChecked;
 	private boolean plasticsIsChecked;
 	private boolean cidarIsChecked;
+	private boolean nocIsChecked;
 	private String company;
 	private String name;
 	private String email;
@@ -65,6 +66,7 @@ public class DataField implements Serializable {
 		this.palIsChecked = false;
 		this.plasticsIsChecked = false;
 		this.cidarIsChecked = false;
+		this.nocIsChecked = false;
 		this.company = "";
 		this.name = "";
 		this.email = "";
@@ -107,6 +109,7 @@ public class DataField implements Serializable {
 		this.palIsChecked = df.getPALIsChecked();
 		this.plasticsIsChecked = df.getPlasticsIsChecked();
 		this.cidarIsChecked = df.getCIDARIsChecked();
+		this.nocIsChecked = df.getNOCIsChecked();
 		this.company = df.getCompany();
 		this.name = df.getName();
 		this.email = df.getEmail();
@@ -169,6 +172,9 @@ public class DataField implements Serializable {
 		return this.cidarIsChecked;
 	}
 	
+	boolean getNOCIsChecked() {
+		return this.nocIsChecked;
+	}
 	String getCompany() {
 		return this.company;
 	}
@@ -296,6 +302,10 @@ public class DataField implements Serializable {
 	
 	void setCIDARIsChecked(boolean newCIDARIsChecked) {
 		this.cidarIsChecked = newCIDARIsChecked;
+	}
+
+	void setNOCIsChecked(boolean newNOCIsChecked) {
+		this.cidarIsChecked = newNOCIsChecked;
 	}
 	
 	void setCompany(String newCompany) {
@@ -445,6 +455,11 @@ public class DataField implements Serializable {
 	 */
 	@Override public String toString() {
 		return "";
+	}
+
+	public boolean getNocIsChecked() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }
