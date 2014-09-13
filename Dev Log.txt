@@ -57,7 +57,5 @@ Bryan:		-add button to add additional Notes for the case
 					This will help in keeping track of timeline events during the service repair.
 
 ***BUTTON PANEL SECTION:
-Trent:	-add button NOI = "No Other Issue"
-	
-		-add check box for DPS expectations	
+	-add check box for DPS expectations	
 	-update VA to "OKC CPS VA"
