@@ -115,7 +115,8 @@ public class Main {
 	static JTextField JTF_DESCRIPTION = new JTextField();
 	static JButton JB_REMOVE = new JButton("Remove");
 	static JButton JB_DCSID = new JButton("DellConnect");
-	static JButton JB_FILLER = new JButton("Filler Button");
+	static JButton JB_CDO = new JButton("CDO");
+	static JButton JB_PPID = new JButton("PPID");
 	static DefaultListModel LIST_MODEL = new DefaultListModel();
 	static JList LIST = new JList(Main.LIST_MODEL);
 	static JTextField JTF_SEARCH_FIELD = new JTextField();

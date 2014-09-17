@@ -29,7 +29,8 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		jpInsertButtons.setBorder(new EmptyBorder(0, 0, 0, 5));
 		jpInsertButtons.setLayout(new BorderLayout(5,4));
 		jpInsertButtons.add(Main.JB_DCSID, BorderLayout.WEST);
-		jpInsertButtons.add(Main.JB_FILLER, BorderLayout.CENTER);
+		jpInsertButtons.add(Main.JB_CDO, BorderLayout.CENTER);
+		jpInsertButtons.add(Main.JB_PPID, BorderLayout.EAST);
 		
 		JPanel jpServiceTag = new JPanel();
 		jpServiceTag.setOpaque(true);
@@ -59,10 +60,10 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		jpContainer.setBackground(Color.WHITE);
 		jpContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
 		jpContainer.setLayout(new GridLayout(1, 2));
-		jpContainer.add(jpInsertButtons);
+		
 		jpContainer.add(jpServiceTag);
 		jpContainer.add(jpServiceRequest);
-		
+		jpContainer.add(jpInsertButtons);
 		
 		this.add(jl, BorderLayout.NORTH);
 		this.add(jpContainer, BorderLayout.CENTER);
@@ -80,7 +81,19 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		//user press insert dell connect
 		Main.JB_DCSID.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				Main.JTA_TROUBLESHOOTING.append("DellConnectTSessionID#\n");
+				Main.JTA_TROUBLESHOOTING.append("\nDellConnectTSessionID#\n");
+			}
+		});
+		
+		Main.JB_PPID.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				Main.JTA_TROUBLESHOOTING.append("\nPPID#\n");
+			}
+		});
+		
+		Main.JB_CDO.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				Main.JTA_TROUBLESHOOTING.append("\nCDO PRI-");
 			}
 		});
 		
