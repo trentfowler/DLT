@@ -115,7 +115,7 @@ public class Main {
 	static JTextField JTF_DESCRIPTION = new JTextField();
 	static JButton JB_REMOVE = new JButton("Remove");
 	static JButton JB_DCSID = new JButton("DellConnect");
-	static JButton JB_CDO = new JButton("CDO");
+	static JComboBox<String> JB_CDO = new JComboBox<String>(new String[]{"CDO-1 ASAP","CDO-2 HIGH","CDO-3 MEDIUM","CDO-4 LOW"});
 	static JButton JB_PPID = new JButton("PPID");
 	static DefaultListModel LIST_MODEL = new DefaultListModel();
 	static JList LIST = new JList(Main.LIST_MODEL);

@@ -100,12 +100,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
 			
 			//build description string based on field data
 			StringBuilder sb = new StringBuilder();
-			/*if (!Main.JTF_SERVICE_TAG.getText().isEmpty()) {
-				sb.append("ST:" + Main.JTF_SERVICE_TAG.getText() + " // ");
-			}
-			if (!Main.JTF_SERVICE_REQUEST.getText().isEmpty()) {
-				sb.append("SR#" + Main.JTF_SERVICE_REQUEST.getText() + " // ");
-			}*/
+			
 			if (!Main.JTF_DESCRIPTION.getText().isEmpty()) {
 				sb.append(Main.JTF_DESCRIPTION.getText());
 			}
