@@ -28,7 +28,7 @@ import javax.swing.JTextField;
  * ...
  * 
  * @author Trent
- *
+ * @author Bryan 
  */
 public class Main {
 	
@@ -39,6 +39,10 @@ public class Main {
 	static final int STATUS_IS_CLOSED = 3;
 	static final int STATUS_IS_DUE = 4;
 	static final int STATUS_IS_OVERDUE = 5;
+	static final String PRIORITY_1 = "CDO-1 ASAP";
+	static final String PRIORITY_2 = "CDO-2 HIGH";
+	static final String PRIORITY_3 = "CDO-3 MEDIUM";
+	static final String PRIORITY_4 = "CDO-4 LOW";
 	
 	//frame dimensions
 	static int F_MIN_WIDTH = 300;
@@ -114,6 +118,9 @@ public class Main {
 	static JTextArea JTA_NOTES = new JTextArea();
 	static JTextField JTF_DESCRIPTION = new JTextField();
 	static JButton JB_REMOVE = new JButton("Remove");
+	static JButton JB_DCSID = new JButton("DellConnect");
+	static JComboBox<String> JB_CDO = new JComboBox<String>(new String[]{"CDO-1 ASAP","CDO-2 HIGH","CDO-3 MEDIUM","CDO-4 LOW"});
+	static JButton JB_PPID = new JButton("PPID");
 	static DefaultListModel LIST_MODEL = new DefaultListModel();
 	static JList LIST = new JList(Main.LIST_MODEL);
 	static JTextField JTF_SEARCH_FIELD = new JTextField();
@@ -184,6 +191,7 @@ public class Main {
 		Main.JTA_CONCLUSION.setText(Main.FIELDS.get(index).getConclusion());
 		Main.JTA_NOTES.setText(Main.FIELDS.get(index).getNotes());
 		Main.JTF_DESCRIPTION.setText(Main.FIELDS.get(index).getDescription());
+		Main.JB_CDO.setSelectedItem(Main.FIELDS.get(index).getPriority());
 		
 		//check boxes enabled
 		if (Main.FIELDS.get(index).getPOSIsChecked()) {
