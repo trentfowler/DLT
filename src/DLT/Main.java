@@ -157,6 +157,7 @@ public class Main {
 		Main.FIELDS.get(Main.SELECTED_INDEX).setConclusion(Main.JTA_CONCLUSION.getText());
 		Main.FIELDS.get(Main.SELECTED_INDEX).setNotes(Main.JTA_NOTES.getText());
 		Main.FIELDS.get(Main.SELECTED_INDEX).setDescription(Main.JTF_DESCRIPTION.getText());
+		Main.FIELDS.get(Main.SELECTED_INDEX).setPriority(Main.JB_CDO.getSelectedItem());
 	}
 	
 	//sets the view with the data from the DataField element for the selected case
