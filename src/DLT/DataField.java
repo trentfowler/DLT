@@ -50,7 +50,7 @@ public class DataField implements Serializable {
 	private int status;
 	private LocalDate committedDate;
 	private LocalDate openedDate;
-	private String priority;
+	private Object priority;
 	
 	/**
 	 * DataField constructor
@@ -270,7 +270,7 @@ public class DataField implements Serializable {
 		return this.openedDate;
 	}
 	
-	String getPriority() {
+	Object getPriority() {
 		return this.priority;
 	}
 	
@@ -406,7 +406,7 @@ public class DataField implements Serializable {
 	void setOpenedDate(LocalDate newOpenedDate) {
 		this.openedDate = newOpenedDate;
 	}
-	void setPriority(String newPriority) {
+	void setPriority(Object newPriority) {
 		this.priority = newPriority;
 	}
 	
