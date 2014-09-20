@@ -10,7 +10,7 @@ import org.joda.time.LocalDate;
  * ...
  * 
  * @author Trent
- *
+ * @author Bryan
  */
 
 public class DataField implements Serializable {
@@ -26,6 +26,7 @@ public class DataField implements Serializable {
 	private boolean palIsChecked;
 	private boolean plasticsIsChecked;
 	private boolean cidarIsChecked;
+	private boolean nocIsChecked;
 	private String company;
 	private String name;
 	private String email;
@@ -48,6 +49,8 @@ public class DataField implements Serializable {
 	private String notes;
 	private int status;
 	private LocalDate committedDate;
+	private LocalDate openedDate;
+	private String priority;
 	
 	/**
 	 * DataField constructor
@@ -64,6 +67,7 @@ public class DataField implements Serializable {
 		this.palIsChecked = false;
 		this.plasticsIsChecked = false;
 		this.cidarIsChecked = false;
+		this.nocIsChecked = false;
 		this.company = "";
 		this.name = "";
 		this.email = "";
@@ -86,6 +90,8 @@ public class DataField implements Serializable {
 		this.notes = "";
 		this.status = Main.STATUS_IS_CLOSED;
 		this.committedDate = new LocalDate();
+		this.openedDate = new LocalDate();
+		this.priority = Main.PRIORITY_3;
 	}
 	
 	/**
@@ -105,6 +111,7 @@ public class DataField implements Serializable {
 		this.palIsChecked = df.getPALIsChecked();
 		this.plasticsIsChecked = df.getPlasticsIsChecked();
 		this.cidarIsChecked = df.getCIDARIsChecked();
+		this.nocIsChecked = df.getNOCIsChecked();
 		this.company = df.getCompany();
 		this.name = df.getName();
 		this.email = df.getEmail();
@@ -127,6 +134,8 @@ public class DataField implements Serializable {
 		this.notes = df.getNotes();
 		this.status = df.getStatus();
 		this.committedDate = df.getCommittedDate();
+		this.openedDate = df.getOpenedDate();
+		this.priority = df.getPriority();
 	}
 	
 	//getters
@@ -166,6 +175,9 @@ public class DataField implements Serializable {
 		return this.cidarIsChecked;
 	}
 	
+	boolean getNOCIsChecked() {
+		return this.nocIsChecked;
+	}
 	String getCompany() {
 		return this.company;
 	}
@@ -254,6 +266,14 @@ public class DataField implements Serializable {
 		return this.committedDate;
 	}
 	
+	LocalDate getOpenedDate() {
+		return this.openedDate;
+	}
+	
+	String getPriority() {
+		return this.priority;
+	}
+	
 	//setters
 	void setVAIsChecked(boolean newVAIsChecked) {
 		this.vaIsChecked = newVAIsChecked;
@@ -289,6 +309,10 @@ public class DataField implements Serializable {
 	
 	void setCIDARIsChecked(boolean newCIDARIsChecked) {
 		this.cidarIsChecked = newCIDARIsChecked;
+	}
+
+	void setNOCIsChecked(boolean newNOCIsChecked) {
+		this.cidarIsChecked = newNOCIsChecked;
 	}
 	
 	void setCompany(String newCompany) {
@@ -379,6 +403,13 @@ public class DataField implements Serializable {
 		this.committedDate = newCommittedDate;
 	}
 	
+	void setOpenedDate(LocalDate newOpenedDate) {
+		this.openedDate = newOpenedDate;
+	}
+	void setPriority(String newPriority) {
+		this.priority = newPriority;
+	}
+	
 	/**
 	 * Sets the status of the case to DUE if committed date is today, OVERDUE if 
 	 * committed date is before today, and TOUCHED if committed date is after 
@@ -434,6 +465,11 @@ public class DataField implements Serializable {
 	 */
 	@Override public String toString() {
 		return "";
+	}
+
+	public boolean getNocIsChecked() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }
