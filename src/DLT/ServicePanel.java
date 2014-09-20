@@ -41,13 +41,14 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		JButton jbServiceRequest = new JButton("Service Request");
 		jpServiceRequest.add(jbServiceRequest, BorderLayout.WEST);
 		jpServiceRequest.add(Main.JTF_SERVICE_REQUEST, BorderLayout.CENTER);
-
+		//CDO and Button Line
 		JPanel jpInsertButtons = new JPanel();
 		jpInsertButtons.setBorder(new EmptyBorder(5, 0, 0, 5));
 		jpInsertButtons.setLayout(new BorderLayout(5,5));
 		jpInsertButtons.add(Main.JB_CDO, BorderLayout.WEST);
 		jpInsertButtons.add(Main.JB_DCSID, BorderLayout.CENTER);
 		jpInsertButtons.add(Main.JB_PPID, BorderLayout.EAST);
+		//TODO Second Button panel for more buttons
 		
 		JLabel jl = new JLabel(" ");
 		jl.setOpaque(true);
@@ -78,19 +79,20 @@ public class ServicePanel extends JPanel implements DocumentListener {
 			}
 		});
 		
-		//user press insert dell connect
+		//user pressed dell connect
 		Main.JB_DCSID.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				Main.JTA_TROUBLESHOOTING.append("\nDellConnectTSessionID#\n");
 			}
 		});
 		
+		//user pressed PPID
 		Main.JB_PPID.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				Main.JTA_TROUBLESHOOTING.append("\nPPID#\n");
 			}
 		});
-				
+		
 		//user pressed copy service request
 		jbServiceRequest.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
