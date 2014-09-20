@@ -71,29 +71,13 @@ public class ButtonPanel extends JPanel implements ActionListener {
 				sb.append(" SR#" + Main.JTF_SERVICE_REQUEST.getText() + " ");
 			}
 			if (!Main.JTA_TROUBLESHOOTING.getText().isEmpty()) {
-				sb.append("\n\n" + Main.JTA_TROUBLESHOOTING.getText() + "\n\n ***NO OTHER ISSUES RAISED***");
+				sb.append("\n\n" + Main.JTA_TROUBLESHOOTING.getText() + "\n\n***NO OTHER ISSUES RAISED***");
 			}
-			if (Main.JCHK_NOC.isSelected()) sb.append("\n ***NO ALT CONTACT*** ");
+			if (Main.JCHK_NOC.isSelected()) sb.append("\n***NO ALT CONTACT*** ");
 			
-			String priority = Main.FIELDS.get(Main.SELECTED_INDEX).getPriority();
-			if (priority == Main.PRIORITY_1) {
-					sb.append("\n ***CDO PRIORITY - 1 ASAP*** ");
-				}
-				
-			else if (priority == Main.PRIORITY_2) {
-					sb.append("\n ***CDO PRIORITY - 2 HIGH*** ");
-				}
-				
-			else if (priority == Main.PRIORITY_3) {
-					sb.append("\n ***CDO PRIORITY - 3 MEDIUM*** ");
-				}
-				
-			else if (priority == Main.PRIORITY_4) {
-					sb.append("\n ***CDO PRIORITY - 4 LOW*** ");
-				}
-			
-			
-			
+			Object priority = Main.JB_CDO.getSelectedItem();
+			sb.append("\n***"+ priority +"***\n");
+						
 			//clean up -- no consecutive space characters
 			for (int i = 0; i < sb.length() - 1; i++) {
 				if (sb.charAt(i) == ' ' && sb.charAt(i + 1) == ' ') sb.deleteCharAt(i + 1);
@@ -114,7 +98,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
 			clpbrd.setContents(stringSelection, null);
 		}
 		
-		//if generte description button is pressed --> copy to clipboard
+		//if generate description button is pressed --> copy to clipboard
 		else if (e.getSource() == jbGenerateDescription) {
 			
 			//build description string based on field data
