@@ -24,7 +24,7 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		this.setOpaque(true);
 		this.setBackground(Color.WHITE);
 		this.setLayout(new BorderLayout());
-		
+				
 		JPanel jpServiceTag = new JPanel();
 		jpServiceTag.setOpaque(true);
 		jpServiceTag.setBackground(Color.WHITE);
@@ -41,6 +41,13 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		JButton jbServiceRequest = new JButton("Service Request");
 		jpServiceRequest.add(jbServiceRequest, BorderLayout.WEST);
 		jpServiceRequest.add(Main.JTF_SERVICE_REQUEST, BorderLayout.CENTER);
+
+		JPanel jpInsertButtons = new JPanel();
+		jpInsertButtons.setBorder(new EmptyBorder(5, 0, 0, 5));
+		jpInsertButtons.setLayout(new BorderLayout(5,5));
+		jpInsertButtons.add(Main.JB_CDO, BorderLayout.WEST);
+		jpInsertButtons.add(Main.JB_DCSID, BorderLayout.CENTER);
+		jpInsertButtons.add(Main.JB_PPID, BorderLayout.EAST);
 		
 		JLabel jl = new JLabel(" ");
 		jl.setOpaque(true);
@@ -52,9 +59,11 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		jpContainer.setOpaque(true);
 		jpContainer.setBackground(Color.WHITE);
 		jpContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
-		jpContainer.setLayout(new GridLayout(1, 2));
+		jpContainer.setLayout(new GridLayout(0, 2));
+		
 		jpContainer.add(jpServiceTag);
 		jpContainer.add(jpServiceRequest);
+		jpContainer.add(jpInsertButtons);
 		
 		this.add(jl, BorderLayout.NORTH);
 		this.add(jpContainer, BorderLayout.CENTER);
@@ -65,9 +74,23 @@ public class ServicePanel extends JPanel implements DocumentListener {
 				StringSelection stringSelection = new StringSelection(Main.JTF_SERVICE_TAG.getText());
 				Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 				clpbrd.setContents(stringSelection, null);
+				
 			}
 		});
 		
+		//user press insert dell connect
+		Main.JB_DCSID.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				Main.JTA_TROUBLESHOOTING.append("\nDellConnectTSessionID#\n");
+			}
+		});
+		
+		Main.JB_PPID.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				Main.JTA_TROUBLESHOOTING.append("\nPPID#\n");
+			}
+		});
+				
 		//user pressed copy service request
 		jbServiceRequest.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
