@@ -190,9 +190,10 @@ public class ListPanel extends JPanel implements ActionListener {
 			if (!sb.toString().isEmpty()) {
 				Main.LIST_MODEL.set(Main.SELECTED_INDEX, sb.toString());
 			}
-			
+						
 			//add item
 			Main.FIELDS.add(new DataField());
+			
 			Main.SELECTED_INDEX = Main.FIELDS.size() - 1;
 			
 			//set initial status to touched and committed date to next business day
@@ -205,12 +206,13 @@ public class ListPanel extends JPanel implements ActionListener {
 			}
 			Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
 			Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
+			Main.FIELDS.get(Main.SELECTED_INDEX).setTroubleshooting("ISSUE***\n\n"
+					+ "TS***\n\n");
 			
 			//add new item to case list
 			Main.LIST_MODEL.addElement("NEW");
 			Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
 			Main.LIST.ensureIndexIsVisible(Main.SELECTED_INDEX);
-			
 			Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
 		}
 		

@@ -2,6 +2,9 @@ package DLT;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -46,7 +49,7 @@ import com.thoughtworks.xstream.XStream;
  * ...
  * 
  * @author Trent
- *
+ * @author Bryan
  */
 public class MenuFrame extends JFrame implements WindowListener {
 	
@@ -55,7 +58,7 @@ public class MenuFrame extends JFrame implements WindowListener {
 	private JMenuItem save = new JMenuItem("Save");
 	private JMenuItem export = new JMenuItem("Export");
 	private JMenuItem recover = new JMenuItem("Recover");
-	
+		
 	private JMenu imprt = new JMenu("Import");
 	private JMenuItem importCSV = new JMenuItem("CSV");
 	private JMenuItem importXML = new JMenuItem("XML");
@@ -90,7 +93,15 @@ public class MenuFrame extends JFrame implements WindowListener {
 		
 		fileMenu.add(imprt);
 		imprt.add(importCSV);
+		KeyStroke ctrl_q = KeyStroke.getKeyStroke(
+				KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK);
+		importCSV.setAccelerator(ctrl_q);
 		imprt.add(importXML);
+		KeyStroke ctrl_w = KeyStroke.getKeyStroke(
+				KeyEvent.VK_W, InputEvent.CTRL_DOWN_MASK);
+		importXML.setAccelerator(ctrl_w);
+		
+		
 		
 		//menu.add(view);
 		view.add(show_hide);
