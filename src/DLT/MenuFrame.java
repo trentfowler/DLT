@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -44,11 +43,9 @@ import com.thoughtworks.xstream.XStream;
 /**
  * MenuFrame class
  * 
- * This class defines the main JFrame for the application. It contains 
- * the File menu and handles importing/exporting data.
+ * ...
  * 
  * @author Trent
- * @author Bryan
  *
  */
 public class MenuFrame extends JFrame implements WindowListener {
@@ -57,13 +54,20 @@ public class MenuFrame extends JFrame implements WindowListener {
 	
 	private JMenuItem save = new JMenuItem("Save");
 	private JMenuItem export = new JMenuItem("Export");
+	private JMenuItem recover = new JMenuItem("Recover");
+	
 	private JMenu imprt = new JMenu("Import");
-	private JMenu cmmnd = new JMenu("Commands");
 	private JMenuItem importCSV = new JMenuItem("CSV");
 	private JMenuItem importXML = new JMenuItem("XML");
-	private JMenuItem commandCPY = new JMenuItem("Copy selected case");
-	private JMenuItem commandDEL = new JMenuItem("Delete selected case");
-	private JMenuItem commandNEW = new JMenuItem("Add new case");
+	
+	private JMenu view = new JMenu("View");
+	private JMenu show_hide = new JMenu("Show / Hide");
+	private JCheckBoxMenuItem viewClosedCases = new JCheckBoxMenuItem("Closed cases");
+	private JCheckBoxMenuItem viewTouchedCases = new JCheckBoxMenuItem("Touched cases");
+	private JCheckBoxMenuItem viewDueCases = new JCheckBoxMenuItem("Due cases");
+	private JCheckBoxMenuItem viewOverdueCases = new JCheckBoxMenuItem("Past due cases");
+	private JMenuItem viewShowAllCases = new JMenuItem("Show all cases");
+	private JMenu sort = new JMenu("Sort");
 	
 	private JButton jbSearch = new JButton("Search");
 	
@@ -74,47 +78,59 @@ public class MenuFrame extends JFrame implements WindowListener {
 		JMenu fileMenu = new JMenu("File");
 		menu.add(fileMenu);
 		
-		JMenu editMenu = new JMenu("Edit");
-		menu.add(editMenu);
+		fileMenu.add(save);
+		KeyStroke ctrl_s = KeyStroke.getKeyStroke(
+				KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK);
+		save.setAccelerator(ctrl_s);
 		
-		if (Main.BRANCH == -1) {
-			fileMenu.add(save);
-			KeyStroke ctrl_s = KeyStroke.getKeyStroke(
-					KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK);
-			save.setAccelerator(ctrl_s);			
-		}
-		
-		if (Main.BRANCH == -1) {
-			fileMenu.add(export);
-			KeyStroke ctrl_e = KeyStroke.getKeyStroke(
-					KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK);
-			export.setAccelerator(ctrl_e);	
-		}
+		fileMenu.add(export);
+		KeyStroke ctrl_e = KeyStroke.getKeyStroke(
+				KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK);
+		export.setAccelerator(ctrl_e);
 		
 		fileMenu.add(imprt);
 		imprt.add(importCSV);
 		imprt.add(importXML);
 		
-		editMenu.add(cmmnd);
-		cmmnd.add(commandNEW);
-		cmmnd.add(commandCPY);
-		cmmnd.add(commandDEL);
+		//menu.add(view);
+		view.add(show_hide);
+		show_hide.add(viewClosedCases);
+		show_hide.add(viewTouchedCases);
+		show_hide.add(viewDueCases);
+		show_hide.add(viewOverdueCases);
+		show_hide.addSeparator();
+		show_hide.add(viewShowAllCases);
+		view.add(sort);
 		
-		//set keystrokes
-		KeyStroke ctrl_o = KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK);
-		importCSV.setAccelerator(ctrl_o);
+		viewClosedCases.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				update_list_items();
+			}
+		});
 		
-		KeyStroke ctrl_i = KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_DOWN_MASK);
-		importXML.setAccelerator(ctrl_i);
+		viewTouchedCases.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				update_list_items();
+			}
+		});
 		
-		KeyStroke ctrl_q = KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_DOWN_MASK);
-		commandCPY.setAccelerator(ctrl_q);
+		viewDueCases.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				update_list_items();	
+			}
+		});
 		
-		KeyStroke ctrl_d = KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_DOWN_MASK);
-		commandDEL.setAccelerator(ctrl_d);
+		viewClosedCases.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				update_list_items();
+			}
+		});
 		
-		KeyStroke ctrl_n = KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK);
-		commandNEW.setAccelerator(ctrl_n);
+		viewShowAllCases.addActionListener(new ActionListener() {
+			@Override public void actionPerformed(ActionEvent e) {
+				update_list_items();
+			}
+		});
 		
 		//user clicked save
 		save.addActionListener(new ActionListener() {
@@ -125,7 +141,23 @@ public class MenuFrame extends JFrame implements WindowListener {
 					Main.SAVE_CHANGEABLE_FIELDS();
 					
 					//update list model
-					Main.UPDATE_LIST_MODEL(Main.SELECTED_INDEX);
+					StringBuilder sb = new StringBuilder();
+					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty()) {
+						sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
+					}
+					
+					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty() &&
+						!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+						sb.append(" / ");
+					}
+
+					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+						sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName());
+					}
+					
+					if (!sb.toString().isEmpty()) {
+						Main.LIST_MODEL.set(Main.SELECTED_INDEX, sb.toString());
+					}
 					
 					//write to file
 					try {
@@ -153,6 +185,7 @@ public class MenuFrame extends JFrame implements WindowListener {
 			}
 		});
 		
+		
 		//import
 		
 		//...csv
@@ -169,87 +202,19 @@ public class MenuFrame extends JFrame implements WindowListener {
 			}
 		});
 		
-		//commands
-		
-		//...copy
-		commandCPY.addActionListener(new ActionListener() {
+		//user clicked recover
+		recover.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				case_copy();
+				
 			}
 		});
 		
-		//...del
-		commandDEL.addActionListener(new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {
-				if (Main.FIELDS.size() == 1) {
-					//clear all
-					Main.FIELDS.clear();
-					Main.LIST_MODEL.clear();
-					Main.SELECTED_INDEX = 0;
-					
-					//add new element
-					Main.LIST_MODEL.add(Main.SELECTED_INDEX, "NEW");
-					Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
-					Main.FIELDS.add(new DataField());
-					LocalDate today = new LocalDate();
-					int days = 1;
-					while (days < 4) {
-						if (Main.FIELDS.get(Main.SELECTED_INDEX).workingDaysBetween(today, today.plusDays(days)) == 1)
-							break;
-						days++;
-					}
-					Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
-					Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
-					Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
-				}
-				
-				if (Main.FIELDS.size() > 1) {
-					//remove selected element
-					Main.FIELDS.remove(Main.SELECTED_INDEX);
-					Main.LIST_MODEL.remove(Main.SELECTED_INDEX);
-					if (Main.SELECTED_INDEX == Main.FIELDS.size())
-						Main.SELECTED_INDEX -= 1;
-					
-					//update view
-					Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
-					Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
-				}
-			}
-		});
-		
-		//...new
-		commandNEW.addActionListener(new ActionListener() {
-			@Override public void actionPerformed(ActionEvent arg0) {
-				//update object
-				Main.SAVE_CHANGEABLE_FIELDS();
-				
-				//update list model
-				Main.UPDATE_LIST_MODEL(Main.SELECTED_INDEX);
-				
-				//add item
-				Main.FIELDS.add(new DataField());
-				Main.SELECTED_INDEX = Main.FIELDS.size() - 1;
-				
-				//set initial status to touched and committed date to next business day
-				LocalDate today = new LocalDate();
-				int days = 1;
-				while (days < 4) {
-					if (Main.FIELDS.get(Main.SELECTED_INDEX).workingDaysBetween(today, today.plusDays(days)) == 1)
-						break;
-					days++;
-				}
-				Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
-				Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
-				
-				//add new item to case list
-				Main.LIST_MODEL.addElement("NEW");
-				Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
-				Main.LIST.ensureIndexIsVisible(Main.SELECTED_INDEX);
-				
-				Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
-			}
-		});
-		
+		/*
+		JPanel mainPanel = new JPanel();
+		mainPanel.setOpaque(true);
+		mainPanel.setBackground(Color.WHITE);
+		mainPanel.setLayout(new BorderLayout());
+		*/
 		JScrollPane jspInfo = new JScrollPane(new InfoPanel());
 		jspInfo.getVerticalScrollBar().setUnitIncrement(16);
 		
@@ -267,31 +232,38 @@ public class MenuFrame extends JFrame implements WindowListener {
 		leftPanel.add(searchPanel, BorderLayout.NORTH);
 		leftPanel.add(new ListPanel(), BorderLayout.CENTER);
 		
+		//mainPanel.add(leftPanel, BorderLayout.WEST);
+		//mainPanel.add(jspInfo, BorderLayout.CENTER);
+		
 		JSplitPane jsp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, jspInfo);
 		
 		this.setSize(Main.F_WIDTH, Main.F_HEIGHT);
 		this.setMinimumSize(new Dimension(Main.F_MIN_WIDTH, Main.F_MIN_HEIGHT));
-		this.setTitle("BLT Tool 2.3 \"Wheat Bread\""); //Backup Logging Tool... Tool!
+		this.setTitle("BLT Tool"); //Backup Logging Tool... Tool!
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setContentPane(jsp);
+		//this.setContentPane(mainPanel);
 		this.setResizable(true);
 		this.addWindowListener(this);
 		this.setVisible(true);
 		
 		Main.JTF_SEARCH_FIELD.getDocument().addDocumentListener(new DocumentListener() {
 			@Override public void changedUpdate(DocumentEvent e) {
+				//Main.JTF_SEARCH_FIELD.setBackground(Color.WHITE);
 				if (Main.JTF_SEARCH_FIELD.getText().isEmpty())
 					jbSearch.setEnabled(false);
 				else jbSearch.setEnabled(true);
 			}
 
 			@Override public void insertUpdate(DocumentEvent e) {
+				//Main.JTF_SEARCH_FIELD.setBackground(Color.WHITE);
 				if (Main.JTF_SEARCH_FIELD.getText().isEmpty())
 					jbSearch.setEnabled(false);
 				else jbSearch.setEnabled(true);
 			}
 
 			@Override public void removeUpdate(DocumentEvent e) {
+				//Main.JTF_SEARCH_FIELD.setBackground(Color.WHITE);
 				if (Main.JTF_SEARCH_FIELD.getText().isEmpty())
 					jbSearch.setEnabled(false);
 				else jbSearch.setEnabled(true);
@@ -303,24 +275,36 @@ public class MenuFrame extends JFrame implements WindowListener {
 			@Override public void actionPerformed(ActionEvent e) {
 				int newSelectedIndex = 0;
 				for (DataField d: Main.FIELDS) {
-					boolean foundMatch = false;
-					
 					if (Main.JTF_SEARCH_FIELD.getText().toLowerCase().contains(
-							d.getServiceRequest().toLowerCase()) &&
-							!d.getServiceRequest().isEmpty()) {
-						foundMatch = true;
-					}
-					
-					if (Main.JTF_SEARCH_FIELD.getText().toLowerCase().contains(
-							d.getServiceTag().toLowerCase()) &&
-							!d.getServiceTag().isEmpty()) {
-						foundMatch = true;
-					}
-					
-					if (foundMatch) {
+								d.getServiceRequest().toLowerCase()) ||
+							Main.JTF_SEARCH_FIELD.getText().toLowerCase().contains(
+								d.getServiceTag().toLowerCase())) {
+						
+						//Main.JTF_SEARCH_FIELD.setBackground(new Color(161, 255, 161));
+						
 						boolean hasUnsavedChanges = Main.HAS_UNSAVED_CHANGES;
+						
+						//save current
 						Main.SAVE_CHANGEABLE_FIELDS();
-						Main.UPDATE_LIST_MODEL(Main.SELECTED_INDEX);
+						
+						StringBuilder sb = new StringBuilder();
+						if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty()) {
+							sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
+						}
+						
+						if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty() &&
+							!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+							sb.append(" / ");
+						}
+
+						if (!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
+							sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName());
+						}
+						
+						if (!sb.toString().isEmpty()) {
+							Main.LIST_MODEL.set(Main.SELECTED_INDEX, sb.toString());
+						}
+						
 						Main.HAS_UNSAVED_CHANGES = hasUnsavedChanges;
 						
 						//move to found index
@@ -328,11 +312,17 @@ public class MenuFrame extends JFrame implements WindowListener {
 						Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
 						Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
 						Main.LIST.ensureIndexIsVisible(Main.SELECTED_INDEX);
-						
 						break;
-					}			
+					}
 					newSelectedIndex++;
-				}				
+				}
+				
+				//not found
+				/*
+				if (newSelectedIndex == Main.FIELDS.size()) {
+					Main.JTF_SEARCH_FIELD.setBackground(new Color(255, 181, 181));
+				}
+				*/
 			}
 		});
 	}
@@ -346,21 +336,20 @@ public class MenuFrame extends JFrame implements WindowListener {
 	}
 
 	@Override public void windowClosing(WindowEvent e) {
-		if (Main.BRANCH == -1) {
-			//no unsaved changes; exit without saving
-			if (!Main.HAS_UNSAVED_CHANGES) {
-				System.exit(0);
-			}
+		//handle unsaved changes
+		if (Main.HAS_UNSAVED_CHANGES) {
 			
-			//show save dialog
 			int choice = JOptionPane.showConfirmDialog(this, 
 					"Would you like to save your changes?", "Save", 
 					JOptionPane.YES_NO_CANCEL_OPTION);
 			
-			//...user selected yes; save and exit
+			//save changes and exit
 			if (choice == JOptionPane.YES_OPTION) {
+				//update FIELDS
 				Main.SAVE_CHANGEABLE_FIELDS();
-				try { //write to file
+				
+				//write to file
+				try {
 					FileOutputStream fileStream = new FileOutputStream("Data.ser");
 					ObjectOutputStream os = new ObjectOutputStream(fileStream);
 					for (DataField df : Main.FIELDS) os.writeObject(df);
@@ -373,87 +362,22 @@ public class MenuFrame extends JFrame implements WindowListener {
 				System.exit(0);
 			}
 			
-			//...user selected no; exit without saving
+			//discard changes and exit
 			else if (choice == JOptionPane.NO_OPTION) {
 				System.exit(0);
 			}
 			
-			//...user selected cancel
+			//cancel exit
 			else if (choice == JOptionPane.CANCEL_OPTION) {
 				//do nothing
 			}
 		}
 		
-		else { //mainstream branch
-			if (Main.HAS_UNSAVED_CHANGES || 
-					(Main.FIELDS.size() > 1) || 
-					(Main.FIELDS.size() == 1 && !Main.FIELDS.get(0).isEmpty())) {
-				//confirm user wants to exit and delete data
-				Object[] options = {"Yes", "No", "Save"};
-				int choice = JOptionPane.showOptionDialog(this, 
-						"Close the program and clear data?", "Warning", 
-						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, 
-						null, options, options[0]);
-				
-				//...user said yes; close and destroy data
-				if (choice == 0) {
-					Main.FIELDS.clear();
-					try { //write to file
-						FileOutputStream fileStream = new FileOutputStream("Data.ser");
-						ObjectOutputStream os = new ObjectOutputStream(fileStream);
-						for (DataField df : Main.FIELDS) os.writeObject(df);
-						os.close();
-					} catch (FileNotFoundException e1) {
-						e1.printStackTrace();
-					} catch (IOException e2) {
-						e2.printStackTrace();
-					}
-					System.exit(0);
-				}
-				
-				//...user said no; don't close program
-				else if (choice == 1) {
-					
-				}
-				
-				//...user said save
-				else if (choice == 2) {
-					//warn user about saving customer data
-					int c = JOptionPane.showConfirmDialog(this, 
-							"Storing customer data requires approval.\n"
-							+ "Are you sure you want to perform a one time save?");
-					
-					//...user said yes; save and exit
-					if (c == JOptionPane.YES_OPTION) {
-						Main.SAVE_CHANGEABLE_FIELDS();
-						try { //write to file
-							FileOutputStream fileStream = new FileOutputStream("Data.ser");
-							ObjectOutputStream os = new ObjectOutputStream(fileStream);
-							for (DataField df : Main.FIELDS) os.writeObject(df);
-							os.close();
-						} catch (FileNotFoundException e1) {
-							e1.printStackTrace();
-						} catch (IOException e2) {
-							e2.printStackTrace();
-						}
-						System.exit(0);
-					}
-					
-					//...user said no; don't close program
-					else if (c == JOptionPane.NO_OPTION) {
-						
-					}
-					
-					//...user said cancel; don't close program
-					else if (c == JOptionPane.CANCEL_OPTION) {
-						
-					}
-				}
-			} else { //nothing to save; exit without saving
-				System.exit(0);
-			}
+		//no unsaved changes --> exit
+		else {
+			System.exit(0);
 		}
-	} //endif window closing
+	}
 	
 	@Override public void windowDeactivated(WindowEvent e) {
 		
@@ -513,7 +437,18 @@ public class MenuFrame extends JFrame implements WindowListener {
 				Main.FIELDS = (ArrayList<DataField>) xstream.fromXML(chooser.getSelectedFile());
 				
 				//update list model
-				Main.UPDATE_LIST_MODEL();
+				for (int i = 0; i < Main.FIELDS.size(); i++) {
+					StringBuilder sb = new StringBuilder();
+					sb.append(Main.FIELDS.get(i).getServiceRequest());
+					if (!Main.FIELDS.get(i).getServiceRequest().isEmpty() &&
+						!Main.FIELDS.get(i).getName().isEmpty()) {
+						sb.append(" / ");
+					}
+					sb.append(Main.FIELDS.get(i).getName());
+					if (!sb.toString().isEmpty()) {
+						Main.LIST_MODEL.add(i, sb.toString());
+					}
+				}
 				
 				Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
 				Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
@@ -550,86 +485,14 @@ public class MenuFrame extends JFrame implements WindowListener {
 		try {
 			CSVReader reader = new CSVReader(
 					new FileReader(chooser.getSelectedFile()), delimiter);
-			
-			String[] nextLine = reader.readNext(); //first row of .csv w/ string values to check
-			
-			//check the first row, extract important indexes
-			
-			int OPENED_DATE_INDEX = 0;
-			int SR_NUMBER_INDEX = 0;
-			int SR_TITLE_INDEX = 0;
-			int SERVICE_TAG_INDEX = 0;
-			int LAST_NAME_INDEX = 0;
-			int FIRST_NAME_INDEX = 0;
-			int PRIMARY_PHONE_NUMBER_INDEX = 0;
-			int E_MAIL_INDEX = 0;
-			int COMMITTED_DATE_INDEX = 0;
-						
-			for (int i = 0; i < nextLine.length; i++) {
-				
-				//re-build title, e.g. "SR #", "SR Title", etc.. from .csv first row items
-				// Note: fixes unicode spacing issue, e.g. changes "S R  T i t l e" back to "SR Title"
-				StringBuilder temp = new StringBuilder();
-				if (nextLine.length > 1) {
-					
-					//find start char
-					int startChar = 0;
-					for (int j = 1; j < nextLine[i].length(); j++) {
-						if (nextLine[i].charAt(j) != ' ' &&
-								nextLine[i].charAt(j) != 'þ') {
-							startChar = j;
-							break;
-						}
-					}
-					
-					for (int j = startChar; j <= nextLine[i].length() - 2; j+= 2) {
-						temp.append(nextLine[i].charAt(j));
-					}
-					
-					System.out.println(temp.toString()); //TODO remove this line; for troubleshooting
-				}
-				
-				//assign index values based on column location in first row of .csv
-				if (temp.toString().equals("Opened"))
-					OPENED_DATE_INDEX = i;
-				
-				else if (temp.toString().equals("SR #"))
-					SR_NUMBER_INDEX = i;
-				
-				else if (temp.toString().equals("SR Title"))
-					SR_TITLE_INDEX = i;
-				
-				else if (temp.toString().equals("Service Tag"))
-					SERVICE_TAG_INDEX = i;
-				
-				else if (temp.toString().equals("Last Name"))
-					LAST_NAME_INDEX = i;
-				
-				else if (temp.toString().equals("First Name"))
-					FIRST_NAME_INDEX = i;
-				
-				else if (temp.toString().equals("Primary Phone #"))
-					PRIMARY_PHONE_NUMBER_INDEX = i;
-				
-				else if (temp.toString().equals("Email"))
-					E_MAIL_INDEX = i;
-				
-				else if (temp.toString().equals("Committed"))
-					COMMITTED_DATE_INDEX = i;
-				
-				else { } 
-					//nothing else yet... lots of potential to extract other data from .csv file
-			}
-			
-			//read the rest of the rows in the .csv
-			
+			String[] nextLine = reader.readNext(); //skip first line
 			while ((nextLine = reader.readNext()) != null) {
 				
 				//opened date
 				StringBuilder openedDateString = new StringBuilder();
-				if (nextLine.length > OPENED_DATE_INDEX) {
-					for (int i = 3; i < nextLine[OPENED_DATE_INDEX].length() - 2; i += 2) {
-						openedDateString.append(nextLine[OPENED_DATE_INDEX].charAt(i));
+				if (nextLine.length > 1) {
+					for (int i = 3; i < nextLine[1].length() - 2; i += 2) {
+						openedDateString.append(nextLine[1].charAt(i));
 					}
 				}
 				String[] strDate = openedDateString.toString().split(" ")[0].split("/");
@@ -642,43 +505,43 @@ public class MenuFrame extends JFrame implements WindowListener {
 										Integer.parseInt(strDate[1]));
 				}
 				
-				//service request number
+				//service request
 				StringBuilder serviceRequest = new StringBuilder();
-				if (nextLine.length > SR_NUMBER_INDEX) {
-					for (int i = 3; i < nextLine[SR_NUMBER_INDEX].length() - 2; i += 2) {
-						serviceRequest.append(nextLine[SR_NUMBER_INDEX].charAt(i));
+				if (nextLine.length > 3) {
+					for (int i = 3; i < nextLine[3].length() - 2; i += 2) {
+						serviceRequest.append(nextLine[3].charAt(i));
 					}
 				}
 				
-				//description (a.k.a service request title)
+				//description
 				StringBuilder description = new StringBuilder();
-				if (nextLine.length > SR_TITLE_INDEX) {
-					for (int i = 3; i < nextLine[SR_TITLE_INDEX].length() - 2; i += 2) {
-						description.append(nextLine[SR_TITLE_INDEX].charAt(i));
+				if (nextLine.length > 4) {
+					for (int i = 3; i < nextLine[4].length() - 2; i += 2) {
+						description.append(nextLine[4].charAt(i));
 					}
 				}
 				
 				//service tag
 				StringBuilder serviceTag = new StringBuilder();
-				if (nextLine.length > SERVICE_TAG_INDEX) {
-					for (int i = 3; i < nextLine[SERVICE_TAG_INDEX].length() - 2; i += 2) {
-						serviceTag.append(nextLine[SERVICE_TAG_INDEX].charAt(i));
+				if (nextLine.length > 5) {
+					for (int i = 3; i < nextLine[5].length() - 2; i += 2) {
+						serviceTag.append(nextLine[5].charAt(i));
 					}
 				}
 				
 				//last name
 				StringBuilder lastName = new StringBuilder();
-				if (nextLine.length > LAST_NAME_INDEX) {
-					for (int i = 3; i < nextLine[LAST_NAME_INDEX].length() - 2; i += 2) {
-						lastName.append(nextLine[LAST_NAME_INDEX].charAt(i));
+				if (nextLine.length > 8) {
+					for (int i = 3; i < nextLine[8].length() - 2; i += 2) {
+						lastName.append(nextLine[8].charAt(i));
 					}
 				}
 				
-				//first name
+				//last name
 				StringBuilder firstName = new StringBuilder();
-				if (nextLine.length > FIRST_NAME_INDEX) {
-					for (int i = 3; i < nextLine[FIRST_NAME_INDEX].length() - 2; i += 2) {
-						firstName.append(nextLine[FIRST_NAME_INDEX].charAt(i));
+				if (nextLine.length > 9) {
+					for (int i = 3; i < nextLine[9].length() - 2; i += 2) {
+						firstName.append(nextLine[9].charAt(i));
 					}
 				}
 				
@@ -687,27 +550,25 @@ public class MenuFrame extends JFrame implements WindowListener {
 				
 				//phone number
 				StringBuilder phone = new StringBuilder();
-				if (nextLine.length > PRIMARY_PHONE_NUMBER_INDEX) {
-					for (int i = 3; i < nextLine[PRIMARY_PHONE_NUMBER_INDEX].length() - 2; i += 2) {
-						if (Character.isDigit(nextLine[PRIMARY_PHONE_NUMBER_INDEX].charAt(i))) {
-							phone.append(nextLine[PRIMARY_PHONE_NUMBER_INDEX].charAt(i));
-						}
+				if (nextLine.length > 10) {
+					for (int i = 3; i < nextLine[10].length() - 2; i += 2) {
+						phone.append(nextLine[10].charAt(i));
 					}
 				}
 				
 				//email
 				StringBuilder email = new StringBuilder();
-				if (nextLine.length > E_MAIL_INDEX) {
-					for (int i = 3; i < nextLine[E_MAIL_INDEX].length() - 2; i += 2) {
-						email.append(nextLine[E_MAIL_INDEX].charAt(i));
+				if (nextLine.length > 11) {
+					for (int i = 3; i < nextLine[11].length() - 2; i += 2) {
+						email.append(nextLine[11].charAt(i));
 					}
 				}
 				
 				//committed date
 				StringBuilder committedDateString = new StringBuilder();
-				if (nextLine.length > COMMITTED_DATE_INDEX) {
-					for (int i = 3; i < nextLine[COMMITTED_DATE_INDEX].length() - 2; i+= 2) {
-						committedDateString.append(nextLine[COMMITTED_DATE_INDEX].charAt(i));
+				if (nextLine.length > 42) {
+					for (int i = 3; i < nextLine[42].length() - 2; i+= 2) {
+						committedDateString.append(nextLine[42].charAt(i));
 					}
 				}
 				String[] stringDate = committedDateString.toString()
@@ -726,16 +587,9 @@ public class MenuFrame extends JFrame implements WindowListener {
 				df.setServiceRequest(serviceRequest.toString());
 				df.setDescription(description.toString());
 				df.setServiceTag(serviceTag.toString());
-				df.setPrimaryFirstName(firstName.toString());
-				df.setPrimaryLastName(lastName.toString());
-				if (phone.toString().length() >= 3) {
-					df.setPrimaryAreaCode(phone.substring(0, 3));
-				}
-				if (phone.toString().length() > 3) {
-					df.setPrimaryPhoneNumber(phone.substring(3));
-				}
-				df.setPrimaryEmail(email.toString());
-				
+				df.setName(name);
+				df.setPhone(phone.toString());
+				df.setEmail(email.toString());
 				if (hasCommittedDate) {
 					df.setCommittedDate(committedDate);
 					LocalDate today = new LocalDate();
@@ -778,14 +632,12 @@ public class MenuFrame extends JFrame implements WindowListener {
 					}
 					
 					if (!df.getServiceRequest().isEmpty() &&
-						!df.getPrimaryFirstName().isEmpty()) {
+						!df.getName().isEmpty()) {
 						sb.append(" / ");
 					}
 					
-					if (!df.getPrimaryFirstName().isEmpty()) {
-						sb.append(df.getPrimaryFirstName()
-								+ " "
-								+ df.getPrimaryLastName());
+					if (!df.getName().isEmpty()) {
+						sb.append(df.getName());
 					}
 					
 					if (!sb.toString().isEmpty()) {
@@ -837,60 +689,6 @@ public class MenuFrame extends JFrame implements WindowListener {
 			//output error message
 			JOptionPane.showMessageDialog(this, "Error importing file!");
 		}
-	}
-	
-	private void case_copy() {
-		//update object
-		Main.SAVE_CHANGEABLE_FIELDS();
-		
-		//update list model
-		Main.UPDATE_LIST_MODEL(Main.SELECTED_INDEX);
-				
-		//add new item
-		int copyIndex = Main.SELECTED_INDEX;
-		Main.FIELDS.add(new DataField(Main.FIELDS.get(copyIndex)));
-		Main.SELECTED_INDEX = Main.FIELDS.size() - 1;
-		
-		//set initial status to touched and committed date to next business day
-		LocalDate today = new LocalDate();
-		int days = 1;
-		while (days < 4) {
-			if (Main.FIELDS.get(Main.SELECTED_INDEX).workingDaysBetween(today, today.plusDays(days)) == 1)
-				break;
-			days++;
-		}
-		Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
-		Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
-		
-		//add new item to case list
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
-		
-		if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty() && 
-				(!Main.FIELDS.get(Main.SELECTED_INDEX).getPrimaryFirstName().isEmpty() || 
-					!Main.FIELDS.get(Main.SELECTED_INDEX).getPrimaryLastName().isEmpty())) {
-			sb.append(" / ");
-		}
-		
-		sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getPrimaryFirstName());
-		
-		if (!Main.FIELDS.get(Main.SELECTED_INDEX).getPrimaryFirstName().isEmpty() &&
-			!Main.FIELDS.get(Main.SELECTED_INDEX).getPrimaryLastName().isEmpty()) {
-			sb.append(" ");
-		}
-		
-		sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getPrimaryLastName());
-		
-		if (!sb.toString().isEmpty()) {
-			Main.LIST_MODEL.addElement(sb.toString());
-		} else {
-			Main.LIST_MODEL.addElement("NEW");
-		}
-		
-		Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
-		Main.LIST.ensureIndexIsVisible(Main.SELECTED_INDEX);
-		Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
 	}
 	
 	void update_list_items() {

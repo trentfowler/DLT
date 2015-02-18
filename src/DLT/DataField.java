@@ -7,10 +7,9 @@ import org.joda.time.LocalDate;
 /**
  * DataField class
  * 
- * This class represents one service request.
+ * ...
  * 
  * @author Trent
- * @author Bryan
  *
  */
 
@@ -27,37 +26,19 @@ public class DataField implements Serializable {
 	private boolean palIsChecked;
 	private boolean plasticsIsChecked;
 	private boolean cidarIsChecked;
-	private boolean noacIsChecked;
 	private String company;
-	
-	private String primaryFirstName;
-	private String primaryLastName;
-	private String primaryAreaCode;
-	private String primaryPhoneNumber;
-	private String primaryExt;
-	private String primaryEmail;
-	private String primaryAltAreaCode;
-	private String primaryAltPhoneNumber;
-	private String primaryAltExt;
-	private String primaryAddress;
-	private String primaryAddressL2;
-	private String primaryCity;
-	private String primaryZip;
-	
-	private String altFirstName;
-	private String altLastName;
-	private String altAreaCode;
-	private String altPhoneNumber;
-	private String altExt;
+	private String name;
+	private String email;
+	private String phone;
+	private String altPhone;
+	private String address;
+	private String address2;
+	private String zip;
+	private String altName;
 	private String altEmail;
-	private String altAltAreaCode;
-	private String altAltPhoneNumber;
-	private String altAltExt;
+	private String altPrimaryPhone;
+	private String altSecondaryPhone;
 	private String altAddress;
-	private String altAddressL2;
-	private String altCity;
-	private String altZip;
-	
 	private String serviceTag;
 	private String serviceRequest;
 	private String symptoms;
@@ -84,37 +65,19 @@ public class DataField implements Serializable {
 		this.palIsChecked = false;
 		this.plasticsIsChecked = false;
 		this.cidarIsChecked = false;
-		this.noacIsChecked = false;
 		this.company = "";
-		
-		this.primaryFirstName = "";
-		this.primaryLastName = "";
-		this.primaryAreaCode = "";
-		this.primaryPhoneNumber = "";
-		this.primaryExt = "";
-		this.primaryEmail = "";
-		this.primaryAltAreaCode = "";
-		this.primaryAltPhoneNumber = "";
-		this.primaryAltExt = "";
-		this.primaryAddress = "";
-		this.primaryAddressL2 = "";
-		this.primaryCity = "";
-		this.primaryZip = "";
-		
-		this.altFirstName = "";
-		this.altLastName = "";
-		this.altAreaCode = "";
-		this.altPhoneNumber = "";
-		this.altExt = "";
+		this.name = "";
+		this.email = "";
+		this.phone = "";
+		this.altPhone = "";
+		this.address = "";
+		this.address2 = "";
+		this.zip = "";
+		this.altName = "";
 		this.altEmail = "";
-		this.altAltAreaCode = "";
-		this.altAltPhoneNumber = "";
-		this.altAltExt = "";
+		this.altPrimaryPhone = "";
+		this.altSecondaryPhone = "";
 		this.altAddress = "";
-		this.altAddressL2 = "";
-		this.altCity = "";
-		this.altZip = "";
-		
 		this.serviceTag = "";
 		this.serviceRequest = "";
 		this.symptoms = "";
@@ -144,38 +107,19 @@ public class DataField implements Serializable {
 		this.palIsChecked = df.getPALIsChecked();
 		this.plasticsIsChecked = df.getPlasticsIsChecked();
 		this.cidarIsChecked = df.getCIDARIsChecked();
-		this.noacIsChecked = df.getNOACIsChecked();
-		
 		this.company = df.getCompany();
-		
-		this.primaryFirstName = df.getPrimaryFirstName();
-		this.primaryLastName = df.getPrimaryLastName();
-		this.primaryAreaCode = df.getPrimaryAreaCode();
-		this.primaryPhoneNumber = df.getPrimaryPhoneNumber();
-		this.primaryExt = df.getPrimaryExt();
-		this.primaryEmail = df.getPrimaryEmail();
-		this.primaryAltAreaCode = df.getPrimaryAltAreaCode();
-		this.primaryAltPhoneNumber = df.getPrimaryAltPhoneNumber();
-		this.primaryAltExt = df.getPrimaryExt();
-		this.primaryAddress = df.getPrimaryAddress();
-		this.primaryAddressL2 = df.getPrimaryAddressL2();
-		this.primaryCity = df.getPrimaryCity();
-		this.primaryZip = df.getPrimaryZip();
-		
-		this.altFirstName = df.getAltFirstName();
-		this.altLastName = df.getAltLastName();
-		this.altAreaCode = df.getAltAreaCode();
-		this.altPhoneNumber = df.getAltPhoneNumber();
-		this.altExt = df.getAltExt();
+		this.name = df.getName();
+		this.email = df.getEmail();
+		this.phone = df.getPhone();
+		this.altPhone = df.getAltPhone();
+		this.address = df.getAddress();
+		this.address2 = df.getAddress2();
+		this.zip = df.getZip();
+		this.altName = df.getAltName();
 		this.altEmail = df.getAltEmail();
-		this.altAltAreaCode = df.getAltAltAreaCode();
-		this.altAltPhoneNumber = df.getAltAltPhoneNumber();
-		this.altAltExt = df.getAltExt();
+		this.altPrimaryPhone = df.getAltPrimaryPhone();
+		this.altSecondaryPhone = df.getAltSecondaryPhone();
 		this.altAddress = df.getAltAddress();
-		this.altAddressL2 = df.getAltAddressL2();
-		this.altCity = df.getAltCity();
-		this.altZip = df.getAltZip();
-		
 		this.serviceTag = df.getServiceTag();
 		this.serviceRequest = df.getServiceRequest();
 		this.symptoms = df.getSymptoms();
@@ -225,116 +169,56 @@ public class DataField implements Serializable {
 		return this.cidarIsChecked;
 	}
 	
-	boolean getNOACIsChecked() {
-		return this.noacIsChecked;
-	}
-	
 	String getCompany() {
 		return this.company;
 	}
 	
-	String getPrimaryFirstName() {
-		return this.primaryFirstName;
+	String getName() {
+		return this.name;
 	}
 	
-	String getPrimaryLastName() {
-		return this.primaryLastName;
+	String getEmail() {
+		return this.email;
 	}
 	
-	String getPrimaryAreaCode() {
-		return this.primaryAreaCode;
+	String getPhone() {
+		return this.phone;
 	}
 	
-	String getPrimaryPhoneNumber() {
-		return this.primaryPhoneNumber;
+	String getAltPhone() {
+		return this.altPhone;
 	}
 	
-	String getPrimaryExt() {
-		return this.primaryExt;
+	String getAddress() {
+		return this.address;
 	}
 	
-	String getPrimaryEmail() {
-		return this.primaryEmail;
+	String getAddress2() {
+		return this.address2;
 	}
 	
-	String getPrimaryAltAreaCode() {
-		return this.primaryAltAreaCode;
+	String getZip() {
+		return this.zip;
 	}
 	
-	String getPrimaryAltPhoneNumber() {
-		return this.primaryAltPhoneNumber;
-	}
-	
-	String getPrimaryAltExt() {
-		return this.primaryAltExt;
-	}
-	
-	String getPrimaryAddress() {
-		return this.primaryAddress;
-	}
-	
-	String getPrimaryAddressL2() {
-		return this.primaryAddressL2;
-	}
-	
-	String getPrimaryCity() {
-		return this.primaryCity;
-	}
-	
-	String getPrimaryZip() {
-		return this.primaryZip;
-	}
-	
-	String getAltFirstName() {
-		return this.altFirstName;
-	}
-	
-	String getAltLastName() {
-		return this.altLastName;
-	}
-	
-	String getAltAreaCode() {
-		return this.altAreaCode;
-	}
-	
-	String getAltPhoneNumber() {
-		return this.altPhoneNumber;
-	}
-	
-	String getAltExt() {
-		return this.altExt;
+	String getAltName() {
+		return this.altName;
 	}
 	
 	String getAltEmail() {
 		return this.altEmail;
 	}
 	
-	String getAltAltAreaCode() {
-		return this.altAltAreaCode;
+	String getAltPrimaryPhone() {
+		return this.altPrimaryPhone;
 	}
 	
-	String getAltAltPhoneNumber() {
-		return this.altAltPhoneNumber;
-	}
-	
-	String getAltAltExt() {
-		return this.altAltExt;
+	String getAltSecondaryPhone() {
+		return this.altSecondaryPhone;
 	}
 	
 	String getAltAddress() {
 		return this.altAddress;
-	}
-	
-	String getAltAddressL2() {
-		return this.altAddressL2;
-	}
-	
-	String getAltCity() {
-		return this.altCity;
-	}
-	
-	String getAltZip() {
-		return this.altZip;
 	}
 	
 	String getServiceTag() {
@@ -414,116 +298,56 @@ public class DataField implements Serializable {
 		this.cidarIsChecked = newCIDARIsChecked;
 	}
 	
-	void setNOACIsChecked(boolean newNOACIsChecked) {
-		this.noacIsChecked = newNOACIsChecked;
-	}
-	
 	void setCompany(String newCompany) {
 		this.company = newCompany;
 	}
 	
-	void setPrimaryFirstName(String newPrimaryFirstName) {
-		this.primaryFirstName = newPrimaryFirstName;
+	void setName(String newName) {
+		this.name = newName;
 	}
 	
-	void setPrimaryLastName(String newPrimaryLastName) {
-		this.primaryLastName = newPrimaryLastName;
+	void setEmail(String newEmail) {
+		this.email = newEmail;
 	}
 	
-	void setPrimaryAreaCode(String newPrimaryAreaCode) {
-		this.primaryAreaCode = newPrimaryAreaCode;
+	void setPhone(String newPhone) {
+		this.phone = newPhone;
 	}
 	
-	void setPrimaryPhoneNumber(String newPrimaryPhoneNumber) {
-		this.primaryPhoneNumber = newPrimaryPhoneNumber;
+	void setAltPhone(String newAltPhone) {
+		this.altPhone = newAltPhone;
 	}
 	
-	void setPrimaryExt(String newPrimaryExt) {
-		this.primaryExt = newPrimaryExt;
+	void setAddress(String newAddress) {
+		this.address = newAddress;
 	}
 	
-	void setPrimaryEmail(String newPrimaryEmail) {
-		this.primaryEmail = newPrimaryEmail;
+	void setAddress2(String newAddress2) {
+		this.address2 = newAddress2;
 	}
 	
-	void setPrimaryAltAreaCode(String newPrimaryAltAreaCode) {
-		this.primaryAltAreaCode = newPrimaryAltAreaCode;
+	void setZip(String newZip) {
+		this.zip = newZip;
 	}
 	
-	void setPrimaryAltPhoneNumber(String newPrimaryAltPhoneNumber) {
-		this.primaryAltPhoneNumber = newPrimaryAltPhoneNumber;
-	}
-	
-	void setPrimaryAltExt(String newPrimaryAltExt) {
-		this.primaryAltExt = newPrimaryAltExt;
-	}
-	
-	void setPrimaryAddress(String newPrimaryAddress) {
-		this.primaryAddress = newPrimaryAddress;
-	}
-	
-	void setPrimaryAddressL2(String newPrimaryAddressL2) {
-		this.primaryAddressL2 = newPrimaryAddressL2;
-	}
-	
-	void setPrimaryCity(String newPrimaryCity) {
-		this.primaryCity = newPrimaryCity;
-	}
-	
-	void setPrimaryZip(String newPrimaryZip) {
-		this.primaryZip = newPrimaryZip;
-	}
-	
-	void setAltFirstName(String newAltFirstName) {
-		this.altFirstName = newAltFirstName;
-	}
-	
-	void setAltLastName(String newAltLastName) {
-		this.altLastName = newAltLastName;
-	}
-	
-	void setAltAreaCode(String newAltAreaCode) {
-		this.altAreaCode = newAltAreaCode;
-	}
-	
-	void setAltPhoneNumber(String newAltPhoneNumber) {
-		this.altPhoneNumber = newAltPhoneNumber;
-	}
-	
-	void setAltExt(String newAltExt) {
-		this.altExt = newAltExt;
+	void setAltName(String newAltName) {
+		this.altName = newAltName;
 	}
 	
 	void setAltEmail(String newAltEmail) {
 		this.altEmail = newAltEmail;
 	}
 	
-	void setAltAltAreaCode(String newAltAltAreaCode) {
-		this.altAltAreaCode = newAltAltAreaCode;
+	void setAltPrimaryPhone(String newAltPrimaryPhone) {
+		this.altPrimaryPhone = newAltPrimaryPhone;
 	}
 	
-	void setAltAltPhoneNumber(String newAltAltPhoneNumber) {
-		this.altAltPhoneNumber = newAltAltPhoneNumber;
-	}
-	
-	void setAltAltExt(String newAltAltExt) {
-		this.altAltExt = newAltAltExt;
+	void setAltSecondaryPhone(String newAltSecondaryPhone) {
+		this.altSecondaryPhone = newAltSecondaryPhone;
 	}
 	
 	void setAltAddress(String newAltAddress) {
 		this.altAddress = newAltAddress;
-	}
-	
-	void setAltAddressL2(String newAltAddressL2) {
-		this.altAddressL2 = newAltAddressL2;
-	}
-	
-	void setAltCity(String newAltCity) {
-		this.altCity = newAltCity;
-	}
-	
-	void setAltZip(String newAltZip) {
-		this.altZip = newAltZip;
 	}
 	
 	void setServiceTag(String newServiceTag) {
@@ -566,58 +390,6 @@ public class DataField implements Serializable {
 		this.openedDate = newOpenedDate;
 	}
 	
-	/**
-	 * Returns true if the DataField object is empty.
-	 * 
-	 */
-	boolean isEmpty() {
-		String s = "";
-		return this.vaIsChecked == false && 
-			   this.toadeIsChecked == false && 
-			   this.vdiIsChecked == false && 
-			   this.emailCapIsChecked == false &&
-			   this.tarpIsChecked == false &&
-			   this.posIsChecked == false &&
-			   this.palIsChecked == false &&
-			   this.plasticsIsChecked == false &&
-			   this.cidarIsChecked == false &&
-			   this.noacIsChecked == false &&
-			   s.equals(company) &&
-			   s.equals(primaryFirstName) &&
-			   s.equals(primaryLastName) &&
-			   s.equals(primaryAreaCode) &&
-			   s.equals(primaryPhoneNumber) &&
-			   s.equals(primaryExt) &&
-			   s.equals(primaryEmail) &&
-			   s.equals(primaryAltAreaCode) &&
-			   s.equals(primaryAltPhoneNumber) &&
-			   s.equals(primaryAltExt) &&
-			   s.equals(primaryAddress) &&
-			   s.equals(primaryAddressL2) &&
-			   s.equals(primaryCity) &&
-			   s.equals(primaryZip) &&
-			   s.equals(altFirstName) &&
-			   s.equals(altLastName) &&
-			   s.equals(altAreaCode) &&
-			   s.equals(altPhoneNumber) &&
-			   s.equals(altExt) &&
-			   s.equals(altEmail) &&
-			   s.equals(altAltAreaCode) &&
-			   s.equals(altAltPhoneNumber) &&
-			   s.equals(altAltExt) &&
-			   s.equals(altAddress) &&
-			   s.equals(altAddressL2) &&
-			   s.equals(altCity) &&
-			   s.equals(altZip) &&
-			   s.equals(serviceTag) &&
-			   s.equals(serviceRequest) &&
-			   s.equals(symptoms) &&
-			   s.equals(troubleshooting) &&
-			   s.equals(conclusion) &&
-			   s.equals(description) &&
-			   s.equals(notes);
-	}
-		
 	/**
 	 * Sets the status of the case to DUE if committed date is today, OVERDUE if 
 	 * committed date is before today, and TOUCHED if committed date is after 

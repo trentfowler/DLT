@@ -19,8 +19,9 @@ public class CustomListCellRenderer extends JLabel implements ListCellRenderer {
 	private static final long serialVersionUID = 2690029116548791087L;
 	
 	private JList defaultColorList = new JList();
+	private Color defaultListColor = defaultColorList.getBackground();
 	private Color defaultSelectorColor = defaultColorList.getSelectionBackground();
-		
+	
 	public CustomListCellRenderer() {
 		setOpaque(true);
 	}
@@ -50,20 +51,10 @@ public class CustomListCellRenderer extends JLabel implements ListCellRenderer {
 					
 			if (isSelected) {
 				setBackground(defaultSelectorColor);
-			}
+			}			
 		}
 		
 		return this;
 	}
 	
-	//TODO work on hovered list item instead of selected list item
-	/*
-	@Override public String getToolTipText() {
-		if (Main.FIELDS.get(Main.SELECTED_INDEX).getStatus() != Main.STATUS_IS_CLOSED) {
-			return "Committed Date: " + Main.FIELDS.get(Main.SELECTED_INDEX).getCommittedDate().toString();
-
-		}
-		return "No Committed date.";
-	}
-	*/
 }

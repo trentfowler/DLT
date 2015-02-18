@@ -26,7 +26,7 @@ public class DescriptionPanel extends JPanel implements DocumentListener {
 		this.setBorder(new EmptyBorder(0, 0, 5, 0));
 		
 		this.setLayout(new BorderLayout());
-		
+				
 		JLabel jlDescription = new JLabel("Description:");
 		jlDescription.setOpaque(true);
 		jlDescription.setBackground(new Color(90, 167, 226));
