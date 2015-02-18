@@ -80,23 +80,7 @@ public class ListPanel extends JPanel implements ActionListener {
 					Main.SAVE_CHANGEABLE_FIELDS();
 					
 					//update list model
-					StringBuilder sb = new StringBuilder();
-					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty()) {
-						sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
-					}
-					
-					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty() &&
-						!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
-						sb.append(" / ");
-					}
-
-					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
-						sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName());
-					}
-					
-					if (!sb.toString().isEmpty()) {
-						Main.LIST_MODEL.set(Main.SELECTED_INDEX, sb.toString());
-					}
+					Main.UPDATE_LIST_MODEL(Main.SELECTED_INDEX);
 					
 					//update view
 					if (Main.LIST.getSelectedIndex() != -1) Main.SELECTED_INDEX = Main.LIST.getSelectedIndex();
@@ -133,23 +117,7 @@ public class ListPanel extends JPanel implements ActionListener {
 					Main.SAVE_CHANGEABLE_FIELDS();
 					
 					//update list model
-					StringBuilder sb = new StringBuilder();
-					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty()) {
-						sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
-					}
-					
-					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty() &&
-						!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
-						sb.append(" / ");
-					}
-
-					if (!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
-						sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName());
-					}
-					
-					if (!sb.toString().isEmpty()) {
-						Main.LIST_MODEL.set(Main.SELECTED_INDEX, sb.toString());
-					}
+					Main.UPDATE_LIST_MODEL(Main.SELECTED_INDEX);
 					
 					//update view
 					if (Main.LIST.getSelectedIndex() != -1) 
@@ -173,23 +141,7 @@ public class ListPanel extends JPanel implements ActionListener {
 			Main.SAVE_CHANGEABLE_FIELDS();
 			
 			//update list model
-			StringBuilder sb = new StringBuilder();
-			if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty()) {
-				sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest());
-			}
-			
-			if (!Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest().isEmpty() &&
-				!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
-				sb.append(" / ");
-			}
-
-			if (!Main.FIELDS.get(Main.SELECTED_INDEX).getName().isEmpty()) {
-				sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getName());
-			}
-			
-			if (!sb.toString().isEmpty()) {
-				Main.LIST_MODEL.set(Main.SELECTED_INDEX, sb.toString());
-			}
+			Main.UPDATE_LIST_MODEL(Main.SELECTED_INDEX);
 			
 			//add item
 			Main.FIELDS.add(new DataField());
@@ -217,7 +169,7 @@ public class ListPanel extends JPanel implements ActionListener {
 		//user clicked remove
 		else if (e.getSource() == Main.JB_REMOVE) {
 			if (Main.FIELDS.size() == 1) {
-				//reset all
+				//clear all
 				Main.FIELDS.clear();
 				Main.LIST_MODEL.clear();
 				Main.SELECTED_INDEX = 0;
@@ -226,6 +178,19 @@ public class ListPanel extends JPanel implements ActionListener {
 				Main.LIST_MODEL.add(Main.SELECTED_INDEX, "NEW");
 				Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
 				Main.FIELDS.add(new DataField());
+				
+				//set committed date and status
+				LocalDate today = new LocalDate();
+				int days = 1;
+				while (days < 4) {
+					if (Main.FIELDS.get(Main.SELECTED_INDEX).workingDaysBetween(today, today.plusDays(days)) == 1)
+						break;
+					days++;
+				}
+				Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
+				Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
+				
+				//populate view
 				Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
 			}
 			
@@ -245,9 +210,10 @@ public class ListPanel extends JPanel implements ActionListener {
 		//user clicked sort
 		else if (e.getSource() == jbSort) {
 			
+			//save the service request number of the currently selected case for later
 			String selectedIndexSR = Main.FIELDS.get(Main.SELECTED_INDEX).getServiceRequest();
 			
-			//sort by committed date
+			//first arrange by committed date
 			int noSwapCounter = 0;
 			while (noSwapCounter < 2) {
 				boolean didSwap = false;
@@ -258,7 +224,6 @@ public class ListPanel extends JPanel implements ActionListener {
 						Main.FIELDS.set(i, new DataField(Main.FIELDS.get(i + 1)));
 						Main.FIELDS.set(i + 1, temp);
 						didSwap = true;
-						break;
 					}
 				}
 				if (didSwap == false) {
@@ -266,7 +231,7 @@ public class ListPanel extends JPanel implements ActionListener {
 				}
 			}
 			
-			//bubble down closed cases
+			//then bubble down closed cases
 			noSwapCounter = 0;
 			while (noSwapCounter < 2) {
 				boolean didSwap = false;
@@ -284,7 +249,7 @@ public class ListPanel extends JPanel implements ActionListener {
 				}
 			}
 			
-			//then sort by case age
+			//then, for cases with the same committed date, sort by case age
 			noSwapCounter = 0;
 			while (noSwapCounter < 2) {
 				boolean didSwap = false;
@@ -297,7 +262,6 @@ public class ListPanel extends JPanel implements ActionListener {
 							Main.FIELDS.set(i, new DataField(Main.FIELDS.get(i + 1)));
 							Main.FIELDS.set(i + 1, temp);
 							didSwap = true;
-							break;
 						}
 					}
 				}
@@ -314,12 +278,14 @@ public class ListPanel extends JPanel implements ActionListener {
 				}
 				
 				if (!Main.FIELDS.get(i).getServiceRequest().isEmpty() &&
-						!Main.FIELDS.get(i).getName().isEmpty()) {
+						!Main.FIELDS.get(i).getPrimaryFirstName().isEmpty()) {
 					 sb.append(" / ");
 				}
 				
-				if (!Main.FIELDS.get(i).getName().isEmpty()) {
-					sb.append(Main.FIELDS.get(i).getName());
+				if (!Main.FIELDS.get(i).getPrimaryFirstName().isEmpty()) {
+					sb.append(Main.FIELDS.get(i).getPrimaryFirstName()
+							+ " " 
+							+ Main.FIELDS.get(i).getPrimaryLastName());
 				}
 				
 				if (!sb.toString().isEmpty()) {
@@ -340,6 +306,7 @@ public class ListPanel extends JPanel implements ActionListener {
 			Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
 			Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
 			
+			//flag unsaved changes
 			Main.HAS_UNSAVED_CHANGES = true;
 		}
 	}

@@ -88,8 +88,26 @@ public class ButtonPanel extends JPanel implements ActionListener {
 		//if generate conclusion button is pressed --> copy to clipboard
 		else if (e.getSource() == jbGenerateConclusion) {
 			
+			StringBuilder sb = new StringBuilder();
+			sb.append("I: ");
+			sb.append(Main.JTF_DESCRIPTION.getText());
+			sb.append(" C: ");
+			sb.append(Main.JTA_CONCLUSION.getText());
+			
+			if (Main.JCHK_POS.isSelected()) {
+				sb.append(" Parts only dispatch.");
+			}
+			
+			if (Main.JCHK_PAL.isSelected()) {
+				sb.append(" Parts and labor dispatch.");
+				
+				if (Main.JCHK_NOAC.isSelected()) {
+					sb.append(" No alt contact.");
+				}
+			}
+			
 			StringSelection stringSelection = 
-					new StringSelection(Main.JTA_CONCLUSION.getText());
+					new StringSelection(sb.toString());
 			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 			clpbrd.setContents(stringSelection, null);
 		}
@@ -141,10 +159,12 @@ public class ButtonPanel extends JPanel implements ActionListener {
 			if (!Main.JTF_SERVICE_REQUEST.getText().isEmpty()) {
 				s = s.replace("%sr%", Main.JTF_SERVICE_REQUEST.getText());
 			}
+			/*
 			if (!Main.JTF_NAME.getText().isEmpty()) {
 				String[] names = Main.JTF_NAME.getText().split("\\s+"); //split at white space
 				s = s.replace("%fn%", names[0]);
 			}
+			*/
 			if (!Main.JTF_DESCRIPTION.getText().isEmpty()) {
 				s = s.replace("%id%", Main.JTF_DESCRIPTION.getText());
 			}
