@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
  * ...
  * 
  * @author Trent
+ * @author Bryan
  *
  */
 public class CheckBoxPanel extends JPanel implements ActionListener {
@@ -35,7 +36,7 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		Main.JCHK_PAL.setBackground(Color.WHITE);
 		Main.JCHK_PLASTICS.setBackground(Color.WHITE);
 		Main.JCHK_CIDAR.setBackground(Color.WHITE);
-		Main.JCHK_NOC.setBackground(Color.WHITE);
+		Main.JCHK_NOAC.setBackground(Color.WHITE);
 		
 		Main.JCHK_VA.setToolTipText("Verified Authorization");
 		Main.JCHK_TOADE.setToolTipText("Told Owner About Date of Expiration");
@@ -43,11 +44,10 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		Main.JCHK_EMAIL_CAP.setToolTipText("E-mail Captured");
 		Main.JCHK_TARP.setToolTipText("Told About Return Policy");
 		Main.JCHK_POS.setToolTipText("Parts Only Service");
-		Main.JCHK_PAL.setToolTipText("Parts and Labor");
+		Main.JCHK_PAL.setToolTipText("Parts and Labor Dispatch");
 		Main.JCHK_PLASTICS.setToolTipText("Checked Plastics");
-		Main.JCHK_CIDAR.setToolTipText("Customer Induced Damage Explained");
-		Main.JCHK_NOC.setToolTipText("No Alternate Contact");
-		
+		Main.JCHK_CIDAR.setToolTipText("Customer Induced Damage Policy Explained");
+		Main.JCHK_NOAC.setToolTipText("No Alt. Contact");
 		
 		JPanel checkBoxPanel = new JPanel();
 		checkBoxPanel.setOpaque(true);
@@ -61,7 +61,7 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		checkBoxPanel.add(Main.JCHK_PAL);
 		checkBoxPanel.add(Main.JCHK_PLASTICS);
 		checkBoxPanel.add(Main.JCHK_CIDAR);
-		checkBoxPanel.add(Main.JCHK_NOC);
+		checkBoxPanel.add(Main.JCHK_NOAC);
 		
 		JLabel jl = new JLabel(" ");
 		jl.setOpaque(true);
@@ -81,7 +81,7 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		Main.JCHK_PAL.addActionListener(this);
 		Main.JCHK_PLASTICS.addActionListener(this);
 		Main.JCHK_CIDAR.addActionListener(this);
-		Main.JCHK_NOC.addActionListener(this);
+		Main.JCHK_NOAC.addActionListener(this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -114,6 +114,29 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 			} else {
 				Main.JCHK_PAL.setEnabled(true);
 			}
+			
+			//set address fields enabled/disabled
+			if (!Main.JCHK_POS.isSelected() &&
+				!Main.JCHK_PAL.isSelected()) {
+				Main.PRIMARY_ADDRESS.setEnabled(false);
+				Main.PRIMARY_ADDRESS_L2.setEnabled(false);
+				Main.PRIMARY_CITY.setEnabled(false);
+				Main.PRIMARY_ZIP.setEnabled(false);		
+				Main.JL_ADDRESS.setEnabled(false);
+				Main.JL_ADDRESS_L2.setEnabled(false);
+				Main.JL_CITY.setEnabled(false);
+				Main.JL_ZIP.setEnabled(false);
+			} 
+			else {
+				Main.PRIMARY_ADDRESS.setEnabled(true);
+				Main.PRIMARY_ADDRESS_L2.setEnabled(true);
+				Main.PRIMARY_CITY.setEnabled(true);
+				Main.PRIMARY_ZIP.setEnabled(true);
+				Main.JL_ADDRESS.setEnabled(true);
+				Main.JL_ADDRESS_L2.setEnabled(true);
+				Main.JL_CITY.setEnabled(true);
+				Main.JL_ZIP.setEnabled(true);
+			}
 		}
 		
 		else if (e.getSource() == Main.JCHK_PAL) {
@@ -122,8 +145,64 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 			//pos and pal
 			if (Main.JCHK_PAL.isSelected()) {
 				Main.JCHK_POS.setEnabled(false);
+				Main.JCHK_NOAC.setEnabled(true);
 			} else {
 				Main.JCHK_POS.setEnabled(true);
+				Main.JCHK_NOAC.setSelected(false);
+				Main.JCHK_NOAC.setEnabled(false);
+			}
+			
+			//set address fields enabled/disabled
+			if (!Main.JCHK_POS.isSelected() &&
+				!Main.JCHK_PAL.isSelected()) {
+				Main.PRIMARY_ADDRESS.setEnabled(false);
+				Main.PRIMARY_ADDRESS_L2.setEnabled(false);
+				Main.PRIMARY_CITY.setEnabled(false);
+				Main.PRIMARY_ZIP.setEnabled(false);
+				Main.JL_ADDRESS.setEnabled(false);
+				Main.JL_ADDRESS_L2.setEnabled(false);
+				Main.JL_CITY.setEnabled(false);
+				Main.JL_ZIP.setEnabled(false);
+			} else {
+				Main.PRIMARY_ADDRESS.setEnabled(true);
+				Main.PRIMARY_ADDRESS_L2.setEnabled(true);
+				Main.PRIMARY_CITY.setEnabled(true);
+				Main.PRIMARY_ZIP.setEnabled(true);
+				Main.JL_ADDRESS.setEnabled(true);
+				Main.JL_ADDRESS_L2.setEnabled(true);
+				Main.JL_CITY.setEnabled(true);
+				Main.JL_ZIP.setEnabled(true);
+			}
+			
+			//alt contact
+			if (!Main.JCHK_PAL.isSelected()) {
+				Main.ALT_FIRST_NAME.setEnabled(false);
+				Main.ALT_LAST_NAME.setEnabled(false);
+				Main.ALT_AREA_CODE.setEnabled(false);
+				Main.ALT_PHONE_NUMBER.setEnabled(false);
+				Main.ALT_EXT.setEnabled(false);
+				Main.ALT_EMAIL.setEnabled(false);
+				Main.ALT_ALT_AREA_CODE.setEnabled(false);
+				Main.ALT_ALT_PHONE_NUMBER.setEnabled(false);
+				Main.ALT_ALT_EXT.setEnabled(false);
+				Main.JL_ALT_NAME.setEnabled(false);
+				Main.JL_ALT_PHONE.setEnabled(false);
+				Main.JL_ALT_EMAIL.setEnabled(false);
+				Main.JL_ALT_ALT_PHONE.setEnabled(false);				
+			} else {
+				Main.ALT_FIRST_NAME.setEnabled(true);
+				Main.ALT_LAST_NAME.setEnabled(true);
+				Main.ALT_AREA_CODE.setEnabled(true);
+				Main.ALT_PHONE_NUMBER.setEnabled(true);
+				Main.ALT_EXT.setEnabled(true);
+				Main.ALT_EMAIL.setEnabled(true);
+				Main.ALT_ALT_AREA_CODE.setEnabled(true);
+				Main.ALT_ALT_PHONE_NUMBER.setEnabled(true);
+				Main.ALT_ALT_EXT.setEnabled(true);
+				Main.JL_ALT_NAME.setEnabled(true);
+				Main.JL_ALT_PHONE.setEnabled(true);
+				Main.JL_ALT_EMAIL.setEnabled(true);
+				Main.JL_ALT_ALT_PHONE.setEnabled(true);
 			}
 		}
 		
@@ -135,8 +214,40 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 			Main.HAS_UNSAVED_CHANGES = true;
 		}
 		
-		else if (e.getSource() == Main.JCHK_NOC) {
+		else if (e.getSource() == Main.JCHK_NOAC) {
 			Main.HAS_UNSAVED_CHANGES = true;
+			
+			if (Main.JCHK_NOAC.isSelected()) {
+				Main.ALT_FIRST_NAME.setEnabled(false);
+				Main.ALT_LAST_NAME.setEnabled(false);
+				Main.ALT_AREA_CODE.setEnabled(false);
+				Main.ALT_PHONE_NUMBER.setEnabled(false);
+				Main.ALT_EXT.setEnabled(false);
+				Main.ALT_EMAIL.setEnabled(false);
+				Main.ALT_ALT_AREA_CODE.setEnabled(false);
+				Main.ALT_ALT_PHONE_NUMBER.setEnabled(false);
+				Main.ALT_ALT_EXT.setEnabled(false);
+				Main.JL_ALT_NAME.setEnabled(false);
+				Main.JL_ALT_PHONE.setEnabled(false);
+				Main.JL_ALT_EMAIL.setEnabled(false);
+				Main.JL_ALT_ALT_PHONE.setEnabled(false);
+			} else {
+				if (Main.JCHK_PAL.isSelected()) {
+					Main.ALT_FIRST_NAME.setEnabled(true);
+					Main.ALT_LAST_NAME.setEnabled(true);
+					Main.ALT_AREA_CODE.setEnabled(true);
+					Main.ALT_PHONE_NUMBER.setEnabled(true);
+					Main.ALT_EXT.setEnabled(true);
+					Main.ALT_EMAIL.setEnabled(true);
+					Main.ALT_ALT_AREA_CODE.setEnabled(true);
+					Main.ALT_ALT_PHONE_NUMBER.setEnabled(true);
+					Main.ALT_ALT_EXT.setEnabled(true);
+					Main.JL_ALT_NAME.setEnabled(true);
+					Main.JL_ALT_PHONE.setEnabled(true);
+					Main.JL_ALT_EMAIL.setEnabled(true);
+					Main.JL_ALT_ALT_PHONE.setEnabled(true);
+				}
+			}
 		}
 	}
 }
