@@ -67,3 +67,4 @@ public class ConclusionPanel extends JPanel implements DocumentListener {
 	}
 
 }
+	
