@@ -71,4 +71,4 @@ public class BetterScrollPane extends JScrollPane {
 					e.getScrollType(), e.getScrollAmount(), e.getWheelRotation());
 		}
 	}
-}
+}	
