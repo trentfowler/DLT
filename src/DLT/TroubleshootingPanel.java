@@ -29,7 +29,6 @@ public class TroubleshootingPanel extends JPanel implements DocumentListener {
 		Main.JTA_TROUBLESHOOTING.setLineWrap(true);
 		Main.JTA_TROUBLESHOOTING.setWrapStyleWord(true);
 		Main.JTA_TROUBLESHOOTING.setEditable(true);
-		
 				
 		JPanel jpScrollPaneContainer = new JPanel();
 		jpScrollPaneContainer.setOpaque(true);
