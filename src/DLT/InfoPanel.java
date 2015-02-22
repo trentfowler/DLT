@@ -49,4 +49,4 @@ public class InfoPanel extends JPanel {
 		this.add(top, BorderLayout.NORTH);
 		this.add(flex, BorderLayout.CENTER);
 	}
-}
+}	
