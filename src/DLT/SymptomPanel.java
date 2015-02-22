@@ -65,4 +65,4 @@ public class SymptomPanel extends JPanel implements DocumentListener {
 	@Override public void removeUpdate(DocumentEvent e) {
 		Main.HAS_UNSAVED_CHANGES = true;
 	}
-}
+}	
