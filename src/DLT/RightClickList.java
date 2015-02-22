@@ -15,7 +15,12 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 import org.joda.time.LocalDate;
 
-
+/**
+ * RightClickList class
+ * 
+ * @author Trent
+ *
+ */
 public class RightClickList extends JPopupMenu {
 
 	private static final long serialVersionUID = -1474472275653429868L;
