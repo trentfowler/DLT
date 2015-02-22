@@ -64,3 +64,4 @@ public class NotesPanel extends JPanel implements DocumentListener {
 		Main.HAS_UNSAVED_CHANGES = true;
 	}
 }
+	
