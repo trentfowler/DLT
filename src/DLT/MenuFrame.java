@@ -15,7 +15,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -208,6 +210,19 @@ public class MenuFrame extends JFrame implements WindowListener {
 					}
 					Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
 					Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
+					//add troubleshooting template
+					String LINE = "";
+					try {
+						File f = new File("TS_Template.txt");
+						Scanner s = new Scanner(f);
+						while (s.hasNextLine()) {
+							LINE += s.nextLine() + "\n";
+							System.out.println(LINE);
+						}
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					Main.FIELDS.get(Main.SELECTED_INDEX).setTroubleshooting(LINE);
 					Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
 				}
 				
@@ -248,6 +263,20 @@ public class MenuFrame extends JFrame implements WindowListener {
 				}
 				Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
 				Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
+				//add troubleshooting template
+				String LINE = "";
+				try {
+					File f = new File("TS_Template.txt");
+					Scanner s = new Scanner(f);
+					while (s.hasNextLine()) {
+						LINE += s.nextLine() + "\n";
+						System.out.println(LINE);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				Main.FIELDS.get(Main.SELECTED_INDEX).setTroubleshooting(LINE);
+				
 				
 				//add new item to case list
 				Main.LIST_MODEL.addElement("NEW");
@@ -383,7 +412,7 @@ public class MenuFrame extends JFrame implements WindowListener {
 		
 		JPanel leftPanel = new JPanel();
 		leftPanel.setOpaque(true);
-		leftPanel.setBackground(Color.WHITE);
+		leftPanel.setBackground(Color.BLACK);
 		leftPanel.setLayout(new BorderLayout());
 		leftPanel.add(searchPanel, BorderLayout.NORTH);
 		leftPanel.add(new ListPanel(), BorderLayout.CENTER);
