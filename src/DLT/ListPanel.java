@@ -157,7 +157,18 @@ public class ListPanel extends JPanel implements ActionListener {
 			}
 			Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
 			Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
-			
+			//add troubleshooting template
+			String LINE = "";
+			try {
+				File f = new File("TS_Template.txt");
+				Scanner s = new Scanner(f);
+				while (s.hasNextLine()) {
+					LINE += s.nextLine() + "\n";
+					System.out.println(LINE);
+				}
+			} catch (Exception e3) {
+				e3.printStackTrace();
+			}
 			//add new item to case list
 			Main.LIST_MODEL.addElement("NEW");
 			Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
@@ -189,7 +200,18 @@ public class ListPanel extends JPanel implements ActionListener {
 				}
 				Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
 				Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
-				
+				//add troubleshooting template
+				String LINE = "";
+				try {
+					File f = new File("TS_Template.txt");
+					Scanner s = new Scanner(f);
+					while (s.hasNextLine()) {
+						LINE += s.nextLine() + "\n";
+						System.out.println(LINE);
+					}
+				} catch (Exception e4) {
+					e4.printStackTrace();
+				}
 				//populate view
 				Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
 			}
