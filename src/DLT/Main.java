@@ -729,6 +729,19 @@ public class Main {
 			}
 			Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
 			Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
+			//add troubleshooting template
+			String LINE = "";
+			try {
+				File f = new File("TS_Template.txt");
+				Scanner s = new Scanner(f);
+				while (s.hasNextLine()) {
+					LINE += s.nextLine() + "\n";
+					System.out.println(LINE);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Main.FIELDS.get(Main.SELECTED_INDEX).setTroubleshooting(LINE);
 			Main.SET_CHANGEABLE_FIELDS(0);
 		}
 		
