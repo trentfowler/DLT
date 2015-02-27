@@ -28,3 +28,8 @@ Bryan:	-the address field: separate sections for Address Line1, Address Line2, C
 	
 	-setup profile for alt configs:
 		-Color
+		-textfield templates
+		-copy buttons outputs
+	-readd touch cases
+		-shortkey
+	
