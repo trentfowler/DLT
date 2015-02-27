@@ -23,17 +23,21 @@ public class TroubleshootingPanel extends JPanel implements DocumentListener {
 
 	public TroubleshootingPanel() {
 		this.setOpaque(true);
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.BLACK);
 		this.setBorder(new EmptyBorder(0, 0, 5, 0));
 		
 		Main.JTA_TROUBLESHOOTING.setLineWrap(true);
 		Main.JTA_TROUBLESHOOTING.setWrapStyleWord(true);
 		Main.JTA_TROUBLESHOOTING.setEditable(true);
-		
+		Main.JTA_TROUBLESHOOTING.setBackground(Color.BLACK);
+		Main.JTA_TROUBLESHOOTING.setForeground(Color.GREEN);
+		Main.JTA_TROUBLESHOOTING.setCaretColor(Color.GREEN);
 				
 		JPanel jpScrollPaneContainer = new JPanel();
 		jpScrollPaneContainer.setOpaque(true);
-		jpScrollPaneContainer.setBackground(Color.WHITE);
+		jpScrollPaneContainer.setBackground(Color.black);
+		
+		
 		jpScrollPaneContainer.setLayout(new BorderLayout());
 		jpScrollPaneContainer.setBorder(new EmptyBorder(5, 5, 0, 5));
 		jpScrollPaneContainer.add(new BetterScrollPane(Main.JTA_TROUBLESHOOTING), 
@@ -41,8 +45,8 @@ public class TroubleshootingPanel extends JPanel implements DocumentListener {
 		
 		JLabel jlTroubleshooting = new JLabel("Troubleshooting:");
 		jlTroubleshooting.setOpaque(true);
-		jlTroubleshooting.setBackground(new Color(90, 167, 226));
-		jlTroubleshooting.setForeground(Color.WHITE);
+		jlTroubleshooting.setBackground(new Color(80,80,80));
+		jlTroubleshooting.setForeground(Color.CYAN);
 		jlTroubleshooting.setBorder(new EmptyBorder(3, 5, 3, 5));
 		
 		this.setPreferredSize(new Dimension(0, 200));

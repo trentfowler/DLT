@@ -23,15 +23,20 @@ public class NotesPanel extends JPanel implements DocumentListener {
 
 	public NotesPanel() {
 		this.setOpaque(true);
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.black);
 		
 		Main.JTA_NOTES.setLineWrap(true);
 		Main.JTA_NOTES.setWrapStyleWord(true);
 		Main.JTA_NOTES.setEditable(true);
+		Main.JTA_NOTES.setBackground(Color.BLACK);
+		Main.JTA_NOTES.setForeground(Color.GREEN);
+		Main.JTA_NOTES.setCaretColor(Color.GREEN);
+
 		
 		JPanel jpScrollPaneContainer = new JPanel();
 		jpScrollPaneContainer.setOpaque(true);
-		jpScrollPaneContainer.setBackground(Color.WHITE);
+		jpScrollPaneContainer.setBackground(Color.black);
+		
 		jpScrollPaneContainer.setLayout(new BorderLayout());
 		jpScrollPaneContainer.setBorder(new EmptyBorder(5, 5, 0, 5));
 		jpScrollPaneContainer.add(new BetterScrollPane(Main.JTA_NOTES), 
@@ -39,8 +44,8 @@ public class NotesPanel extends JPanel implements DocumentListener {
 		
 		JLabel jlNotes = new JLabel("Notes:");
 		jlNotes.setOpaque(true);
-		jlNotes.setBackground(new Color(90, 167, 226));
-		jlNotes.setForeground(Color.WHITE);
+		jlNotes.setBackground(new Color(80,80,80));
+		jlNotes.setForeground(Color.cyan);
 		jlNotes.setBorder(new EmptyBorder(3, 5, 3, 5));
 		
 		this.setPreferredSize(new Dimension(0, 200));

@@ -15,39 +15,35 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-
+/**
+ * ServicePanel class
+ * 
+ * @author Trent
+ *
+ */
 public class ServicePanel extends JPanel implements DocumentListener {
 	
 	private static final long serialVersionUID = -8451889141356208101L;
 
 	public ServicePanel() {
 		this.setOpaque(true);
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.black);
 		this.setLayout(new BorderLayout());
-				
+		
 		JPanel jpServiceTag = new JPanel();
 		jpServiceTag.setOpaque(true);
-		jpServiceTag.setBackground(Color.WHITE);
+		jpServiceTag.setBackground(Color.black);
 		jpServiceTag.setBorder(new EmptyBorder(0, 0, 0, 5));
 		jpServiceTag.setLayout(new BorderLayout(5, 5));
-		JButton jbServiceTag = new JButton("Service Tag");
-		jpServiceTag.add(jbServiceTag, BorderLayout.WEST);
+		jpServiceTag.add(Main.JB_SERVICE_TAG, BorderLayout.WEST);
 		jpServiceTag.add(Main.JTF_SERVICE_TAG, BorderLayout.CENTER);
 		
 		JPanel jpServiceRequest = new JPanel();
 		jpServiceRequest.setOpaque(true);
-		jpServiceRequest.setBackground(Color.WHITE);
+		jpServiceRequest.setBackground(Color.black);
 		jpServiceRequest.setLayout(new BorderLayout(5, 5));
-		JButton jbServiceRequest = new JButton("Service Request");
-		jpServiceRequest.add(jbServiceRequest, BorderLayout.WEST);
+		jpServiceRequest.add(Main.JB_SERVICE_REQUEST, BorderLayout.WEST);
 		jpServiceRequest.add(Main.JTF_SERVICE_REQUEST, BorderLayout.CENTER);
-
-		JPanel jpInsertButtons = new JPanel();
-		jpInsertButtons.setBorder(new EmptyBorder(5, 0, 0, 5));
-		jpInsertButtons.setLayout(new BorderLayout(5,5));
-		jpInsertButtons.add(Main.JB_CDO, BorderLayout.WEST);
-		jpInsertButtons.add(Main.JB_DCSID, BorderLayout.CENTER);
-		jpInsertButtons.add(Main.JB_PPID, BorderLayout.EAST);
 		
 		JLabel jl = new JLabel(" ");
 		jl.setOpaque(true);
@@ -57,42 +53,26 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		
 		JPanel jpContainer = new JPanel();
 		jpContainer.setOpaque(true);
-		jpContainer.setBackground(Color.WHITE);
+		jpContainer.setBackground(Color.black);
 		jpContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
-		jpContainer.setLayout(new GridLayout(0, 2));
-		
+		jpContainer.setLayout(new GridLayout(1, 2));
 		jpContainer.add(jpServiceTag);
 		jpContainer.add(jpServiceRequest);
-		jpContainer.add(jpInsertButtons);
 		
 		this.add(jl, BorderLayout.NORTH);
 		this.add(jpContainer, BorderLayout.CENTER);
 		
 		//user pressed copy service tag
-		jbServiceTag.addActionListener(new ActionListener() {
+		Main.JB_SERVICE_TAG.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				StringSelection stringSelection = new StringSelection(Main.JTF_SERVICE_TAG.getText());
 				Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 				clpbrd.setContents(stringSelection, null);
-				
 			}
 		});
 		
-		//user press insert dell connect
-		Main.JB_DCSID.addActionListener(new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {
-				Main.JTA_TROUBLESHOOTING.append("\nDellConnectTSessionID#\n");
-			}
-		});
-		
-		Main.JB_PPID.addActionListener(new ActionListener() {
-			@Override public void actionPerformed(ActionEvent e) {
-				Main.JTA_TROUBLESHOOTING.append("\nPPID#\n");
-			}
-		});
-				
 		//user pressed copy service request
-		jbServiceRequest.addActionListener(new ActionListener() {
+		Main.JB_SERVICE_REQUEST.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
 				StringSelection stringSelection = new StringSelection(Main.JTF_SERVICE_REQUEST.getText());
 				Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -103,10 +83,19 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		Main.JTF_SERVICE_TAG.getDocument().addDocumentListener(this);
 		Main.JTF_SERVICE_REQUEST.getDocument().addDocumentListener(this);
 	}
-
+	
 	@Override public void changedUpdate(DocumentEvent e) {
 		//flag unsaved changes
 		Main.HAS_UNSAVED_CHANGES = true;
+		
+		//button enabled state
+		if (Main.JTF_SERVICE_TAG.getText().length() == 0) {
+			Main.JB_SERVICE_TAG.setEnabled(false);
+		} else Main.JB_SERVICE_TAG.setEnabled(true);
+		
+		if (Main.JTF_SERVICE_REQUEST.getText().length() == 0) {
+			Main.JB_SERVICE_REQUEST.setEnabled(false);
+		} else Main.JB_SERVICE_REQUEST.setEnabled(true);
 		
 		//service tag color
 		if (Main.JTF_SERVICE_TAG.getText().length() < 7) {
@@ -129,6 +118,15 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		//flag unsaved changes
 		Main.HAS_UNSAVED_CHANGES = true;
 		
+		//button enabled state
+		if (Main.JTF_SERVICE_TAG.getText().length() == 0) {
+			Main.JB_SERVICE_TAG.setEnabled(false);
+		} else Main.JB_SERVICE_TAG.setEnabled(true);
+		
+		if (Main.JTF_SERVICE_REQUEST.getText().length() == 0) {
+			Main.JB_SERVICE_REQUEST.setEnabled(false);
+		} else Main.JB_SERVICE_REQUEST.setEnabled(true);
+		
 		//service tag color
 		if (Main.JTF_SERVICE_TAG.getText().length() < 7) {
 			Main.JTF_SERVICE_TAG.setBackground(new Color(255, 181, 181)); //red
@@ -149,6 +147,15 @@ public class ServicePanel extends JPanel implements DocumentListener {
 	@Override public void removeUpdate(DocumentEvent e) {
 		//flag unsaved changes
 		Main.HAS_UNSAVED_CHANGES = true;
+		
+		//button enabled state
+		if (Main.JTF_SERVICE_TAG.getText().length() == 0) {
+			Main.JB_SERVICE_TAG.setEnabled(false);
+		} else Main.JB_SERVICE_TAG.setEnabled(true);
+		
+		if (Main.JTF_SERVICE_REQUEST.getText().length() == 0) {
+			Main.JB_SERVICE_REQUEST.setEnabled(false);
+		} else Main.JB_SERVICE_REQUEST.setEnabled(true);
 		
 		//service tag color
 		if (Main.JTF_SERVICE_TAG.getText().length() < 7) {

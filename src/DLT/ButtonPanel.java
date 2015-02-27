@@ -5,11 +5,14 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 /**
  * ButtonPanel class
@@ -30,7 +33,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
 	
 	public ButtonPanel() {
 		this.setOpaque(true);
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.black);
 		
 		this.add(jbGenerateDescription);
 		this.add(jbGenerateTroubleshooting);
@@ -49,31 +52,21 @@ public class ButtonPanel extends JPanel implements ActionListener {
 		if (e.getSource() == jbGenerateTroubleshooting) {
 			
 			//build troubleshooting string based on field data
-			StringBuilder sb = new StringBuilder("***\n");
-			if (Main.JCHK_VA.isSelected()) sb.append(" VA \n");
-			if (Main.JCHK_TOADE.isSelected()) sb.append(" TOADE \n");
-			if (Main.JCHK_EMAIL_CAP.isSelected()) sb.append(" EMAILCAP \n");
-			if (Main.JCHK_VDI.isSelected()) sb.append(" VDI \n");
-			if (Main.JCHK_TARP.isSelected()) sb.append(" TARP \n");
-			if (Main.JCHK_POS.isSelected()) sb.append(" POS \n");
-			if (Main.JCHK_PAL.isSelected()) sb.append(" OST DPS \n");
-			if (Main.JCHK_PLASTICS.isSelected()) sb.append(" CHECK PLASTICS \n");
-			if (Main.JCHK_CIDAR.isSelected()) sb.append(" CIDAR EXPLAINED \n");
-			sb.append("***\n");
-			if (!Main.JTF_SERVICE_TAG.getText().isEmpty()) {
-				sb.append("ST:" + Main.JTF_SERVICE_TAG.getText() + " ");
-			}
-			if (!Main.JTF_SERVICE_TAG.getText().isEmpty() &&
-				!Main.JTF_SERVICE_REQUEST.getText().isEmpty()) {
-				sb.append(" // ");
-			}
-			if (!Main.JTF_SERVICE_REQUEST.getText().isEmpty()) {
-				sb.append(" SR#" + Main.JTF_SERVICE_REQUEST.getText() + " ");
-			}
+			StringBuilder sb = new StringBuilder("");
 			if (!Main.JTA_TROUBLESHOOTING.getText().isEmpty()) {
-				sb.append("\n\n" + Main.JTA_TROUBLESHOOTING.getText() + "\n\n ***NO OTHER ISSUES RAISED***");
+				sb.append(Main.JTA_TROUBLESHOOTING.getText() + "\n");
 			}
-			if (Main.JCHK_NOC.isSelected()) sb.append("\n ***NO ALT CONTACT*** ");
+			sb.append("***");
+			if (Main.JCHK_VA.isSelected()) sb.append(" VA ");
+			if (Main.JCHK_TOADE.isSelected()) sb.append(" TOADE ");
+			if (Main.JCHK_EMAIL_CAP.isSelected()) sb.append(" EMAILCAP ");
+			if (Main.JCHK_VDI.isSelected()) sb.append(" VDI ");
+			if (Main.JCHK_TARP.isSelected()) sb.append(" TARP ");
+			if (Main.JCHK_POS.isSelected()) sb.append(" POS ");
+			if (Main.JCHK_PAL.isSelected()) sb.append(" OST DPS ");
+			if (Main.JCHK_PLASTICS.isSelected()) sb.append(" CHECK PLASTICS ");
+			if (Main.JCHK_CIDAR.isSelected()) sb.append(" CIDAR EXPLAINED ");
+			sb.append("***");
 			
 			//clean up -- no consecutive space characters
 			for (int i = 0; i < sb.length() - 1; i++) {
@@ -89,8 +82,26 @@ public class ButtonPanel extends JPanel implements ActionListener {
 		//if generate conclusion button is pressed --> copy to clipboard
 		else if (e.getSource() == jbGenerateConclusion) {
 			
+			StringBuilder sb = new StringBuilder();
+			sb.append("I: ");
+			sb.append(Main.JTF_DESCRIPTION.getText());
+			sb.append(" C: ");
+			sb.append(Main.JTA_CONCLUSION.getText());
+			
+			if (Main.JCHK_POS.isSelected()) {
+				sb.append(" Parts only dispatch.");
+			}
+			
+			if (Main.JCHK_PAL.isSelected()) {
+				sb.append(" Parts and labor dispatch.");
+				
+				if (Main.JCHK_NOAC.isSelected()) {
+					sb.append(" No alt contact.");
+				}
+			}
+			
 			StringSelection stringSelection = 
-					new StringSelection(Main.JTA_CONCLUSION.getText());
+					new StringSelection(sb.toString());
 			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 			clpbrd.setContents(stringSelection, null);
 		}
@@ -100,7 +111,6 @@ public class ButtonPanel extends JPanel implements ActionListener {
 			
 			//build description string based on field data
 			StringBuilder sb = new StringBuilder();
-			
 			if (!Main.JTF_DESCRIPTION.getText().isEmpty()) {
 				sb.append(Main.JTF_DESCRIPTION.getText());
 			}
@@ -137,10 +147,12 @@ public class ButtonPanel extends JPanel implements ActionListener {
 			if (!Main.JTF_SERVICE_REQUEST.getText().isEmpty()) {
 				s = s.replace("%sr%", Main.JTF_SERVICE_REQUEST.getText());
 			}
+			/*
 			if (!Main.JTF_NAME.getText().isEmpty()) {
 				String[] names = Main.JTF_NAME.getText().split("\\s+"); //split at white space
 				s = s.replace("%fn%", names[0]);
 			}
+			*/
 			if (!Main.JTF_DESCRIPTION.getText().isEmpty()) {
 				s = s.replace("%id%", Main.JTF_DESCRIPTION.getText());
 			}

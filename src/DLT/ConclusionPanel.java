@@ -23,16 +23,19 @@ public class ConclusionPanel extends JPanel implements DocumentListener {
 	
 	public ConclusionPanel() {
 		this.setOpaque(true);
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.black);
 		this.setBorder(new EmptyBorder(0, 0, 5, 0));
 		
 		Main.JTA_CONCLUSION.setLineWrap(true);
 		Main.JTA_CONCLUSION.setWrapStyleWord(true);
 		Main.JTA_CONCLUSION.setEditable(true);
-				
+		Main.JTA_CONCLUSION.setBackground(Color.BLACK);
+		Main.JTA_CONCLUSION.setForeground(Color.GREEN);
+		Main.JTA_CONCLUSION.setCaretColor(Color.GREEN);
+		
 		JPanel jpScrollPaneContainer = new JPanel();
 		jpScrollPaneContainer.setOpaque(true);
-		jpScrollPaneContainer.setBackground(Color.WHITE);
+		jpScrollPaneContainer.setBackground(Color.black);
 		jpScrollPaneContainer.setLayout(new BorderLayout());
 		jpScrollPaneContainer.setBorder(new EmptyBorder(0, 5, 0, 5));
 		jpScrollPaneContainer.add(new BetterScrollPane(Main.JTA_CONCLUSION), 
@@ -40,8 +43,8 @@ public class ConclusionPanel extends JPanel implements DocumentListener {
 		
 		JLabel jlConclusion = new JLabel("Conclusion:");
 		jlConclusion.setOpaque(true);
-		jlConclusion.setBackground(new Color(90, 167, 226));
-		jlConclusion.setForeground(Color.WHITE);
+		jlConclusion.setBackground(new Color(80,80,80));
+		jlConclusion.setForeground(Color.CYAN);
 		jlConclusion.setBorder(new EmptyBorder(3, 5, 3, 5));
 		
 		this.setPreferredSize(new Dimension(0, 100));

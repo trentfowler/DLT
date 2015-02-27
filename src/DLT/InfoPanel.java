@@ -19,12 +19,12 @@ public class InfoPanel extends JPanel {
 
 	public InfoPanel() {
 		this.setOpaque(true);
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.black);
 		this.setLayout(new BorderLayout());
 		
 		JPanel top = new JPanel();
 		top.setOpaque(true);
-		top.setBackground(Color.WHITE);
+		top.setBackground(Color.black);
 		top.setLayout(new BoxLayout(top, BoxLayout.Y_AXIS));
 		top.add(new CheckBoxPanel());
 		top.add(new ServicePanel());
@@ -33,7 +33,7 @@ public class InfoPanel extends JPanel {
 				
 		JPanel bottom = new JPanel();
 		bottom.setOpaque(true);
-		bottom.setBackground(Color.WHITE);
+		bottom.setBackground(Color.black);
 		bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
 		bottom.add(new ConclusionPanel());
 		bottom.add(new NotesPanel());
@@ -41,7 +41,7 @@ public class InfoPanel extends JPanel {
 		
 		JPanel flex = new JPanel();
 		flex.setOpaque(true);
-		flex.setBackground(Color.WHITE);
+		flex.setBackground(Color.black);
 		flex.setLayout(new BorderLayout());
 		flex.add(new TroubleshootingPanel(), BorderLayout.CENTER);
 		flex.add(bottom, BorderLayout.SOUTH);

@@ -1,413 +1,293 @@
 package DLT;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import net.miginfocom.swing.MigLayout;
+
 /**
  * ContactPanel class
  * 
- * ..
+ * This class defines the JPanel which allows you to view and modify 
+ * the contact info like name, phone number, e-mail, address, etc...
  * 
- * @author Trent Fowler
- * @author Bryan W.W.
+ * @author Trent
+ * @author Bryan
  */
 public class ContactPanel extends JPanel implements DocumentListener {
 	
 	private static final long serialVersionUID = 4220570468139986554L;
 
 	public ContactPanel() {
+		
 		this.setOpaque(true);
 		this.setBackground(Color.WHITE);
-		this.setLayout(new BorderLayout());
+		this.setLayout(new BorderLayout());		
 		
-		//CONTACT
-		JPanel contactContainer = new JPanel();
-		contactContainer.setOpaque(true);
-		contactContainer.setBackground(Color.WHITE);
-		contactContainer.setBorder(new EmptyBorder(0, 0, 0, 5));
-		GridBagLayout gbl_C = new GridBagLayout();
-		gbl_C.columnWidths = new int[]{100, 0};
-		gbl_C.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_C.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_C.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		contactContainer.setLayout(gbl_C);
+		JPanel primary = new JPanel();
+		primary.setOpaque(true);
+		primary.setBackground(Color.black);
+		primary.setLayout(new MigLayout("fill",
+										"10[min!][][][][][][]",
+										""));
+		Main.JL_PRIMARY_NAME.setForeground(Color.GREEN);
+		primary.add(Main.JL_PRIMARY_NAME,           "grow, cell 0 0 1 1");
+		primary.add(Main.PRIMARY_FIRST_NAME,		"grow, cell 1 0 3 1"); // cell column row width height
+		primary.add(Main.PRIMARY_LAST_NAME,			"grow, cell 4 0 3 1, wrap");
+		Main.JL_PRIMARY_EMAIL.setForeground(Color.GREEN);
+		primary.add(Main.JL_PRIMARY_EMAIL,				  "cell 0 1 1 1");
+		primary.add(Main.PRIMARY_EMAIL,				"grow, cell 1 1 6 1, wrap");
+		Main.JL_PRIMARY_PHONE.setForeground(Color.GREEN);
+		primary.add(Main.JL_PRIMARY_PHONE,				  "cell 0 2 1 1");
+		primary.add(Main.PRIMARY_AREA_CODE,			"grow, cell 1 2 1 1");
+		primary.add(Main.PRIMARY_PHONE_NUMBER,		"grow, cell 2 2 3 1");
+		primary.add(Main.PRIMARY_EXT,				"grow, cell 5 2 2 1, wrap");
+		Main.JL_PRIMARY_ALT_PHONE.setForeground(Color.GREEN);
+		primary.add(Main.JL_PRIMARY_ALT_PHONE,			  "cell 0 3 1 1");
+		primary.add(Main.PRIMARY_ALT_AREA_CODE,		"grow, cell 1 3 1 1");
+		primary.add(Main.PRIMARY_ALT_PHONE_NUMBER,	"grow, cell 2 3 3 1");
+		primary.add(Main.PRIMARY_ALT_EXT,			"grow, cell 5 3 2 1, wrap");
+		Main.JL_ADDRESS.setForeground(Color.GREEN);
+		primary.add(Main.JL_ADDRESS,					  "cell 0 4 1 1");
+		primary.add(Main.PRIMARY_ADDRESS,			"grow, cell 1 4 6 1, wrap");
+		Main.JL_ADDRESS_L2.setForeground(Color.GREEN);
+		primary.add(Main.JL_ADDRESS_L2,				"grow, cell 0 5 1 1");
+		primary.add(Main.PRIMARY_ADDRESS_L2,		"grow, cell 1 5 6 1, wrap");
 		
-		//name
-		JLabel jlName = new JLabel("     Name");
-		
-		GridBagConstraints gbc_Name_Label = new GridBagConstraints();
-		gbc_Name_Label.anchor = GridBagConstraints.WEST;
-		gbc_Name_Label.gridx = 0;
-		gbc_Name_Label.gridy = 0;
-		
-		contactContainer.add(jlName, gbc_Name_Label);
-		
-		GridBagConstraints gbc_Name_Field = new GridBagConstraints();
-		gbc_Name_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Name_Field.gridx = 1;
-		gbc_Name_Field.gridy = 0;
-		
-		contactContainer.add(Main.JTF_NAME, gbc_Name_Field);
-		
-		//email
-		JLabel jlEmail = new JLabel("     E-mail");
-		
-		GridBagConstraints gbc_Email_Label = new GridBagConstraints();
-		gbc_Email_Label.anchor = GridBagConstraints.WEST;
-		gbc_Email_Label.gridx = 0;
-		gbc_Email_Label.gridy = 2;
-		
-		contactContainer.add(jlEmail, gbc_Email_Label);
-		
-		GridBagConstraints gbc_Email_Field = new GridBagConstraints();
-		gbc_Email_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Email_Field.gridx = 1;
-		gbc_Email_Field.gridy = 2;
-		
-		contactContainer.add(Main.JTF_EMAIL, gbc_Email_Field);
-		
-		//phone
-		JLabel jlPhone = new JLabel("     Phone");
-		
-		GridBagConstraints gbc_Phone_Label = new GridBagConstraints();
-		gbc_Phone_Label.anchor = GridBagConstraints.WEST;
-		gbc_Phone_Label.gridx = 0;
-		gbc_Phone_Label.gridy = 1;
-		
-		contactContainer.add(jlPhone, gbc_Phone_Label);
-		
-		GridBagConstraints gbc_Phone_Field = new GridBagConstraints();
-		gbc_Phone_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Phone_Field.gridx = 1;
-		gbc_Phone_Field.gridy = 1;
-		
-		contactContainer.add(Main.JTF_PHONE, gbc_Phone_Field);
-		
-		//alt phone
-		JLabel jlAltPhone = new JLabel("     Alt. Phone");
-		
-		GridBagConstraints gbc_Alt_Phone_Label = new GridBagConstraints();
-		gbc_Alt_Phone_Label.anchor = GridBagConstraints.WEST;
-		gbc_Alt_Phone_Label.gridx = 0;
-		gbc_Alt_Phone_Label.gridy = 3;
-		
-		contactContainer.add(jlAltPhone, gbc_Alt_Phone_Label);
-		
-		GridBagConstraints gbc_Alt_Phone_Field = new GridBagConstraints();
-		gbc_Alt_Phone_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Alt_Phone_Field.gridx = 1;
-		gbc_Alt_Phone_Field.gridy = 3;
-		
-		contactContainer.add(Main.JTF_ALT_PHONE, gbc_Alt_Phone_Field);
-		
-		//address
-		JLabel jlAddress = new JLabel("  Address Line#1");
-		
-		GridBagConstraints gbc_Address_Label = new GridBagConstraints();
-		gbc_Address_Label.anchor = GridBagConstraints.WEST;
-		gbc_Address_Label.gridx = 0;
-		gbc_Address_Label.gridy = 4;
-		
-		contactContainer.add(jlAddress, gbc_Address_Label);
-		
-		GridBagConstraints gbc_Address_Field = new GridBagConstraints();
-		gbc_Address_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Address_Field.gridx = 1;
-		gbc_Address_Field.gridy = 4;
-		
-		contactContainer.add(Main.JTF_ADDRESS, gbc_Address_Field);
-		
-		//made second line as address line#2:: used for APT,FLR,Suite,etc.
-		GridBagConstraints gbc_CSZ_Label = new GridBagConstraints();
-		gbc_CSZ_Label.anchor = GridBagConstraints.WEST;
-		gbc_CSZ_Label.gridx = 0;
-		gbc_CSZ_Label.gridy = 5;
-		
-		contactContainer.add(new JLabel("  Address Line#2"), gbc_CSZ_Label);
-		
-		GridBagConstraints gbc_CSZ_Field = new GridBagConstraints();
-		gbc_CSZ_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_CSZ_Field.gridx = 1;
-		gbc_CSZ_Field.gridy = 5;
-		
-		contactContainer.add(Main.JTF_CITY_STATE_ZIP, gbc_CSZ_Field);
-		
-		//SECONDARY CONTACT
-		JPanel altContactContainer = new JPanel();
-		altContactContainer.setOpaque(true);
-		altContactContainer.setBackground(Color.WHITE);
-		GridBagLayout gbl_AC = new GridBagLayout();
-		gbl_AC.columnWidths = new int[]{100, 0};
-		gbl_AC.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_AC.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_AC.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		altContactContainer.setLayout(gbl_AC);
-		
-		//alt name
-		JLabel jlAltName = new JLabel("     Name");
-		
-		GridBagConstraints gbc_Alt_Name_Label = new GridBagConstraints();
-		gbc_Alt_Name_Label.anchor = GridBagConstraints.WEST;
-		gbc_Alt_Name_Label.gridx = 0;
-		gbc_Alt_Name_Label.gridy = 0;
-		
-		GridBagConstraints gbc_Alt_Name_Field = new GridBagConstraints();
-		gbc_Alt_Name_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Alt_Name_Field.gridx = 1;
-		gbc_Alt_Name_Field.gridy = 0;
-		
-		altContactContainer.add(jlAltName, gbc_Alt_Name_Label);
-		altContactContainer.add(Main.JTF_ALT_NAME, gbc_Alt_Name_Field);
-		
-		//alt email: arranged after alt primary phone
-		JLabel jlAltEmail = new JLabel("     E-mail");
-		
-		GridBagConstraints gbc_Alt_Email_Label = new GridBagConstraints();
-		gbc_Alt_Email_Label.anchor = GridBagConstraints.WEST;
-		gbc_Alt_Email_Label.gridx = 0;
-		gbc_Alt_Email_Label.gridy = 2;
+		JPanel alt = new JPanel();
+		alt.setOpaque(true);
+		alt.setBackground(Color.black);
+		alt.setLayout(new MigLayout("fill",
+									"[min!][][][][][][]",
+									""));
+		Main.JL_ALT_NAME.setForeground(Color.GREEN);
+		alt.add(Main.JL_ALT_NAME,					"grow, cell 0 0 1 1"); //"cell column row width height"
+		alt.add(Main.ALT_FIRST_NAME,				"grow, cell 1 0 3 1");
+		alt.add(Main.ALT_LAST_NAME,					"grow, cell 4 0 3 1, wrap");
+		Main.JL_ALT_EMAIL.setForeground(Color.GREEN);
+		alt.add(Main.JL_ALT_EMAIL,					"grow, cell 0 1 1 1");
+		alt.add(Main.ALT_EMAIL,						"grow, cell 1 1 6 1, wrap");
+		Main.JL_ALT_PHONE.setForeground(Color.GREEN);
+		alt.add(Main.JL_ALT_PHONE,					"grow, cell 0 2 1 1");
+		alt.add(Main.ALT_AREA_CODE,					"grow, cell 1 2 1 1");
+		alt.add(Main.ALT_PHONE_NUMBER,				"grow, cell 2 2 3 1");
+		alt.add(Main.ALT_EXT,						"grow, cell 5 2 2 1, wrap");
+		Main.JL_ALT_ALT_PHONE.setForeground(Color.GREEN);
+		alt.add(Main.JL_ALT_ALT_PHONE,				"grow, cell 0 3 1 1");
+		alt.add(Main.ALT_ALT_AREA_CODE,				"grow, cell 1 3 1 1");
+		alt.add(Main.ALT_ALT_PHONE_NUMBER,			"grow, cell 2 3 4 1");
+		alt.add(Main.ALT_ALT_EXT,					"grow, cell 6 3 1 1, wrap");
+		Main.JL_CITY.setForeground(Color.GREEN);
+		alt.add(Main.JL_CITY,						"grow, cell 0 4 1 1");
+		alt.add(Main.PRIMARY_CITY,					"grow, cell 1 4 6 1, wrap");
+		Main.JL_ZIP.setForeground(Color.GREEN);
+		alt.add(Main.JL_ZIP,						"grow, cell 0 5 1 1");
+		alt.add(Main.PRIMARY_ZIP,					"grow, cell 1 5 6 1, wrap");
 				
-		GridBagConstraints gbc_Alt_Email_Field = new GridBagConstraints();
-		gbc_Alt_Email_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Alt_Email_Field.gridx = 1;
-		gbc_Alt_Email_Field.gridy = 2;
+		JPanel p = new JPanel();
+		p.setOpaque(true);
+		p.setLayout(new GridLayout(0, 2));
+		p.setBackground(Color.black);
+		p.add(primary);
+		p.add(alt);
 		
-		altContactContainer.add(jlAltEmail, gbc_Alt_Email_Label);
-		altContactContainer.add(Main.JTF_ALT_EMAIL, gbc_Alt_Email_Field);
+		JLabel blue = new JLabel(" ");
+		blue.setOpaque(true);
+		blue.setBackground(new Color(80,80,80));
+		blue.setForeground(Color.cyan);
+		blue.setBorder(new EmptyBorder(3, 5, 3, 5));
+
+		this.add(blue, BorderLayout.NORTH);
+		this.add(p, BorderLayout.CENTER);
 		
-		//alt primary phone: arranged before alt email
-		JLabel jlAltPrimaryPhone = new JLabel("     Phone");
-		
-		GridBagConstraints gbc_Alt_PP_Label = new GridBagConstraints();
-		gbc_Alt_PP_Label.anchor = GridBagConstraints.WEST;
-		gbc_Alt_PP_Label.gridx = 0;
-		gbc_Alt_PP_Label.gridy = 1;
-				
-		GridBagConstraints gbc_Alt_PP_Field = new GridBagConstraints();
-		gbc_Alt_PP_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Alt_PP_Field.gridx = 1;
-		gbc_Alt_PP_Field.gridy = 1;
-		
-		altContactContainer.add(jlAltPrimaryPhone, gbc_Alt_PP_Label);
-		altContactContainer.add(Main.JTF_ALT_PRIMARY_PHONE, gbc_Alt_PP_Field);
-		
-		//alt secondary phone
-		JLabel jlAltSecondaryPhone = new JLabel("     Alt. Phone");
-		
-		GridBagConstraints gbc_Alt_SP_Label = new GridBagConstraints();
-		gbc_Alt_SP_Label.anchor = GridBagConstraints.WEST;
-		gbc_Alt_SP_Label.gridx = 0;
-		gbc_Alt_SP_Label.gridy = 3;
-		
-		GridBagConstraints gbc_Alt_SP_Field = new GridBagConstraints();
-		gbc_Alt_SP_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Alt_SP_Field.gridx = 1;
-		gbc_Alt_SP_Field.gridy = 3;
-		
-		altContactContainer.add(jlAltSecondaryPhone, gbc_Alt_SP_Label);
-		altContactContainer.add(Main.JTF_ALT_SECONDARY_PHONE, gbc_Alt_SP_Field);
-		
-		//alt address
-		//used for city/state
-		JLabel jlAltAddress = new JLabel("     City");
-		
-		GridBagConstraints gbc_Alt_Address_Label = new GridBagConstraints();
-		gbc_Alt_Address_Label.anchor = GridBagConstraints.WEST;
-		gbc_Alt_Address_Label.gridx = 0;
-		gbc_Alt_Address_Label.gridy = 4;
-		
-		GridBagConstraints gbc_Alt_Address_Field = new GridBagConstraints();
-		gbc_Alt_Address_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Alt_Address_Field.gridx = 1;
-		gbc_Alt_Address_Field.gridy = 4;
-		
-		altContactContainer.add(jlAltAddress, gbc_Alt_Address_Label);
-		altContactContainer.add(Main.JTF_ALT_ADDRESS, gbc_Alt_Address_Field);
-		
-		//alt city, state, zip
-		//used for postal code
-		GridBagConstraints gbc_Alt_CSZ_Label = new GridBagConstraints();
-		gbc_Alt_CSZ_Label.anchor = GridBagConstraints.WEST;
-		gbc_Alt_CSZ_Label.gridx = 0;
-		gbc_Alt_CSZ_Label.gridy = 5;
-		
-		altContactContainer.add(new JLabel("  Postal Code"), gbc_Alt_CSZ_Label);
-		
-		GridBagConstraints gbc_Alt_CSZ_Field = new GridBagConstraints();
-		gbc_Alt_CSZ_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Alt_CSZ_Field.gridx = 1;
-		gbc_Alt_CSZ_Field.gridy = 5;
-		
-		altContactContainer.add(Main.JTF_ALT_CITY_STATE_ZIP, gbc_Alt_CSZ_Field);
-		
-		//...
-		JPanel jpContactsContainer = new JPanel();
-		jpContactsContainer.setOpaque(true);
-		jpContactsContainer.setBackground(Color.WHITE);
-		jpContactsContainer.setBorder(new EmptyBorder(0, 0, 5, 0));
-		jpContactsContainer.setLayout(new GridLayout(1, 2));
-		jpContactsContainer.add(contactContainer);
-		jpContactsContainer.add(altContactContainer);
-				
-		//company
-		JPanel companyContainer = new JPanel();
-		companyContainer.setOpaque(true);
-		companyContainer.setBackground(Color.WHITE);
-		GridBagLayout gbl_Co = new GridBagLayout();
-		gbl_Co.columnWidths = new int[]{100, 0};
-		gbl_Co.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_Co.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_Co.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		companyContainer.setLayout(gbl_Co);
-				
-		GridBagConstraints gbc_Company_Label = new GridBagConstraints();
-		gbc_Company_Label.anchor = GridBagConstraints.WEST;
-		gbc_Company_Label.gridx = 0;
-		gbc_Company_Label.gridy = 0;
-		
-		GridBagConstraints gbc_Company_Field = new GridBagConstraints();
-		gbc_Company_Field.fill = GridBagConstraints.HORIZONTAL;
-		gbc_Company_Field.gridx = 1;
-		gbc_Company_Field.gridy = 0;
-		
-		companyContainer.add(new JLabel("     Company"), gbc_Company_Label);
-		companyContainer.add(Main.JTF_COMPANY, gbc_Company_Field);
-		
-		//...
-		JPanel container = new JPanel();
-		container.setOpaque(true);
-		container.setBackground(Color.WHITE);
-		container.setBorder(new EmptyBorder(5, 5, 0, 5));
-		container.setLayout(new BorderLayout());
-		//container.add(companyContainer, BorderLayout.NORTH);
-		container.add(jpContactsContainer, BorderLayout.CENTER);
-		
-		//...
-		JLabel jlTitle = new JLabel("Contact Info:");
-		jlTitle.setOpaque(true);
-		jlTitle.setBackground(new Color(90, 167, 226));
-		jlTitle.setForeground(Color.WHITE);
-		jlTitle.setBorder(new EmptyBorder(3, 5, 3, 5));
-		
-		this.add(jlTitle, BorderLayout.NORTH);
-		this.add(container, BorderLayout.CENTER);
-		
-		Main.JTF_COMPANY.getDocument().addDocumentListener(this);
-		Main.JTF_NAME.getDocument().addDocumentListener(this);
-		Main.JTF_EMAIL.getDocument().addDocumentListener(this);
-		Main.JTF_PHONE.getDocument().addDocumentListener(this);		
-		Main.JTF_ALT_PHONE.getDocument().addDocumentListener(this);
-		Main.JTF_ADDRESS.getDocument().addDocumentListener(this);
-		Main.JTF_CITY_STATE_ZIP.getDocument().addDocumentListener(this);
-		Main.JTF_ALT_NAME.getDocument().addDocumentListener(this);
-		Main.JTF_ALT_EMAIL.getDocument().addDocumentListener(this);
-		Main.JTF_ALT_PRIMARY_PHONE.getDocument().addDocumentListener(this);
-		Main.JTF_ALT_SECONDARY_PHONE.getDocument().addDocumentListener(this);
-		Main.JTF_ALT_ADDRESS.getDocument().addDocumentListener(this);
-		Main.JTF_ALT_CITY_STATE_ZIP.getDocument().addDocumentListener(this);
+		Main.PRIMARY_FIRST_NAME.getDocument().addDocumentListener(this);
+		Main.PRIMARY_LAST_NAME.getDocument().addDocumentListener(this);
+		Main.PRIMARY_AREA_CODE.getDocument().addDocumentListener(this);
+		Main.PRIMARY_PHONE_NUMBER.getDocument().addDocumentListener(this);
+		Main.PRIMARY_EXT.getDocument().addDocumentListener(this);
+		Main.PRIMARY_EMAIL.getDocument().addDocumentListener(this);
+		Main.PRIMARY_ALT_AREA_CODE.getDocument().addDocumentListener(this);
+		Main.PRIMARY_ALT_PHONE_NUMBER.getDocument().addDocumentListener(this);
+		Main.PRIMARY_ALT_EXT.getDocument().addDocumentListener(this);
+		Main.ALT_AREA_CODE.getDocument().addDocumentListener(this);
+		Main.ALT_PHONE_NUMBER.getDocument().addDocumentListener(this);
+		Main.ALT_EXT.getDocument().addDocumentListener(this);
+		Main.ALT_ALT_AREA_CODE.getDocument().addDocumentListener(this);
+		Main.ALT_ALT_PHONE_NUMBER.getDocument().addDocumentListener(this);
+		Main.ALT_ALT_EXT.getDocument().addDocumentListener(this);
 	}
 
-	@Override public void changedUpdate(DocumentEvent e) {
+	@Override public void changedUpdate(DocumentEvent arg0) {
 		Main.HAS_UNSAVED_CHANGES = true;
 		
 		//name
-		if (Main.JTF_NAME.getText().length() < 3) Main.JTF_NAME.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_NAME.setBackground(new Color(161, 255, 161)); //green
-		
-		//e-mail
-		if (Main.JTF_EMAIL.getText().length() < 6) Main.JTF_EMAIL.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_EMAIL.setBackground(new Color(161, 255, 161)); //green
-		
-		//phone
-		if (Main.JTF_PHONE.getText().length() < 10) {
-			Main.JTF_PHONE.setBackground(new Color(255, 221, 221)); //red
-		} 
+		if (Main.PRIMARY_FIRST_NAME.getText().length() < 3) {
+			Main.PRIMARY_FIRST_NAME.setBackground(new Color(255, 181, 181)); //red
+		}
 		else {
-			int count = 0;
-			for (int i = 0; i < Main.JTF_PHONE.getText().length(); i++) {
-				if (Character.isDigit(Main.JTF_PHONE.getText().charAt(i))) {
-					count++;
-				}
-			}
-			if (count >= 10) {
-				Main.JTF_PHONE.setBackground(new Color(161, 255, 161)); //green	
-			}
+			Main.PRIMARY_FIRST_NAME.setBackground(new Color(161, 255, 161)); //green
 		}
 		
-		//company
-		if (Main.JTF_COMPANY.getText().length() < 3) Main.JTF_COMPANY.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_COMPANY.setBackground(new Color(161, 255, 161)); //green
+		if (Main.PRIMARY_LAST_NAME.getText().length() < 3) {
+			Main.PRIMARY_LAST_NAME.setBackground(new Color(255, 181, 181)); //red
+		}
+		else {
+			Main.PRIMARY_LAST_NAME.setBackground(new Color(161, 255, 161)); //green
+		}
+		
+		//e-mail
+		if (Main.PRIMARY_EMAIL.getText().length() < 6) {
+			Main.PRIMARY_EMAIL.setBackground(new Color(255, 181, 181)); //red
+		}
+		else {
+			Main.PRIMARY_EMAIL.setBackground(new Color(161, 255, 161)); //green
+		}
+		
+		//phone -- area code
+		if (Main.PRIMARY_AREA_CODE.getText().length() != 3) {
+			Main.PRIMARY_AREA_CODE.setBackground(new Color(255, 181, 181)); //red
+		}
+		else {
+			Main.PRIMARY_AREA_CODE.setBackground(new Color(161, 255, 161)); //green
+		}
+		
+		//phone -- phone number
+		int digits = 0;
+		for (int i = 0; i < Main.PRIMARY_PHONE_NUMBER.getText().length(); i++) {
+			if (Character.isDigit(Main.PRIMARY_PHONE_NUMBER.getText().charAt(i))) {
+				digits++;
+			}
+		}
+		if (digits == 7) {
+			Main.PRIMARY_PHONE_NUMBER.setBackground(new Color(161, 255, 161)); //green
+		} 
+		else {
+			Main.PRIMARY_PHONE_NUMBER.setBackground(new Color(255, 181, 181)); //red
+		}		
 	}
 
-	@Override public void insertUpdate(DocumentEvent e) {
+	@Override public void insertUpdate(DocumentEvent arg0) {
 		Main.HAS_UNSAVED_CHANGES = true;
 		
 		//name
-		if (Main.JTF_NAME.getText().length() < 3) Main.JTF_NAME.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_NAME.setBackground(new Color(161, 255, 161)); //green
-		
-		//e-mail
-		if (Main.JTF_EMAIL.getText().length() < 6) Main.JTF_EMAIL.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_EMAIL.setBackground(new Color(161, 255, 161)); //green
-		
-		//phone
-		if (Main.JTF_PHONE.getText().length() < 10) {
-			Main.JTF_PHONE.setBackground(new Color(255, 221, 221)); //red
-		} 
+		if (Main.PRIMARY_FIRST_NAME.getText().length() < 3) {
+			Main.PRIMARY_FIRST_NAME.setBackground(new Color(255, 181, 181)); //red
+		}
 		else {
-			int count = 0;
-			for (int i = 0; i < Main.JTF_PHONE.getText().length(); i++) {
-				if (Character.isDigit(Main.JTF_PHONE.getText().charAt(i))) {
-					count++;
-				}
-			}
-			if (count >= 10) {
-				Main.JTF_PHONE.setBackground(new Color(161, 255, 161)); //green	
-			}
+			Main.PRIMARY_FIRST_NAME.setBackground(new Color(161, 255, 161)); //green
 		}
 		
-		//company
-		if (Main.JTF_COMPANY.getText().length() < 3) Main.JTF_COMPANY.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_COMPANY.setBackground(new Color(161, 255, 161)); //green
+		if (Main.PRIMARY_LAST_NAME.getText().length() < 3) {
+			Main.PRIMARY_LAST_NAME.setBackground(new Color(255, 181, 181)); //red
+		}
+		else {
+			Main.PRIMARY_LAST_NAME.setBackground(new Color(161, 255, 161)); //green
+		}
+		
+		//e-mail
+		if (Main.PRIMARY_EMAIL.getText().length() < 6) {
+			Main.PRIMARY_EMAIL.setBackground(new Color(255, 181, 181)); //red
+		}
+		else {
+			Main.PRIMARY_EMAIL.setBackground(new Color(161, 255, 161)); //green
+		}
+		
+		//phone -- no code
+		if (Main.PRIMARY_AREA_CODE.getText().length() != 3) {
+			Main.PRIMARY_AREA_CODE.setBackground(new Color(255, 181, 181)); //red
+		}
+		else {
+			Main.PRIMARY_AREA_CODE.setBackground(new Color(161, 255, 161)); //green
+		}
+		
+		//phone -- phone number
+		int digits = 0;
+		for (int i = 0; i < Main.PRIMARY_PHONE_NUMBER.getText().length(); i++) {
+			if (Character.isDigit(Main.PRIMARY_PHONE_NUMBER.getText().charAt(i))) {
+				digits++;
+			}
+		}
+		if (digits == 7) {
+			Main.PRIMARY_PHONE_NUMBER.setBackground(new Color(161, 255, 161)); //green
+		} 
+		else {
+			Main.PRIMARY_PHONE_NUMBER.setBackground(new Color(255, 181, 181)); //red
+		}		
+		
+		//move focus to phone number automatically after area code entry
+		if (Main.PRIMARY_AREA_CODE.isFocusOwner() && Main.PRIMARY_AREA_CODE.getText().length() == 3) {
+			Main.PRIMARY_PHONE_NUMBER.grabFocus();
+		}
+		
+		if (Main.PRIMARY_ALT_AREA_CODE.isFocusOwner() && Main.PRIMARY_ALT_AREA_CODE.getText().length() == 3) {
+			Main.PRIMARY_ALT_PHONE_NUMBER.grabFocus();
+		}
+		
+		if (Main.ALT_AREA_CODE.isFocusOwner() && Main.ALT_AREA_CODE.getText().length() == 3) {
+			Main.ALT_PHONE_NUMBER.grabFocus();
+		}
+		
+		if (Main.ALT_ALT_AREA_CODE.isFocusOwner() && Main.ALT_ALT_AREA_CODE.getText().length() == 3) {
+			Main.ALT_ALT_PHONE_NUMBER.grabFocus();
+		}
 	}
-
-	@Override public void removeUpdate(DocumentEvent e) {
+	
+	@Override public void removeUpdate(DocumentEvent arg0) {
 		Main.HAS_UNSAVED_CHANGES = true;
 		
 		//name
-		if (Main.JTF_NAME.getText().length() < 3) Main.JTF_NAME.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_NAME.setBackground(new Color(161, 255, 161)); //green
-		
-		//e-mail
-		if (Main.JTF_EMAIL.getText().length() < 6) Main.JTF_EMAIL.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_EMAIL.setBackground(new Color(161, 255, 161)); //green
-		
-		//phone
-		if (Main.JTF_PHONE.getText().length() < 10) {
-			Main.JTF_PHONE.setBackground(new Color(255, 221, 221)); //red
-		} 
+		if (Main.PRIMARY_FIRST_NAME.getText().length() < 3) {
+			Main.PRIMARY_FIRST_NAME.setBackground(new Color(255, 181, 181)); //red
+		}
 		else {
-			int count = 0;
-			for (int i = 0; i < Main.JTF_PHONE.getText().length(); i++) {
-				if (Character.isDigit(Main.JTF_PHONE.getText().charAt(i))) {
-					count++;
-				}
-			}
-			if (count >= 10) {
-				Main.JTF_PHONE.setBackground(new Color(161, 255, 161)); //green	
-			}
+			Main.PRIMARY_FIRST_NAME.setBackground(new Color(161, 255, 161)); //green
 		}
 		
-		//company
-		if (Main.JTF_COMPANY.getText().length() < 3) Main.JTF_COMPANY.setBackground(new Color(255, 221, 221)); //red
-		else Main.JTF_COMPANY.setBackground(new Color(161, 255, 161)); //green
+		if (Main.PRIMARY_LAST_NAME.getText().length() < 3) {
+			Main.PRIMARY_LAST_NAME.setBackground(new Color(255, 181, 181)); //red
+		}
+		else {
+			Main.PRIMARY_LAST_NAME.setBackground(new Color(161, 255, 161)); //green
+		}
+		
+		//e-mail
+		if (Main.PRIMARY_EMAIL.getText().length() < 6) {
+			Main.PRIMARY_EMAIL.setBackground(new Color(255, 181, 181)); //red
+		}
+		else {
+			Main.PRIMARY_EMAIL.setBackground(new Color(161, 255, 161)); //green
+		}
+		
+		//phone -- area code
+		if (Main.PRIMARY_AREA_CODE.getText().length() != 3) {
+			Main.PRIMARY_AREA_CODE.setBackground(new Color(255, 181, 181)); //red
+		}
+		else {
+			Main.PRIMARY_AREA_CODE.setBackground(new Color(161, 255, 161)); //green
+		}
+		
+		//phone -- phone number
+		int digits = 0;
+		for (int i = 0; i < Main.PRIMARY_PHONE_NUMBER.getText().length(); i++) {
+			if (Character.isDigit(Main.PRIMARY_PHONE_NUMBER.getText().charAt(i))) {
+				digits++;
+			}
+		}
+		if (digits == 7) {
+			Main.PRIMARY_PHONE_NUMBER.setBackground(new Color(161, 255, 161)); //green
+		} 
+		else {
+			Main.PRIMARY_PHONE_NUMBER.setBackground(new Color(255, 181, 181)); //red
+		}		
 	}	
 }

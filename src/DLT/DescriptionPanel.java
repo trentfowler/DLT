@@ -22,20 +22,20 @@ public class DescriptionPanel extends JPanel implements DocumentListener {
 
 	public DescriptionPanel() {
 		this.setOpaque(true);
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.black);
 		this.setBorder(new EmptyBorder(0, 0, 5, 0));
 		
 		this.setLayout(new BorderLayout());
-				
+		
 		JLabel jlDescription = new JLabel("Description:");
 		jlDescription.setOpaque(true);
-		jlDescription.setBackground(new Color(90, 167, 226));
-		jlDescription.setForeground(Color.WHITE);
+		jlDescription.setBackground(new Color(80,80,80));
+		jlDescription.setForeground(Color.CYAN);
 		jlDescription.setBorder(new EmptyBorder(3, 5, 3, 5));
 		
 		JPanel jpDescriptionContainer = new JPanel();
 		jpDescriptionContainer.setOpaque(true);
-		jpDescriptionContainer.setBackground(Color.WHITE);
+		jpDescriptionContainer.setBackground(Color.black);
 		jpDescriptionContainer.setLayout(new BorderLayout());
 		jpDescriptionContainer.setBorder(new EmptyBorder(5, 5, 0, 5));
 		jpDescriptionContainer.add(Main.JTF_DESCRIPTION, BorderLayout.CENTER);
@@ -44,6 +44,9 @@ public class DescriptionPanel extends JPanel implements DocumentListener {
 		this.add(jpDescriptionContainer, BorderLayout.CENTER);
 		
 		Main.JTF_DESCRIPTION.getDocument().addDocumentListener(this);
+		Main.JTF_DESCRIPTION.setBackground(Color.BLACK);
+		Main.JTF_DESCRIPTION.setForeground(Color.GREEN);
+		Main.JTF_DESCRIPTION.setCaretColor(Color.GREEN);
 	}
 	
 	@Override public void changedUpdate(DocumentEvent e) {
