@@ -85,6 +85,10 @@ public class MenuFrame extends JFrame implements WindowListener {
 		editMenu.setForeground(Color.CYAN);
 		menu.add(editMenu);
 		
+		JMenu rightMenu = new JMenu("List");
+		rightMenu.setForeground(Color.CYAN);
+		menu.add(rightMenu);
+		
 		if (Main.BRANCH == -1) {
 			fileMenu.add(save);
 			KeyStroke ctrl_s = KeyStroke.getKeyStroke(
@@ -106,6 +110,8 @@ public class MenuFrame extends JFrame implements WindowListener {
 		
 		editMenu.add(cmmnd);
 		editMenu.setMnemonic(KeyEvent.VK_E);
+		
+		rightMenu.setMnemonic(KeyEvent.VK_L);
 		
 		cmmnd.add(commandNEW);
 		cmmnd.add(commandCPY);
