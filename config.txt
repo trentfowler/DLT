@@ -1,4 +1,8 @@
 owner=Bryan_watkins_waner
 branch=-1
 
+//Appearance options
+// Normal 
+// Dark
 
+appearance=Normal
