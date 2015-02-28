@@ -171,7 +171,6 @@ public class ListPanel extends JPanel implements ActionListener {
 				Scanner s = new Scanner(f);
 				while (s.hasNextLine()) {
 					LINE += s.nextLine() + "\n";
-					System.out.println(LINE);
 				}
 			} catch (Exception e3) {
 				e3.printStackTrace();
