@@ -18,10 +18,6 @@ Bryan:	-the address field: separate sections for Address Line1, Address Line2, C
 ***CHANGES MISC:
 	
 	-email output similar to autosweet
-	-letters associated with menu under file
-			-e.g.
-				Command "C"
-				Import "I" 
 	-option for multiple note formats
 	-option for multiple color pallates
 	-option for auto copy on the system
@@ -32,4 +28,5 @@ Bryan:	-the address field: separate sections for Address Line1, Address Line2, C
 		-copy buttons outputs
 	-readd touch cases
 		-shortkey
+	-associate child and parent SRs
 	

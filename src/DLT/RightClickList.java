@@ -28,6 +28,7 @@ public class RightClickList extends JPopupMenu {
 	private JMenuItem open;
 	private JMenuItem close;
 	private JMenuItem touch;
+	private JMenuItem urgent;
 	private UtilDateModel model = new UtilDateModel();
 	private JDatePanelImpl datePanel = new JDatePanelImpl(model);
 	private JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
@@ -50,6 +51,11 @@ public class RightClickList extends JPopupMenu {
 		touch.setOpaque(true);
 		touch.setBackground(Color.black);
 		touch.setForeground(Color.cyan);
+		urgent = new JMenuItem("Mark Urgent");
+		urgent.setOpaque(true);
+		urgent.setBackground(Color.black);
+		urgent.setForeground(Color.cyan);
+		
 		if (Main.FIELDS.get(Main.SELECTED_INDEX).getStatus() != Main.STATUS_IS_CLOSED) {
 			this.model.setDate(Main.FIELDS.get(Main.SELECTED_INDEX).getCommittedDate().getYear(),
 								Main.FIELDS.get(Main.SELECTED_INDEX).getCommittedDate().getMonthOfYear() - 1,
@@ -62,8 +68,10 @@ public class RightClickList extends JPopupMenu {
 			Main.FIELDS.get(Main.SELECTED_INDEX).getStatus() == Main.STATUS_IS_UNKNOWN)
 			this.add(open);
 		
-		else {this.add(touch); 
-		this.add(close);}
+		else {this.add(urgent);
+			  this.add(touch); 
+			  this.add(close);
+		}
 		this.addSeparator();
 		this.add(datePicker);
 		
@@ -91,6 +99,16 @@ public class RightClickList extends JPopupMenu {
 				Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
 				Main.HAS_UNSAVED_CHANGES = true;
 			}
+		});
+		urgent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LocalDate today = new LocalDate();
+				Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.minusDays(1));
+				Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_OVERDUE);
+				Main.HAS_UNSAVED_CHANGES = true;
+				
+			}
+			
 		});
 		
 		datePicker.addActionListener(new ActionListener() {

@@ -202,54 +202,10 @@ public class MenuFrame extends JFrame implements WindowListener {
 		//...del
 		commandDEL.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-				if (Main.FIELDS.size() == 1) {
-					//clear all
-					Main.FIELDS.clear();
-					Main.LIST_MODEL.clear();
-					Main.SELECTED_INDEX = 0;
-					
-					//add new element
-					Main.LIST_MODEL.add(Main.SELECTED_INDEX, "NEW");
-					Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
-					Main.FIELDS.add(new DataField());
-					LocalDate today = new LocalDate();
-					int days = 1;
-					while (days < 4) {
-						if (Main.FIELDS.get(Main.SELECTED_INDEX).workingDaysBetween(today, today.plusDays(days)) == 1)
-							break;
-						days++;
+					Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_CLOSED);
+					Main.HAS_UNSAVED_CHANGES = true;
 					}
-					Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
-					Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
-					//add troubleshooting template
-					String LINE = "";
-					try {
-						File f = new File("TS_Template.txt");
-						Scanner s = new Scanner(f);
-						while (s.hasNextLine()) {
-							LINE += s.nextLine() + "\n";
-							
-						}
-					} catch (Exception e2) {
-						e2.printStackTrace();
-					}
-					Main.FIELDS.get(Main.SELECTED_INDEX).setTroubleshooting(LINE);
-					Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
-				}
-				
-				if (Main.FIELDS.size() > 1) {
-					//remove selected element
-					Main.FIELDS.remove(Main.SELECTED_INDEX);
-					Main.LIST_MODEL.remove(Main.SELECTED_INDEX);
-					if (Main.SELECTED_INDEX == Main.FIELDS.size())
-						Main.SELECTED_INDEX -= 1;
-					
-					//update view
-					Main.LIST.setSelectedIndex(Main.SELECTED_INDEX);
-					Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
-				}
-			}
-		});
+			});
 		
 		//...new
 		commandNEW.addActionListener(new ActionListener() {
