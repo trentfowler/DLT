@@ -47,7 +47,7 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		
 		JLabel jl = new JLabel(" ");
 		jl.setOpaque(true);
-		jl.setBackground(new Color(90, 167, 226));
+		jl.setBackground(Color.GRAY);
 		jl.setForeground(Color.WHITE);
 		jl.setBorder(new EmptyBorder(3, 5, 3, 5));
 		

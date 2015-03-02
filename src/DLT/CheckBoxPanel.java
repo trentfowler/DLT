@@ -23,20 +23,30 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 	
 	public CheckBoxPanel() {
 		this.setOpaque(true);
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.BLACK);
 		
 		this.setLayout(new BorderLayout());
 		
-		Main.JCHK_VA.setBackground(Color.WHITE);
-		Main.JCHK_TOADE.setBackground(Color.WHITE);
-		Main.JCHK_VDI.setBackground(Color.WHITE);
-		Main.JCHK_EMAIL_CAP.setBackground(Color.WHITE);
-		Main.JCHK_TARP.setBackground(Color.WHITE);
-		Main.JCHK_POS.setBackground(Color.WHITE);
-		Main.JCHK_PAL.setBackground(Color.WHITE);
-		Main.JCHK_PLASTICS.setBackground(Color.WHITE);
-		Main.JCHK_CIDAR.setBackground(Color.WHITE);
-		Main.JCHK_NOAC.setBackground(Color.WHITE);
+		Main.JCHK_VA.setBackground(Color.BLACK);
+		Main.JCHK_VA.setForeground(Color.GREEN);
+		Main.JCHK_TOADE.setBackground(Color.BLACK);
+		Main.JCHK_TOADE.setForeground(Color.GREEN);
+		Main.JCHK_VDI.setBackground(Color.BLACK);
+		Main.JCHK_VDI.setForeground(Color.GREEN);
+		Main.JCHK_EMAIL_CAP.setBackground(Color.BLACK);
+		Main.JCHK_EMAIL_CAP.setForeground(Color.GREEN);
+		Main.JCHK_TARP.setBackground(Color.BLACK);
+		Main.JCHK_TARP.setForeground(Color.GREEN);
+		Main.JCHK_POS.setBackground(Color.BLACK);
+		Main.JCHK_POS.setForeground(Color.GREEN);
+		Main.JCHK_PAL.setBackground(Color.BLACK);
+		Main.JCHK_PAL.setForeground(Color.GREEN);
+		Main.JCHK_PLASTICS.setBackground(Color.BLACK);
+		Main.JCHK_PLASTICS.setForeground(Color.GREEN);
+		Main.JCHK_CIDAR.setBackground(Color.BLACK);
+		Main.JCHK_CIDAR.setForeground(Color.GREEN);
+		Main.JCHK_NOAC.setBackground(Color.BLACK);
+		Main.JCHK_NOAC.setForeground(Color.GREEN);
 		
 		Main.JCHK_VA.setToolTipText("Verified Authorization");
 		Main.JCHK_TOADE.setToolTipText("Told Owner About Date of Expiration");
@@ -51,7 +61,7 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		
 		JPanel checkBoxPanel = new JPanel();
 		checkBoxPanel.setOpaque(true);
-		checkBoxPanel.setBackground(Color.WHITE);
+		checkBoxPanel.setBackground(Color.BLACK);
 		checkBoxPanel.add(Main.JCHK_VA);
 		checkBoxPanel.add(Main.JCHK_TOADE);
 		checkBoxPanel.add(Main.JCHK_EMAIL_CAP);
@@ -65,8 +75,8 @@ public class CheckBoxPanel extends JPanel implements ActionListener {
 		
 		JLabel jl = new JLabel(" ");
 		jl.setOpaque(true);
-		jl.setBackground(new Color(90, 167, 226));
-		jl.setForeground(Color.WHITE);
+		jl.setBackground(Color.GRAY);
+		jl.setForeground(Color.CYAN);
 		jl.setBorder(new EmptyBorder(3, 5, 3, 5));
 		
 		this.add(jl, BorderLayout.NORTH);

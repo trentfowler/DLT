@@ -65,8 +65,10 @@ public class MenuFrame extends JFrame implements WindowListener {
 	private JMenuItem importCSV = new JMenuItem("CSV");
 	private JMenuItem importXML = new JMenuItem("XML");
 	private JMenuItem commandCPY = new JMenuItem("Copy selected case");
-	private JMenuItem commandDEL = new JMenuItem("Remove selected case");
+	private JMenuItem commandDEL = new JMenuItem("Touched selected case");
 	private JMenuItem commandNEW = new JMenuItem("Add new case");
+	private JMenuItem moveUp = new JMenuItem("Move Up Case List");
+	private JMenuItem moveDown = new JMenuItem("Move Down Case List");
 	
 	private JButton jbSearch = new JButton("Search");
 	
@@ -85,9 +87,9 @@ public class MenuFrame extends JFrame implements WindowListener {
 		editMenu.setForeground(Color.CYAN);
 		menu.add(editMenu);
 		
-		JMenu rightMenu = new JMenu("List");
-		rightMenu.setForeground(Color.CYAN);
-		menu.add(rightMenu);
+		JMenu listMenu = new JMenu("List");
+		listMenu.setForeground(Color.CYAN);
+		menu.add(listMenu);
 		
 		if (Main.BRANCH == -1) {
 			fileMenu.add(save);
@@ -111,7 +113,10 @@ public class MenuFrame extends JFrame implements WindowListener {
 		editMenu.add(cmmnd);
 		editMenu.setMnemonic(KeyEvent.VK_E);
 		
-		rightMenu.setMnemonic(KeyEvent.VK_L);
+		listMenu.setMnemonic(KeyEvent.VK_L);
+		//TODO... not functional yet
+		listMenu.add(moveUp);
+		listMenu.add(moveDown);
 		
 		cmmnd.add(commandNEW);
 		cmmnd.add(commandCPY);
@@ -133,6 +138,13 @@ public class MenuFrame extends JFrame implements WindowListener {
 		
 		KeyStroke ctrl_n = KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK);
 		commandNEW.setAccelerator(ctrl_n);
+		
+		KeyStroke ctrl_down = KeyStroke.getKeyStroke(KeyEvent.VK_KP_UP, InputEvent.CTRL_DOWN_MASK);
+		moveUp.setAccelerator(ctrl_down);
+		
+		KeyStroke ctrl_up = KeyStroke.getKeyStroke(KeyEvent.VK_KP_DOWN, InputEvent.CTRL_DOWN_MASK);
+		moveDown.setAccelerator(ctrl_up);
+		
 		
 		KeyStroke alt_s = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK);
 		srt.setAccelerator(alt_s);
@@ -202,7 +214,15 @@ public class MenuFrame extends JFrame implements WindowListener {
 		//...del
 		commandDEL.addActionListener(new ActionListener() {
 			@Override public void actionPerformed(ActionEvent e) {
-					Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_CLOSED);
+				LocalDate today = new LocalDate();
+				int days = 1;
+				while (days < 4) {
+					if (Main.FIELDS.get(Main.SELECTED_INDEX).workingDaysBetween(today, today.plusDays(days)) == 1)
+						break;
+					days++;
+				}
+				Main.FIELDS.get(Main.SELECTED_INDEX).setCommittedDate(today.plusDays(days));
+					Main.FIELDS.get(Main.SELECTED_INDEX).setStatus(Main.STATUS_IS_TOUCHED);
 					Main.HAS_UNSAVED_CHANGES = true;
 					}
 			});
@@ -365,6 +385,18 @@ public class MenuFrame extends JFrame implements WindowListener {
 		}
 		
 				);
+		
+		moveUp.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (Main.LIST.getSelectedIndex() > 0) {
+					System.out.println("this");
+					Main.LIST.setSelectedIndex(Main.LIST.getSelectedIndex() - 1);
+					Main.LIST.ensureIndexIsVisible(Main.LIST.getSelectedIndex());
+				}
+				
+			}}
+		);
 		
 		
 		JScrollPane jspInfo = new JScrollPane(new InfoPanel());
@@ -705,7 +737,7 @@ public class MenuFrame extends JFrame implements WindowListener {
 						temp.append(nextLine[i].charAt(j));
 					}
 					
-					System.out.println(temp.toString()); //TODO remove this line; for troubleshooting
+					
 				}
 				
 				//assign index values based on column location in first row of .csv
@@ -759,6 +791,7 @@ public class MenuFrame extends JFrame implements WindowListener {
 					openedDate = new LocalDate(Integer.parseInt(strDate[2]),
 										Integer.parseInt(strDate[0]),
 										Integer.parseInt(strDate[1]));
+					
 				}
 				
 				//service request number

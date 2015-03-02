@@ -7,7 +7,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
+
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -18,7 +20,10 @@ import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+
+
 import org.joda.time.LocalDate;
+import org.joda.time.Period;
 
 /**
  * Backup Logging Tool. For offline logging and case management.
@@ -210,6 +215,17 @@ public class Main {
 		}
 		
 		sb.append(Main.FIELDS.get(Main.SELECTED_INDEX).getPrimaryLastName());
+		new LocalDate();
+		//TODO... add case age to the list
+		LocalDate today = LocalDate.now();
+		Period period = new Period(Main.FIELDS.get(Main.SELECTED_INDEX).getOpenedDate(), today);
+		int caseAge;
+		
+		caseAge =  period.getDays();
+		System.out.println(period.getDays());
+		
+		//int caseAge(today.minus(Main.FIELDS.get(Main.SELECTED_INDEX).getOpenedDate()) );
+		//sb.append(caseAge);
 		
 		if (!sb.toString().isEmpty()) {
 			Main.LIST_MODEL.set(index, sb.toString());

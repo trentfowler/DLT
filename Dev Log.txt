@@ -28,5 +28,7 @@ Bryan:	-the address field: separate sections for Address Line1, Address Line2, C
 		-copy buttons outputs
 	-readd touch cases
 		-shortkey
-	-associate child and parent SRs
-	
+	-link child SRs to parent SRs
+		-ex:have a field on the child SR that is auto filled with the SR# of the parent SR.
+	-add shortkey for the Search feature
+		-eg: Ctrl + F on applications

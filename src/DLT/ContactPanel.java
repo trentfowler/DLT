@@ -4,7 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -24,10 +30,10 @@ import net.miginfocom.swing.MigLayout;
  * @author Trent
  * @author Bryan
  */
-public class ContactPanel extends JPanel implements DocumentListener {
+public class ContactPanel extends JPanel implements DocumentListener, ActionListener {
 	
 	private static final long serialVersionUID = 4220570468139986554L;
-
+	private JButton jbPrimaryFName = new JButton("Name");
 	public ContactPanel() {
 		
 		this.setOpaque(true);
@@ -41,7 +47,7 @@ public class ContactPanel extends JPanel implements DocumentListener {
 										"10[min!][][][][][][]",
 										""));
 		Main.JL_PRIMARY_NAME.setForeground(Color.GREEN);
-		primary.add(Main.JL_PRIMARY_NAME,           "grow, cell 0 0 1 1");
+		primary.add(jbPrimaryFName,           		"grow, cell 0 0 1 1");
 		primary.add(Main.PRIMARY_FIRST_NAME,		"grow, cell 1 0 3 1"); // cell column row width height
 		primary.add(Main.PRIMARY_LAST_NAME,			"grow, cell 4 0 3 1, wrap");
 		Main.JL_PRIMARY_EMAIL.setForeground(Color.GREEN);
@@ -119,14 +125,33 @@ public class ContactPanel extends JPanel implements DocumentListener {
 		Main.PRIMARY_ALT_AREA_CODE.getDocument().addDocumentListener(this);
 		Main.PRIMARY_ALT_PHONE_NUMBER.getDocument().addDocumentListener(this);
 		Main.PRIMARY_ALT_EXT.getDocument().addDocumentListener(this);
+		Main.PRIMARY_ALT_EXT.setOpaque(true);
+		Main.PRIMARY_ALT_EXT.setBackground(Color.GRAY);
 		Main.ALT_AREA_CODE.getDocument().addDocumentListener(this);
 		Main.ALT_PHONE_NUMBER.getDocument().addDocumentListener(this);
 		Main.ALT_EXT.getDocument().addDocumentListener(this);
 		Main.ALT_ALT_AREA_CODE.getDocument().addDocumentListener(this);
 		Main.ALT_ALT_PHONE_NUMBER.getDocument().addDocumentListener(this);
 		Main.ALT_ALT_EXT.getDocument().addDocumentListener(this);
+		//TODO...
+		jbPrimaryFName.addActionListener(this);
 	}
+	
+	
 
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == jbPrimaryFName) {
+			StringBuilder sb = new StringBuilder("");
+			if (!Main.PRIMARY_FIRST_NAME.getText().isEmpty() | !Main.PRIMARY_LAST_NAME.getText().isEmpty()) {
+				sb.append(Main.PRIMARY_FIRST_NAME.getText() +" "+ Main.PRIMARY_LAST_NAME.getText());
+			}
+			StringSelection stringSelection = new StringSelection(sb.toString());
+			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+			clpbrd.setContents(stringSelection, null);
+		}
+		
+	}
+	
 	@Override public void changedUpdate(DocumentEvent arg0) {
 		Main.HAS_UNSAVED_CHANGES = true;
 		
