@@ -33,7 +33,8 @@ import net.miginfocom.swing.MigLayout;
 public class ContactPanel extends JPanel implements DocumentListener, ActionListener {
 	
 	private static final long serialVersionUID = 4220570468139986554L;
-	private JButton jbPrimaryFName = new JButton("Name");
+	private JButton jbPrimaryName = new JButton("Name");
+	private JButton jbPhoneNumber = new JButton("Phone");
 	public ContactPanel() {
 		
 		this.setOpaque(true);
@@ -47,14 +48,14 @@ public class ContactPanel extends JPanel implements DocumentListener, ActionList
 										"10[min!][][][][][][]",
 										""));
 		Main.JL_PRIMARY_NAME.setForeground(Color.GREEN);
-		primary.add(jbPrimaryFName,           		"grow, cell 0 0 1 1");
+		primary.add(jbPrimaryName,           		"grow, cell 0 0 1 1");
 		primary.add(Main.PRIMARY_FIRST_NAME,		"grow, cell 1 0 3 1"); // cell column row width height
 		primary.add(Main.PRIMARY_LAST_NAME,			"grow, cell 4 0 3 1, wrap");
 		Main.JL_PRIMARY_EMAIL.setForeground(Color.GREEN);
 		primary.add(Main.JL_PRIMARY_EMAIL,				  "cell 0 1 1 1");
 		primary.add(Main.PRIMARY_EMAIL,				"grow, cell 1 1 6 1, wrap");
 		Main.JL_PRIMARY_PHONE.setForeground(Color.GREEN);
-		primary.add(Main.JL_PRIMARY_PHONE,				  "cell 0 2 1 1");
+		primary.add(jbPhoneNumber,						  "cell 0 2 1 1");
 		primary.add(Main.PRIMARY_AREA_CODE,			"grow, cell 1 2 1 1");
 		primary.add(Main.PRIMARY_PHONE_NUMBER,		"grow, cell 2 2 3 1");
 		primary.add(Main.PRIMARY_EXT,				"grow, cell 5 2 2 1, wrap");
@@ -134,13 +135,14 @@ public class ContactPanel extends JPanel implements DocumentListener, ActionList
 		Main.ALT_ALT_PHONE_NUMBER.getDocument().addDocumentListener(this);
 		Main.ALT_ALT_EXT.getDocument().addDocumentListener(this);
 		//TODO...
-		jbPrimaryFName.addActionListener(this);
+		jbPrimaryName.addActionListener(this);
+		jbPhoneNumber.addActionListener(this);
 	}
 	
 	
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == jbPrimaryFName) {
+		if (e.getSource() == jbPrimaryName) {
 			StringBuilder sb = new StringBuilder("");
 			if (!Main.PRIMARY_FIRST_NAME.getText().isEmpty() | !Main.PRIMARY_LAST_NAME.getText().isEmpty()) {
 				sb.append(Main.PRIMARY_FIRST_NAME.getText() +" "+ Main.PRIMARY_LAST_NAME.getText());
@@ -148,6 +150,17 @@ public class ContactPanel extends JPanel implements DocumentListener, ActionList
 			StringSelection stringSelection = new StringSelection(sb.toString());
 			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 			clpbrd.setContents(stringSelection, null);
+		}
+		if (e.getSource() == jbPhoneNumber) {
+			StringBuilder sb = new StringBuilder("");
+			if (!Main.PRIMARY_AREA_CODE.getText().isEmpty() | !Main.PRIMARY_PHONE_NUMBER.getText().isEmpty()) {
+				sb.append(Main.PRIMARY_AREA_CODE.getText() + Main.PRIMARY_PHONE_NUMBER.getText());
+			}
+			StringSelection stringSelection = new StringSelection(sb.toString());
+			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+			clpbrd.setContents(stringSelection, null);
+			
+			
 		}
 		
 	}
