@@ -35,6 +35,7 @@ public class ContactPanel extends JPanel implements DocumentListener, ActionList
 	private static final long serialVersionUID = 4220570468139986554L;
 	private JButton jbPrimaryName = new JButton("Name");
 	private JButton jbPhoneNumber = new JButton("Phone");
+	private JButton jbEmail = new JButton("Email");
 	public ContactPanel() {
 		
 		this.setOpaque(true);
@@ -52,7 +53,7 @@ public class ContactPanel extends JPanel implements DocumentListener, ActionList
 		primary.add(Main.PRIMARY_FIRST_NAME,		"grow, cell 1 0 3 1"); // cell column row width height
 		primary.add(Main.PRIMARY_LAST_NAME,			"grow, cell 4 0 3 1, wrap");
 		Main.JL_PRIMARY_EMAIL.setForeground(Color.GREEN);
-		primary.add(Main.JL_PRIMARY_EMAIL,				  "cell 0 1 1 1");
+		primary.add(jbEmail,				  "cell 0 1 1 1");
 		primary.add(Main.PRIMARY_EMAIL,				"grow, cell 1 1 6 1, wrap");
 		Main.JL_PRIMARY_PHONE.setForeground(Color.GREEN);
 		primary.add(jbPhoneNumber,						  "cell 0 2 1 1");
@@ -137,6 +138,7 @@ public class ContactPanel extends JPanel implements DocumentListener, ActionList
 		//TODO...
 		jbPrimaryName.addActionListener(this);
 		jbPhoneNumber.addActionListener(this);
+		jbEmail.addActionListener(this);
 	}
 	
 	
@@ -160,10 +162,20 @@ public class ContactPanel extends JPanel implements DocumentListener, ActionList
 			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 			clpbrd.setContents(stringSelection, null);
 			
+		}
+		if (e.getSource() == jbEmail){
+			StringBuilder sb = new StringBuilder("");
+			if (!Main.PRIMARY_EMAIL.getText().isEmpty()) {
+				sb.append(Main.PRIMARY_EMAIL.getText());
+			}
+			StringSelection stringSelection = new StringSelection(sb.toString());
+			Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+			clpbrd.setContents(stringSelection, null);
+		}
 			
 		}
 		
-	}
+
 	
 	@Override public void changedUpdate(DocumentEvent arg0) {
 		Main.HAS_UNSAVED_CHANGES = true;
