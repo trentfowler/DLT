@@ -9,25 +9,20 @@
 
 ***CONTACT INFO SECTION:
 	
-	-the phone field: separate sections for "area code", "Last 7"
+	
 	-make the header for each record copy contents to the clipboard
 		-similiar to the 'copy description' and 'copy troubleshooting' and 'service tag'
-Bryan:	-the address field: separate sections for Address Line1, Address Line2, City, Zip Code
-		-possibly as seperate section
+	
 	
 ***CHANGES MISC:
 	
 	-email output similar to autosweet
-	-option for multiple note formats
-	-option for multiple color pallates
 	-option for auto copy on the system
 	
 	-setup profile for alt configs:
 		-Color
 		-textfield templates
 		-copy buttons outputs
-	-readd touch cases
-		-shortkey
 	-link child SRs to parent SRs
 		-ex:have a field on the child SR that is auto filled with the SR# of the parent SR.
 	-add shortkey for the Search feature
