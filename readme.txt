@@ -5,10 +5,9 @@ Trent F.
 Bryan W.W.
 
 
-Mayo 
-Light Mayo
-Wheat Bread
-White Bread
+Mayo 		<---2.1
+Light Mayo	<---2.2
+Wheat Bread <---2.3
 Cheddar Cheese
 Swiss Cheese
 Bacon

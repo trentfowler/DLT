@@ -30,6 +30,13 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		this.setBackground(Color.black);
 		this.setLayout(new BorderLayout());
 		
+		JPanel jpServiceRequest = new JPanel();
+		jpServiceRequest.setOpaque(true);
+		jpServiceRequest.setBackground(Color.black);
+		jpServiceRequest.setLayout(new BorderLayout(5, 5));
+		jpServiceRequest.add(Main.JB_SERVICE_REQUEST, BorderLayout.WEST);
+		jpServiceRequest.add(Main.JTF_SERVICE_REQUEST, BorderLayout.CENTER);
+		
 		JPanel jpServiceTag = new JPanel();
 		jpServiceTag.setOpaque(true);
 		jpServiceTag.setBackground(Color.black);
@@ -37,13 +44,6 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		jpServiceTag.setLayout(new BorderLayout(5, 5));
 		jpServiceTag.add(Main.JB_SERVICE_TAG, BorderLayout.WEST);
 		jpServiceTag.add(Main.JTF_SERVICE_TAG, BorderLayout.CENTER);
-		
-		JPanel jpServiceRequest = new JPanel();
-		jpServiceRequest.setOpaque(true);
-		jpServiceRequest.setBackground(Color.black);
-		jpServiceRequest.setLayout(new BorderLayout(5, 5));
-		jpServiceRequest.add(Main.JB_SERVICE_REQUEST, BorderLayout.WEST);
-		jpServiceRequest.add(Main.JTF_SERVICE_REQUEST, BorderLayout.CENTER);
 		
 		JLabel jl = new JLabel(" ");
 		jl.setOpaque(true);
@@ -56,8 +56,8 @@ public class ServicePanel extends JPanel implements DocumentListener {
 		jpContainer.setBackground(Color.black);
 		jpContainer.setBorder(new EmptyBorder(5, 5, 5, 5));
 		jpContainer.setLayout(new GridLayout(1, 2));
-		jpContainer.add(jpServiceTag);
 		jpContainer.add(jpServiceRequest);
+		jpContainer.add(jpServiceTag);
 		
 		this.add(jl, BorderLayout.NORTH);
 		this.add(jpContainer, BorderLayout.CENTER);

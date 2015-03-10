@@ -2,6 +2,9 @@ package DLT;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -60,7 +63,8 @@ public class MenuFrame extends JFrame implements WindowListener {
 	private JMenuItem save = new JMenuItem("Save");
 	private JMenuItem export = new JMenuItem("Export");
 	private JMenu imprt = new JMenu("Import");
-	private JMenu cmmnd = new JMenu("Commands");
+	private JMenu cmmnd = new JMenu("Case Commands");
+	private JMenu cpy = new JMenu("Copy Commands");
 	private JMenuItem srt = new JMenuItem("Sort");
 	private JMenuItem importCSV = new JMenuItem("CSV");
 	private JMenuItem importXML = new JMenuItem("XML");
@@ -69,6 +73,8 @@ public class MenuFrame extends JFrame implements WindowListener {
 	private JMenuItem commandNEW = new JMenuItem("Add new case");
 	private JMenuItem moveUp = new JMenuItem("Move Up Case List");
 	private JMenuItem moveDown = new JMenuItem("Move Down Case List");
+	private JMenuItem cpyTag = new JMenuItem("Copy Service Tag");
+	private JMenuItem cpyRequest = new JMenuItem("Copy Service Request");
 	
 	private JButton jbSearch = new JButton("Search");
 	
@@ -110,11 +116,15 @@ public class MenuFrame extends JFrame implements WindowListener {
 		imprt.add(importCSV);
 		imprt.add(importXML);
 		
-		editMenu.add(cmmnd);
 		editMenu.setMnemonic(KeyEvent.VK_E);
+		cmmnd.setMnemonic(KeyEvent.VK_O);
+		editMenu.add(cmmnd);
+		cpy.setMnemonic(KeyEvent.VK_C);
+		editMenu.add(cpy);
 		
+		editMenu.setMnemonic(KeyEvent.VK_E);
 		listMenu.setMnemonic(KeyEvent.VK_L);
-		//TODO... not functional yet
+		
 		listMenu.add(moveUp);
 		listMenu.add(moveDown);
 		
@@ -122,6 +132,9 @@ public class MenuFrame extends JFrame implements WindowListener {
 		cmmnd.add(commandCPY);
 		cmmnd.add(commandDEL);
 		cmmnd.add(srt);
+		
+		cpy.add(cpyTag);
+		cpy.add(cpyRequest);
 		
 		//set keystrokes
 		KeyStroke ctrl_o = KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK);
@@ -139,12 +152,18 @@ public class MenuFrame extends JFrame implements WindowListener {
 		KeyStroke ctrl_n = KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK);
 		commandNEW.setAccelerator(ctrl_n);
 		
-		KeyStroke ctrl_down = KeyStroke.getKeyStroke(KeyEvent.VK_KP_UP, InputEvent.CTRL_DOWN_MASK);
-		moveUp.setAccelerator(ctrl_down);
+		KeyStroke ctrl_t = KeyStroke.getKeyStroke(KeyEvent.VK_T, InputEvent.CTRL_DOWN_MASK);
+		cpyTag.setAccelerator(ctrl_t);
 		
-		KeyStroke ctrl_up = KeyStroke.getKeyStroke(KeyEvent.VK_KP_DOWN, InputEvent.CTRL_DOWN_MASK);
-		moveDown.setAccelerator(ctrl_up);
+		KeyStroke ctrl_r = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK);
+		cpyRequest.setAccelerator(ctrl_r);
 		
+		
+		KeyStroke ctrl_up = KeyStroke.getKeyStroke(KeyEvent.VK_COMMA, InputEvent.CTRL_DOWN_MASK);
+		moveUp.setAccelerator(ctrl_up);
+		
+		KeyStroke ctrl_down = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, InputEvent.CTRL_DOWN_MASK);
+		moveDown.setAccelerator(ctrl_down);
 		
 		KeyStroke alt_s = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK);
 		srt.setAccelerator(alt_s);
@@ -389,16 +408,46 @@ public class MenuFrame extends JFrame implements WindowListener {
 		moveUp.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Main.LIST.getSelectedIndex() > 0) {
 					System.out.println("this");
 					Main.LIST.setSelectedIndex(Main.LIST.getSelectedIndex() - 1);
 					Main.LIST.ensureIndexIsVisible(Main.LIST.getSelectedIndex());
-				}
+					Main.SAVE_CHANGEABLE_FIELDS();
+					Main.UPDATE_LIST_MODEL(Main.SELECTED_INDEX);
+					if (Main.LIST.getSelectedIndex() != -1) 
+						Main.SELECTED_INDEX = Main.LIST.getSelectedIndex();
+					Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
+			}}
+		);
+		moveDown.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+					Main.LIST.setSelectedIndex(Main.LIST.getSelectedIndex() + 1);
+					Main.LIST.ensureIndexIsVisible(Main.LIST.getSelectedIndex());
+					Main.SAVE_CHANGEABLE_FIELDS();
+					Main.UPDATE_LIST_MODEL(Main.SELECTED_INDEX);
+					if (Main.LIST.getSelectedIndex() != -1) 
+						Main.SELECTED_INDEX = Main.LIST.getSelectedIndex();
+					Main.SET_CHANGEABLE_FIELDS(Main.SELECTED_INDEX);
+			}}
+		);
+		
+		cpyTag.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				StringSelection stringSelection = new StringSelection(Main.JTF_SERVICE_TAG.getText());
+				Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+				clpbrd.setContents(stringSelection, null);
 				
 			}}
 		);
 		
-		
+		cpyRequest.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {	
+				StringSelection stringSelection = new StringSelection(Main.JTF_SERVICE_REQUEST.getText());
+				Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+				clpbrd.setContents(stringSelection, null);
+			}}
+		);
 		JScrollPane jspInfo = new JScrollPane(new InfoPanel());
 		jspInfo.getVerticalScrollBar().setUnitIncrement(16);
 		
